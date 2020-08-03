@@ -1,0 +1,84 @@
+<div class="container">
+<div class="notification">
+  <h1 class="title has-text-centered">Alta de Servicio</h1>
+</div>
+<div class="columns">
+  <div class="column is-narrow" style="width: 450px;">
+    <div class="box" style="height: 600px;">
+    <form class="mid-form" #serviceForm="ngForm">
+      <div class="columns">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="folio" class="label">Folio:</label>  
+        </div>
+        <div class="column">
+          <label class="label">{{servicio.folio}}</label>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="cliente" class="label">Cliente:</label>
+        </div>
+        <div class="column is-narrow" style="width: 200px;">
+          <input type="text" name="cliente" class="input is-small" #cliente="ngModel" [(ngModel)]="servicio.cliente" required />
+          <small *ngIf="!cliente.valid && cliente.touched">El titulo no es válidos</small>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="telefono" class="label">Teléfono</label>
+        </div>
+        <div class="column is-narrow" style="width: 140px;">
+          <input type="number" name="telefono" class="input is-small" #telefono="ngModel" [(ngModel)]="servicio.telefono" required />
+          <small *ngIf="!telefono.valid && telefono.touched">El titulo no es válidos</small>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="correo" class="label">Correo</label>
+        </div>
+        <div class="column is-narrow" style="width: 200px;">            
+          <input type="text" name="correo" class="input is-small" #correo="ngModel" [(ngModel)]="servicio.correo" required />
+          <small *ngIf="!correo.valid && correo.touched">El titulo no es válidos</small>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="receptor" class="label">Receptor</label>
+        </div>
+        <div class="column is-narrow" style="width: 200px;">
+          <input type="text" name="receptor" class="input is-small" #receptor="ngModel" [(ngModel)]="servicio.receptor" required />
+          <small *ngIf="!receptor.valid && receptor.touched">El titulo no es válidos</small>
+        </div>
+      </div>      
+      <div class="columns">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="garantia" class="label">Tiene Garantia:</label>
+        </div>
+        <div class="column is-narrow" style="width: 200px;">
+          <div class="select">
+          <select name="esgarantia" [(ngModel)]="servicio.esgarantia">
+              <option [ngValue]="null" selected disabled>Seleccione Garantía</option>
+              <option *ngFor="let garantia of garantias" [ngValue]="garantia.value">{{garantia.viewValue}}</option>
+          </select>
+          </div>
+        </div>
+      </div>
+      <div class="columns" *ngIf="servicio.esgarantia=='false'">
+        <div class="column is-narrow" style="width: 140px;">
+          <label for="receptor" class="label">Costo Revisión</label>
+        </div>
+        <div class="column is-narrow" style="width: 200px;">
+          <input type="number" name="costorevision" class="input is-small" #costorevision="ngModel" [(ngModel)]="servicio.costorevision" required />
+          <small *ngIf="!costorevision.valid && costorevision.touched">El titulo no es válidos</small>
+        </div>
+      </div> 
+      <button class="button is-success" (click)="onSubmit()" [disabled]="equipos.length <= 0">Enviar</button>
+    </form>    
+    </div>
+  </div>
+  <div class="column">
+    <app-equipos (enviaEquipos)="recibeEquipos($event)"></app-equipos>
+  </div>
+</div>  
+
+

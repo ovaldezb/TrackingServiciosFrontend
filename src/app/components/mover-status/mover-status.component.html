@@ -1,0 +1,238 @@
+<div class="container">
+    <div class="box">
+        <div class="columns">
+            <div class="column">
+                <label for="folio" class="label">Folio: </label>
+            </div>
+            <div class="column">
+                <label for="folio">{{servicio.folio}} </label>
+            </div>
+            <div class="column">
+                <label for="folio" class="label">Estatus: </label>
+            </div>
+            <div class="column">
+                <label for="folio">{{servicio.estatus}} </label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <label for="folio" class="label">Cliente: </label>
+            </div>
+            <div class="column">
+                <label for="folio">{{servicio.cliente}} </label>
+            </div>        
+                <div class="column" *ngIf="servicio.esgarantia">
+                    <label for="folio" class="label">Garantía: </label>
+                </div>
+                <div class="column" *ngIf="servicio.esgarantia">
+                    <label for="folio">Si</label>
+                </div>
+                <div class="column" *ngIf="!servicio.esgarantia">
+                    <label for="folio" class="label">Costo Revisión: </label>
+                </div>
+                <div class="column" *ngIf="!servicio.esgarantia">
+                    <label for="folio">{{servicio.costorevision | currency}}</label>
+                </div>
+            
+        </div>
+        <div class="columns">
+            <div class="column">
+                <app-mostrar-equipos [servicio]="servicio" (enviaEquipos)="recibeEquipos($event)"></app-mostrar-equipos>
+            </div>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 0" [class.etapaanterior]="servicio.etapa > 0">
+        <div class="columns">
+            <div class="column">
+                <label class="label">¿El técnico puede reparar el/los equipo(s)?</label>
+            </div>
+            <div class="column">
+                <input type="radio" name="canrepair" [(ngModel)]="servicio.puedereparar"  [value]="true" (click)="Canrepair(true)">Si
+            </div>
+            <div class="column">
+                <input type="radio" name="canrepair" [(ngModel)]="servicio.puedereparar" [value]="false" (click)="Canrepair(false)">No
+            </div>
+        </div>
+        <div class="columns" *ngIf="canreapir">
+            <div class="column is-narrow">
+                <label class="label">Número de guía</label>
+            </div>
+            <div class="column is-narrow" style="width: 170px;">
+                <input type="text" class="input is-small" [(ngModel)]="servicio.numeroguia" (keyup)="typenoguia()">
+            </div>
+            <div class="column is-narrow">
+                <label class="label">Costo del Envio</label>
+            </div>
+            <div class="column is-narrow" style="width: 90px;" >
+                <input type="number" class="input is-small" [(ngModel)]="servicio.costoenvio" >
+            </div>            
+        </div>        
+        <div class="columns" *ngIf="!canreapir">
+            <div class="column">
+                <label class="label">¿Qué desea hacer?</label>
+            </div>
+            <div class="column">
+                <label class="label"><input type="radio" name="actnnorepair"  [(ngModel)]="actnnorepair" [value]="devolver">Devolver al cliente</label>
+            </div>
+            <div class="column">
+                <label class="label"><input type="radio" name="actnnorepair" [(ngModel)]="actnnorepair" [value]="resguardo">Poner en Resguardo</label>
+            </div>
+        </div>
+        <div class="columns">
+            <button class="button is-success" (click)="enviar(0)" [disabled]="enableBtn" >Enviar</button>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 1" [class.etapaposterior]="servicio.etapa < 1" [class.etapaanterior]="servicio.etapa > 1">
+        <div class="columns">
+            <div class="column"><label class="label">Confirmo que he recibido el/los equipo(s)</label></div>
+            <div class="column"><input type="checkbox" name="tecrecequ" [(ngModel)]="servicio.tecrecequ"></div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(1)" [disabled]="!servicio.tecrecequ">Recibido</button>
+            </div>
+        </div>        
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 3" [class.etapaposterior]="servicio.etapa < 3" [class.etapaanterior]="servicio.etapa > 3">
+        <div class="columns">
+            <div class="column is-narrow"><label class="label">Diagnóstico</label></div>
+            <div class="column">
+                <div class="field">
+                    <div class="control">
+                        <textarea name="diagnostico" [(ngModel)]="servicio.diagnostico" class="textarea is-primary" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow"><label class="label">Costo de la reparación</label></div>
+            <div class="column is-narrow" style="width: 100px;"><input class="input" type="number" [(ngModel)]="servicio.costotecnico"></div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(3)">Enviar Diagnostico</button>
+            </div>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 4" [class.etapaposterior]="servicio.etapa < 4" [class.etapaanterior]="servicio.etapa > 4">
+        <div class="columns">
+            <div class="column">
+                <label class="label">El costo del equipo es: {{costoequipo | currency}}</label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column"><label class="label">El costo de la reparación es: {{servicio.costotecnico | currency}}</label></div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow"><label class="label">El costo para el cliente es: </label></div>
+            <div class="column is-1">
+                <input type="number" class="input is-small" [(ngModel)]="servicio.costocliente">
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <label class="label">¿El cliente autoriza la reparación?</label>
+            </div>
+            <div class="column">
+                <label class="label"><input type="radio" name="actnnorepair"  [(ngModel)]="servicio.cliautoriza" [value]="true">Si</label>
+            </div>
+            <div class="column">
+                <label class="label"><input type="radio" name="actnnorepair" [(ngModel)]="servicio.cliautoriza" [value]="false">No</label>
+            </div>
+        </div>
+        <div class="columns" *ngIf="servicio.cliautoriza">
+            <div class="column is-narrow"><label class="label">Anticipo para el Técnico: {{tecnico}}</label></div>
+            <div class="column is-1">
+                <input type="number" class="input is-small" [(ngModel)]="servicio.pagoanticipotecnico">
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(4)">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 5" [class.etapaposterior]="servicio.etapa < 5" [class.etapaanterior]="servicio.etapa > 5">
+        <div class="columns">
+            <div class="column is-narrow">    
+                <label class="label">Condiciones de devolución:</label>
+            </div>
+            <div class="column">    
+                <textarea name="diagnostico" [(ngModel)]="servicio.condregreso" class="textarea is-primary" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(5)">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 6" [class.etapaposterior]="servicio.etapa < 6" [class.etapaanterior]="servicio.etapa > 6">
+        <div class="columns">
+            <div class="column is-narrow">
+                <label class="label">Por favor confirme que el equipo funciona, antes de entregarlo al cliente</label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="true" >Si</div>
+            <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="false" >No</div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(6)">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 7" [class.etapaposterior]="servicio.etapa < 7" [class.etapaanterior]="servicio.etapa > 7">
+        <div class="columns">
+            <div class="column is-narrow" style="width: 230px;">            
+                <label class="label">Costo de la reparación:</label>
+            </div>
+            <div class="column is-narrow">
+                <label class="label">{{servicio.costotecnico | currency}}</label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow" style="width: 230px;">
+                <label class="label">Anticipo al Técnico:</label>
+            </div>
+            <div class="column is-narrow">
+                <label class="label">{{servicio.pagoanticipotecnico | currency}}</label>
+            </div>
+        </div>    
+        <div class="columns">
+            <div class="column is-narrow" style="width: 230px;">
+                <label class="label">Saldo pendiente al Técnico:</label>
+            </div>
+            <div class="column is-narrow">
+                <label class="label">{{servicio.costotecnico - servicio.pagoanticipotecnico | currency}}</label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow" style="width: 230px;">
+                <label class="label">Cobrar al cliente:</label>
+            </div>
+            <div class="column is-narrow">
+                <label class="label">{{servicio.costocliente | currency}}</label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow" style="width: 230px;">
+                <label class="label">Margen de ganancia:</label>
+            </div>
+            <div class="column is-narrow">
+                <label class="label">{{servicio.costocliente - servicio.costotecnico - servicio.costoenvio | currency}}</label>
+            </div>
+        </div>
+        <div class="column is-narrow">
+            <label class="label">Pida que el cliente firme la entrega del equipo</label>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(7)">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

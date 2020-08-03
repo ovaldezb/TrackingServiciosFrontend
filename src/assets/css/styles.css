@@ -1,0 +1,112 @@
+.etapaactiva{
+    border: 2px solid #293ef7;
+}
+
+.etapaanterior{
+    border: 2px solid #15ca1e;
+}
+
+.etapaposterior{
+    border: 2px solid #d81f07;
+}
+
+#brand {
+    display: block;
+    margin: 0px;
+    float: left;
+}
+
+#menu{
+    width: 70%;
+    float:right;
+    font-size: 18px;
+}
+
+#menu ul{
+    line-height: 85px;
+    width: 60%;
+    float:right;
+}
+
+#menu ul li{
+    display: inline-block;
+    list-style: none;
+    height: 46px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+#menu a{
+    text-decoration: none;
+    color: #444;
+    transition: 300ms all;
+}
+
+
+#menu a:hover, .active{
+    color: #f13e3e !important;
+}
+
+#footer{
+    background: #f7f7f7;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    color: #444;
+}
+
+a:hover {    
+    cursor: pointer;
+}
+
+.icon{
+    width: 20%;
+    height: 20px;
+}
+
+#footer p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.center{
+    width: 75%;
+    margin: 0px auto;
+}
+
+.clearfix{
+    clear:both;
+    float:none;
+}
+
+#logo {
+    width: 30%;
+    font-size: 30px;
+    float: left;
+    margin-top: 35px;
+}
+
+#logo img {
+    display: block;
+    float: left;
+    height: 60px;
+    margin-top: -9px;
+    margin-right: 10px;
+    animation: latir infinite 5s linear;
+}
+
+#content{
+    width: 70%;
+    /*float:left;*/
+    min-height: 650px;
+    margin-right: 20px;
+}
+
+.selected {  
+    background-color:#48da24 !important;  
+    color: white !important;  
+  } 
+
+.mid-form{
+    width: 70%;
+}

@@ -1,0 +1,86 @@
+<div class="box" style="height: 600px;">
+    <div class="columns">
+        <div class="column">
+            <form #equiposForm="ngForm">
+            <div class="columns">
+                <div class="column is-narrow" style="width:70px"><label class="label">Marca:</label></div>
+                <div class="column is-narrow" style="width: 180px;">
+                    <div class="select is-small">
+                    <select name="marca" [(ngModel)]="equipo.marca" >
+                        <option [ngValue]="null" selected disabled>Seleccione Marca</option>
+                        <option *ngFor="let marca of marcas" [ngValue]="marca.value">{{marca.viewValue}}</option>
+                    </select>
+                    </div>
+                </div>    
+                <div class="column is-narrow" style="width: 36px;">&nbsp;</div>
+                <div class="column is-narrow" style="width:110px"><label class="label">Modelo:</label></div>
+                <div class="column is-narrow" style="width: 180px;"><input type="text" class="input is-small" name="modelo" #modelo="ngModel" [(ngModel)]="equipo.modelo" required></div>
+            </div>
+            <div class="columns">
+                <div class="column is-narrow" style="width:70px"><label class="label">Serie:</label></div>
+                <div class="column is-narrow" style="width:165px;"><input type="text" class="input is-small" name="serie" #serie="ngModel" [(ngModel)]="equipo.serie" required></div>            
+                <div class="column is-narrow" style="width: 50px;">&nbsp;</div>
+                <div class="column is-narrow" style="width:110px"><label class="label">Costo:</label></div>
+                <div class="column is-narrow" style="width: 180px;"><input type="number" class="input is-small" name="costo" #costo="ngModel" [(ngModel)]="equipo.costo" required></div>
+            </div>
+            <div class="columns">
+                <div class="column is-narrow" style="width:70px"><label class="label">Técnico:</label></div>
+                <div class="column is-narrow" style="width:180px;">
+                    <div class="select is-small">
+                    <select name="tecnico" [(ngModel)]="equipo.tecnico" >
+                        <option [ngValue]="null" disabled selected="selected">Seleccione Marca</option>
+                        <option *ngFor="let tecnico of tecnicos" [ngValue]="tecnico.value">{{tecnico.viewValue}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="column is-narrow" style="width: 36px;">&nbsp;</div>
+                <div class="column is-narrow" style="width:110px"><label class="label">Comentarios:</label></div>            
+                <div class="column is-narrow" style="width: 180px;">
+                    <div class="field">
+                        <div class="control">
+                            <textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <nav class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <button type="button" class="button is-success" (click)="addEquipo()" [disabled]="equiposForm.invalid">{{btnAccion}}</button>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <a (click)="eliminarEquipo()"><span class="icon has-text-danger"><i class="fas fa-trash-alt"></i></span></a>
+                    </div>
+                </div>
+            </nav>
+            </form>
+        </div>        
+    </div>    
+    
+    <table class="table" style="width:100%">
+        <thead>
+        <tr>
+            <td>Marca</td>
+            <td>Modelo</td>
+            <td>Serie</td>
+            <td>Costo</td>
+            <td>Técnico</td>
+            <td>Comentarios</td>
+        </tr>
+        </thead>
+    </table>
+    <div style="width:100%; height:150px; overflow:auto;">
+        <table class="table is-hoverable" style="width:100%">
+            <tr *ngFor="let equipo of equipos; let i = index" (dblclick)="editEquipo(i)" (click)="selectRow(i)" [class.is-selected]="i == HighlightRow">
+                <td>{{equipo.marca}}</td>
+                <td>{{equipo.modelo}}</td>
+                <td>{{equipo.serie}}</td>
+                <td>{{equipo.costo}}</td>
+                <td>{{equipo.tecnico}}</td>
+                <td>{{equipo.comentarios}}</td>
+            </tr>
+        </table>
+    </div>        
+</div>
