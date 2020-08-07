@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Equipo } from '../../models/equipo';
+import { Tecnico } from '../../models/tecnico';
 import { Global } from '../../services/global';
+import { ServicioService } from '../../services/servicios.service';
 import  swal  from 'sweetalert';
 
 export interface Marcas {
@@ -8,25 +10,28 @@ export interface Marcas {
   viewValue: string;
 }
 
-export interface Tecnico {
-  value: string;
-  viewValue: string;
+export interface Imagenes {
+  
 }
 
 @Component({
   selector: 'app-equipos',
   templateUrl: './equipos.component.html',
-  styleUrls: ['./equipos.component.css']
+  styleUrls: ['./equipos.component.css'],
+  providers:[ServicioService]
 })
 export class EquiposComponent implements OnInit {
 
   @Output() enviaEquipos = new EventEmitter();
-
+  url:string;
   HighlightRow : number; 
   isEdit:boolean = false;
   public btnAccion:string = 'Agregar';
+  public imageActive:boolean = false;
+  public imgPath:string = "";
   public equipo:Equipo;
   public equipos:Equipo[]=[];
+  public tecnicos:Tecnico[];  
   public marcas: Marcas[] = [
     {value: 'Apple', viewValue: 'Apple'},
     {value: 'Bose', viewValue: 'Bose'},
@@ -34,18 +39,42 @@ export class EquiposComponent implements OnInit {
     {value: 'WebDT', viewValue: 'WebDT'}        
   ];
 
-  public tecnicos: Marcas[] = [
-    {value: 'Juan Perez', viewValue: 'Juan Perez'},
-    {value: 'Marco Martinez', viewValue: 'Marco Martinez'},
-    {value: 'Pedro Sanchez', viewValue: 'Pedro Sanchez'},
-    {value: 'Armando Aguilar', viewValue: 'Armando Aguilar'}        
-  ];
+  afuConfig = {
+    multiple: true,
+    formatsAllowed: ".jpg,.png,.gif,.jpeg",
+    maxSize: "50",
+    uploadAPI: {
+      url: Global.url + 'upload-img'  
+    },
+    theme: "attachPin",
+    hideProgressBar: true,
+    hideResetBtn: true,
+    hideSelectBtn: false,
+    fileNameIndex: true,
+    replaceTexts: {
+      selectFileBtn: 'Select Files',
+      resetBtn: 'Reset',
+      uploadBtn: 'Upload',
+      dragNDropBox: 'Drag N Drop',
+      attachPinBtn: 'Sube tu imagen...',
+      afterUploadMsg_success: 'Successfully Uploaded !',
+      afterUploadMsg_error: 'Upload Failed !',
+      sizeLimit: 'Size Limit'
+    }
+  };
 
-  constructor() { 
-    this.equipo = new Equipo('','','','','',0,'','');
+  constructor(private _servicioService:ServicioService) { 
+    this.equipo = new Equipo('','','','','',0,'','',[],'');
+    this.url = Global.url;
   }
 
   ngOnInit(): void {
+    this._servicioService.getTecnicos()
+    .subscribe(res=>{
+      if(res.status == 'success'){
+        this.tecnicos = res.tecnicos;
+      }
+    });
   }
 
   addEquipo():void{
@@ -56,7 +85,7 @@ export class EquiposComponent implements OnInit {
     } else{
       this.equipos.push(this.equipo);      
     }   
-    this.equipo = new Equipo('','','','','',0,'','');
+    this.equipo = new Equipo('','','','','',0,'','',[],'');
     this.enviaEquipos.emit({equipos:this.equipos});
   }
 
@@ -79,6 +108,23 @@ export class EquiposComponent implements OnInit {
 
   selectRow(index): void{
     this.HighlightRow = index;
+  }
+
+  imageUpload(data) {    
+    this.equipo.imagenes.push(data.body.imagen);    
+  }
+
+  clickImage(imagePath){    
+    this.imageActive = true;
+    this.imgPath = this.url+'get-image/'+imagePath;
+  }
+
+  closeModal(){
+    this.imageActive = false;
+  }
+
+  changetecnico(event):void{    
+    this.equipo.nombretecnico = this.tecnicos[event.target.options.selectedIndex-1].nombre + ' ' +this.tecnicos[event.target.options.selectedIndex-1].apellido;
   }
 
 }

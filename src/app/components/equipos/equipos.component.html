@@ -1,6 +1,6 @@
 <div class="box" style="height: 600px;">
     <div class="columns">
-        <div class="column">
+        <div class="column is-narrow">
             <form #equiposForm="ngForm">
             <div class="columns">
                 <div class="column is-narrow" style="width:70px"><label class="label">Marca:</label></div>
@@ -27,9 +27,9 @@
                 <div class="column is-narrow" style="width:70px"><label class="label">Técnico:</label></div>
                 <div class="column is-narrow" style="width:180px;">
                     <div class="select is-small">
-                    <select name="tecnico" [(ngModel)]="equipo.tecnico" >
-                        <option [ngValue]="null" disabled selected="selected">Seleccione Marca</option>
-                        <option *ngFor="let tecnico of tecnicos" [ngValue]="tecnico.value">{{tecnico.viewValue}}</option>
+                    <select name="tecnico" [(ngModel)]="equipo.tecnico" (change)="changetecnico($event)">
+                        <option [ngValue]="null" disabled selected="selected">Seleccione Técnico</option>
+                        <option *ngFor="let tecnico of tecnicos" [ngValue]="tecnico._id">{{tecnico.nombre}} {{tecnico.apellido}}</option>
                     </select>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="column is-narrow" style="width: 180px;">
                     <div class="field">
                         <div class="control">
-                            <textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2"></textarea>
+                            <textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -56,31 +56,63 @@
                 </div>
             </nav>
             </form>
+        </div>
+        <div class="column">
+            <angular-file-uploader [config]="afuConfig" 
+            (ApiResponse)="imageUpload($event)"></angular-file-uploader>
+            <div class="columns is-gapless is-multiline">
+                <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes;">
+                    <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre)" />
+                </div>
+            </div>
         </div>        
     </div>    
     
     <table class="table" style="width:100%">
+        <col width="10%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="25%">
+        <col width="20%">
         <thead>
         <tr>
             <td>Marca</td>
             <td>Modelo</td>
             <td>Serie</td>
-            <td>Costo</td>
-            <td>Técnico</td>
+            <td align="center">Costo</td>
+            <td align="center">Técnico</td>
             <td>Comentarios</td>
         </tr>
         </thead>
     </table>
     <div style="width:100%; height:150px; overflow:auto;">
         <table class="table is-hoverable" style="width:100%">
+            <col width="10%">
+            <col width="15%">
+            <col width="15%">
+            <col width="15%">
+            <col width="25%">
+            <col width="20%">
             <tr *ngFor="let equipo of equipos; let i = index" (dblclick)="editEquipo(i)" (click)="selectRow(i)" [class.is-selected]="i == HighlightRow">
                 <td>{{equipo.marca}}</td>
                 <td>{{equipo.modelo}}</td>
                 <td>{{equipo.serie}}</td>
-                <td>{{equipo.costo}}</td>
-                <td>{{equipo.tecnico}}</td>
-                <td>{{equipo.comentarios}}</td>
+                <td align="center">{{equipo.costo | currency}}</td>
+                <td>{{equipo.nombretecnico}}</td>
+                <td align="right"><textarea rows="1" disabled>{{equipo.comentarios}}</textarea></td>
             </tr>
         </table>
     </div>        
 </div>
+
+<div class="modal is-active" *ngIf="imageActive">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <p class="image is-3by1">
+            <img src="{{imgPath}}" alt="">
+        </p>
+    </div>
+    <button class="modal-close is-large" (click)="closeModal()" aria-label="close"></button>
+</div>
+

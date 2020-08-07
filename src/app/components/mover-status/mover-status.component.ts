@@ -3,7 +3,10 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Servicio } from '../../models/servicio';
 import  swal  from 'sweetalert';
 import { Equipo } from '../../models/equipo';
+import { Mensajeria } from '../../models/mensajeria';
 import { ServicioService } from '../../services/servicios.service';
+import { Global } from '../../services/global';
+
 
 @Component({
   selector: 'app-mover-status',
@@ -12,7 +15,7 @@ import { ServicioService } from '../../services/servicios.service';
   providers:[ServicioService]
 })
 export class MoverStatusComponent implements OnInit {
-
+  url:string;
   public servicio: Servicio;
   public canreapir: boolean;
   public actnnorepair:string;
@@ -20,14 +23,18 @@ export class MoverStatusComponent implements OnInit {
   public resguardo: string = "resguardo";
   public enableBtn:boolean = true;
   public costoequipo: number = 0;
+  public imageActive:boolean = false;
+  public imgPath:string = "";
   public tecnico: string;
   private deltaGanancia:number = 1.2;
   public equipos:Equipo[];
+  public mensajeria:Mensajeria[];
   constructor(  
     private _router : Router,  private _servicioService: ServicioService
   ) { 
     this.canreapir = true;
     this.actnnorepair = 'devolver';
+    this.url = Global.url;
   }
 
   ngOnInit(): void {    
@@ -37,10 +44,22 @@ export class MoverStatusComponent implements OnInit {
         this.equipos = res.equipos;
         this.equipos.forEach(equipo =>{
           this.costoequipo += equipo.costo;
+          this._servicioService.getImagesByEquipoId(equipo._id).subscribe(res =>{
+            if(res.status == 'success'){
+              equipo.imagenes = res.imagenes;
+            }
+          });
         });
         this.tecnico = this.equipos[0].tecnico;
       }
     });
+    this._servicioService.getMensajerias()
+        .subscribe(res=>{
+          if(res.status == 'success'){
+            this.mensajeria = res.mensajeria;
+          }
+        });
+
     if(this.servicio.costotecnico > 0){
       this.servicio.pagoanticipotecnico = this.servicio.costotecnico * 0.7;
       this.servicio.costocliente = (this.servicio.costotecnico + this.servicio.costoenvio) * this.deltaGanancia;
@@ -61,13 +80,12 @@ export class MoverStatusComponent implements OnInit {
     }
   }
 
-  enviar(stage2move):void{
-    console.log(stage2move);
+  enviar(stage2move):void{    
     switch(stage2move){
       case 0:
         if(this.canreapir){
           //this.servicio.estatus = 'Enviado';
-          this.servicio.etapa = 1;
+          this.servicio.etapa = 1;          
         }else if(this.actnnorepair == this.devolver){
           //this.servicio.estatus = 'En espera cliente recoja';
           this.servicio.etapa = 7;
@@ -114,16 +132,17 @@ export class MoverStatusComponent implements OnInit {
           this.servicio.etapa = 8;
         break;
     }
+    var fechaUltAct = new Date();    
+    fechaUltAct.toLocaleString('es-MX', { timeZone: 'America/Chicago' })
+    this.servicio.fechaactualizacion = fechaUltAct;    
     this.servicio = this.servicio;
     this._servicioService.updateServicio(this.servicio._id,this.servicio)
         .subscribe(res=>{
           if(res.status=='success'){
             swal('El servicio ha cambiado de estatus','Estatus actualizado','success');
           }
-        });
-    
+        });    
     this._router.navigate(['/home']);
-
   }
 
   typenoguia(): void{    
@@ -136,12 +155,22 @@ export class MoverStatusComponent implements OnInit {
       this._servicioService.updateEquipoById(this.equipos[i]._id,this.equipos[i])
           .subscribe(res=>{
             this.equipos.forEach(equipo =>{
-              this.costoequipo += equipo.costo;
+              this.costoequipo += equipo.costo;              
             });
             this.tecnico = this.equipos[0].tecnico;
           });
     };
   }
 
-  
+  clickImage(imagePath):void{
+    this.imageActive = true;
+    this.imgPath = this.url+'get-image/'+imagePath;
+  }
+
+  closeModal(){
+    this.imageActive = false;
+  }
+
+
+
 }

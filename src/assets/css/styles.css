@@ -10,6 +10,32 @@
     border: 2px solid #d81f07;
 }
 
+.table tr{
+  cursor: pointer !important;
+}
+
+input.ng-pristine {
+    background-color:pink;
+}
+
+input.ng-invalid {
+    background-color:pink;
+}
+input.ng-valid {
+    background-color:lightgreen;
+ }
+textarea.ng-valid {
+    color: green;
+    background-color: lightgreen;
+ }
+textarea.ng-invalid {
+    background-color: pink;
+  }
+  
+img.equipos{
+    width:50px
+}
+
 #brand {
     display: block;
     margin: 0px;

@@ -35,7 +35,7 @@ export class ServicioComponent implements OnInit {
     private _router : Router,
     private _servicioService: ServicioService
   ) { 
-    this.servicio = new Servicio('','','','','','',0,'false','','',0,'',0,true,0,'',0,0,true,false,false);
+    this.servicio = new Servicio('','','','','','',0,'false','','',0,'',0,true,0,'',0,0,true,false,false,'',new Date());
     this.url = Global.url;    
   }
 
@@ -57,6 +57,7 @@ export class ServicioComponent implements OnInit {
   }
 
   onSubmit(){    
+    this.servicio.fechaactualizacion = new Date();
     this._servicioService.create(this.servicio)
         .subscribe(
           res => {
@@ -71,7 +72,14 @@ export class ServicioComponent implements OnInit {
                         console.log(resp);
                       });
               }
+              this.servicio = res.servicio;
               this.servicio.estatus = this.etapas[this.servicio.etapa].nombre;
+              /*if(this.servicio.correo != ''){              
+                this._servicioService.sendmailInicial(this.servicio)
+                  .subscribe(resp=>{
+                    console.log(res);
+                  });
+              }*/
               swal('Servicio creado',
                 'El Servicio fue creado exitosamente',
                 'success'

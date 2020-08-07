@@ -50,12 +50,4 @@ export class ListaServiciosComponent implements OnInit {
     this._router.navigateByUrl('/movserv',{ state: this.servicios[index] });        
   }
 
-  sendmail():void{
-    console.log('Aqui va enviar el email');
-    /*this._servicioService.sendmail().subscribe(res =>{
-      console.log(res);
-    });*/
-    
-  }
-
 }

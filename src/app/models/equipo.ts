@@ -1,3 +1,5 @@
+import { Imagen } from '../models/imagen';
+
 export class Equipo{
     constructor(
         public _id : string,
@@ -7,6 +9,8 @@ export class Equipo{
         public serie:string,
         public costo:number,
         public tecnico:string,
-        public comentarios:string
+        public comentarios:string,
+        public imagenes: Imagen[],
+        public nombretecnico:string
     ){}
 }

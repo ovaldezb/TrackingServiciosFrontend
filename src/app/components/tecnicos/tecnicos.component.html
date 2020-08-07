@@ -1,1 +1,74 @@
-<p>tecnicos works!</p>
+<div class="container">
+    <div class="notification">
+      <h1 class="title has-text-centered">Gestión de Técnicos</h1>
+    </div>
+    <div class="box">
+        <form class="mid-form" #tecnicoForm="ngForm">
+        <div class="columns">
+            <div class="column">
+                <label class="label">Nombre</label>
+            </div>
+            <div class="column">
+                <input type="text" id="nombre" name="nombre" class="input" [(ngModel)]="tecnico.nombre" required>
+            </div>
+            <div class="column">
+                <label class="label">Apellido</label>
+            </div>
+            <div class="column">
+                <input type="text" id="apellido" name="apellido" class="input" [(ngModel)]="tecnico.apellido" required>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <label class="label">Teléfono</label>
+            </div>
+            <div class="column">
+                <input type="text" name="telefono" class="input" [(ngModel)]="tecnico.telefono" required>
+            </div>
+            <div class="column">
+                <label class="label">Correo</label>
+            </div>
+            <div class="column">
+                <input type="text" name="correo" class="input" [(ngModel)]="tecnico.correo" required>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <label class="label">Clave</label>
+            </div>
+            <div class="column">
+                <input type="text" name="clave" class="input" [(ngModel)]="tecnico.clave" required>
+            </div>
+            <div class="column">
+                <label class="label">Activo</label>
+            </div>
+            <div class="column">
+                <input type="checkbox" name="activo" class="checkbox" [(ngModel)]="tecnico.activo">
+            </div>
+        </div>
+        <button class="button is-success" (click)="onSubmit()" [disabled]="tecnicoForm.invalid">{{btnAccion}}</button>
+        </form>
+    </div>
+    <div class="box">
+        <table class="table" style="width: 100%;">
+            <tr>
+                <td>Nombre</td>
+                <td>Apellido</td>
+                <td>Teléfono</td>
+                <td>Correo</td>
+                <td>Clave</td>
+                <td>Activo</td>
+            </tr>
+        </table>
+        <table class="table" style="width: 100%;">
+            <tr *ngFor="let tecnico of tecnicos ; let i = index" (dblclick)="editTecnico(i)" (click)="selectRow(i)" [class.is-selected]="i == HighlightRow">
+                <td>{{tecnico.nombre}}</td>
+                <td>{{tecnico.apellido}}</td>
+                <td>{{tecnico.telefono}}</td>
+                <td>{{tecnico.correo}}</td>
+                <td>{{tecnico.clave}}</td>
+                <td>{{tecnico.activo}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

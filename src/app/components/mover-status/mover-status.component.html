@@ -1,13 +1,13 @@
 <div class="container">
     <div class="box">
         <div class="columns">
-            <div class="column">
+            <div class="column is-narrow">
                 <label for="folio" class="label">Folio: </label>
             </div>
             <div class="column">
                 <label for="folio">{{servicio.folio}} </label>
             </div>
-            <div class="column">
+            <div class="column is-narrow">
                 <label for="folio" class="label">Estatus: </label>
             </div>
             <div class="column">
@@ -15,13 +15,13 @@
             </div>
         </div>
         <div class="columns">
-            <div class="column">
+            <div class="column is-narrow">
                 <label for="folio" class="label">Cliente: </label>
             </div>
             <div class="column">
                 <label for="folio">{{servicio.cliente}} </label>
             </div>        
-                <div class="column" *ngIf="servicio.esgarantia">
+                <div class="column is-narrow" *ngIf="servicio.esgarantia">
                     <label for="folio" class="label">Garantía: </label>
                 </div>
                 <div class="column" *ngIf="servicio.esgarantia">
@@ -32,14 +32,46 @@
                 </div>
                 <div class="column" *ngIf="!servicio.esgarantia">
                     <label for="folio">{{servicio.costorevision | currency}}</label>
-                </div>
-            
+                </div>            
+        </div>
+        <div class="columns">
+            <div class="column is-narrow">
+                <label for="folio" class="label">Teléfono: </label>
+            </div>
+            <div class="column">
+                <label for="folio">{{servicio.telefono}} </label>
+            </div>        
+            <div class="column is-narrow">
+                <label for="folio" class="label">Correo: </label>
+            </div>                
+            <div class="column">
+                <label for="correo">{{servicio.correo}}</label>
+            </div>            
         </div>
         <div class="columns">
             <div class="column">
                 <app-mostrar-equipos [servicio]="servicio" (enviaEquipos)="recibeEquipos($event)"></app-mostrar-equipos>
             </div>
         </div>
+    </div>
+    <div class="box" *ngFor="let equipo of equipos;">
+        <div class="columns is-gapless is-multiline">
+            <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes">
+                <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre)" />
+            </div>
+        </div>
+    </div>
+    <div class="modal is-active" *ngIf="imageActive">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <!--p class="image is-5by3">
+                <img src="{{imgPath}}" alt="">
+            </p-->
+            <figure class="image is-fullwidth">
+                <img src="{{imgPath}}" alt="">
+            </figure>
+        </div>
+        <button class="modal-close is-large" (click)="closeModal()" aria-label="close"></button>
     </div>
     <div class="box" [class.etapaactiva]="servicio.etapa == 0" [class.etapaanterior]="servicio.etapa > 0">
         <div class="columns">
@@ -58,7 +90,18 @@
                 <label class="label">Número de guía</label>
             </div>
             <div class="column is-narrow" style="width: 170px;">
-                <input type="text" class="input is-small" [(ngModel)]="servicio.numeroguia" (keyup)="typenoguia()">
+                <input type="text" class="input is-small" [(ngModel)]="servicio.numeroguia" (keyup)="typenoguia()" required="servicio.puedereparar">
+            </div>
+            <div class="column is-narrow">
+                <label class="label">Empresa de Mensajeria</label>
+            </div>
+            <div class="column is-narrow">
+                <div class="select is-small">
+                    <select name="mensajeria" [(ngModel)]="servicio.mensajeria" >
+                        <option [ngValue]="null" disabled selected="selected">Seleccione Técnico</option>
+                        <option *ngFor="let mensaj of mensajeria" [ngValue]="mensaj.nombre">{{mensaj.nombre}}</option>
+                    </select>
+                    </div>
             </div>
             <div class="column is-narrow">
                 <label class="label">Costo del Envio</label>
@@ -79,7 +122,7 @@
             </div>
         </div>
         <div class="columns">
-            <button class="button is-success" (click)="enviar(0)" [disabled]="enableBtn" >Enviar</button>
+            <button class="button is-success" (click)="enviar(0)" [disabled]="enableBtn" *ngIf="servicio.etapa == 0" >Enviar</button>
         </div>
     </div>
     <div class="box" [class.etapaactiva]="servicio.etapa == 1" [class.etapaposterior]="servicio.etapa < 1" [class.etapaanterior]="servicio.etapa > 1">
@@ -89,7 +132,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(1)" [disabled]="!servicio.tecrecequ">Recibido</button>
+                <button class="button is-success" (click)="enviar(1)" [disabled]="!servicio.tecrecequ" *ngIf="servicio.etapa == 1">Recibido</button>
             </div>
         </div>        
     </div>
@@ -110,7 +153,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(3)">Enviar Diagnostico</button>
+                <button class="button is-success" (click)="enviar(3)" *ngIf="servicio.etapa == 3">Enviar Diagnostico</button>
             </div>
         </div>
     </div>
@@ -148,7 +191,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(4)">Enviar</button>
+                <button class="button is-success" (click)="enviar(4)" *ngIf="servicio.etapa == 4">Enviar</button>
             </div>
         </div>
     </div>
@@ -163,7 +206,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(5)">Enviar</button>
+                <button class="button is-success" (click)="enviar(5)" *ngIf="servicio.etapa == 5">Enviar</button>
             </div>
         </div>
     </div>
@@ -179,7 +222,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(6)">Enviar</button>
+                <button class="button is-success" (click)="enviar(6)" *ngIf="servicio.etapa == 6">Enviar</button>
             </div>
         </div>
     </div>
@@ -229,7 +272,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(7)">Enviar</button>
+                <button class="button is-success" (click)="enviar(7)" *ngIf="servicio.etapa == 7">Enviar</button>
             </div>
         </div>
     </div>

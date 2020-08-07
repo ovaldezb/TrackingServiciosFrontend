@@ -8,13 +8,15 @@
         <td>Observaciones</td>
     </tr>
 </table>
-<table class="table" style="width: 100%;">
-    <tr *ngFor="let equipo of equipos ; let i = index">
-        <td>{{equipo.marca}}</td>
-        <td>{{equipo.modelo}}</td>
-        <td>{{equipo.serie}}</td>
-        <td>{{equipo.costo | currency}}</td>
-        <td>{{equipo.tecnico}}</td>        
-        <td><textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2" (blur)="retornaequipos()"></textarea></td>
-    </tr>
-</table>
+<div style="width:auto; height: 200px;overflow:auto;">
+    <table class="table" style="width: 100%;">
+        <tr *ngFor="let equipo of equipos ; let i = index">
+            <td>{{equipo.marca}}</td>
+            <td>{{equipo.modelo}}</td>
+            <td>{{equipo.serie}}</td>
+            <td>{{equipo.costo | currency}}</td>
+            <td>{{equipo.tecnico.nombre}} {{equipo.tecnico.apellido}}</td>        
+            <td><textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2" (blur)="retornaequipos()"></textarea></td>
+        </tr>
+    </table>
+</div>

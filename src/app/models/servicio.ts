@@ -20,6 +20,8 @@ export class Servicio{
         public etapa: number,
         public puedereparar: boolean,
         public tecrecequ: boolean,
-        public equipoprobado: boolean
+        public equipoprobado: boolean,
+        public mensajeria: string,
+        public fechaactualizacion: Date
     ){}
 }

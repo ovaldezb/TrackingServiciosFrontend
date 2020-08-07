@@ -47,12 +47,37 @@ export class ServicioService{
         return this._http.put(this.url+'equipo/'+id,params,{headers:headers});
     }
 
-    sendmail():Observable<any>{
+    sendmailInicial(servicio):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type','application/json');
-        return this._http.post(this.url+'send-email',{},{headers:headers});
+        return this._http.post(this.url+'email-inicial',servicio,{headers:headers});
     }
 
     getetapas():Observable<any>{
         return this._http.get(this.url+'etapas');
     }
+
+    getTecnicos():Observable<any>{
+        return this._http.get(this.url+'tecnico');
+    }
+    
+    createTecnico(tecnico):Observable<any>{
+        let params = JSON.stringify(tecnico);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'tecnico',params,{headers:headers});
+    }
+
+    updateTecnico(id,tecnico):Observable<any>{
+        let params = JSON.stringify(tecnico);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.put(this.url+'tecnico/'+id,params,{headers:headers});
+    }
+
+    getImagesByEquipoId(equipoId):Observable<any>{
+        return this._http.get(this.url+'imagenes/'+equipoId);
+    }
+
+    getMensajerias():Observable<any>{
+        return this._http.get(this.url+'mensajeria');
+    }
+
 }
