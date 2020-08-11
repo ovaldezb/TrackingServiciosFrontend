@@ -6,13 +6,14 @@ import { Equipo } from '../../models/equipo';
 import { Mensajeria } from '../../models/mensajeria';
 import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
   selector: 'app-mover-status',
   templateUrl: './mover-status.component.html',
   styleUrls: ['./mover-status.component.css'],
-  providers:[ServicioService]
+  providers:[ServicioService, AuthService]
 })
 export class MoverStatusComponent implements OnInit {
   url:string;
@@ -29,9 +30,9 @@ export class MoverStatusComponent implements OnInit {
   private deltaGanancia:number = 1.2;
   public equipos:Equipo[];
   public mensajeria:Mensajeria[];
+  
   constructor(  
-    private _router : Router,  private _servicioService: ServicioService
-  ) { 
+    private _router : Router,  private _servicioService: ServicioService, public authService: AuthService) { 
     this.canreapir = true;
     this.actnnorepair = 'devolver';
     this.url = Global.url;
@@ -41,16 +42,15 @@ export class MoverStatusComponent implements OnInit {
     this.servicio = history.state;    
     this._servicioService.getEquiposById(this.servicio._id).subscribe(res =>{      
       if(res.equipos.length > 0){
-        this.equipos = res.equipos;
+        this.equipos = res.equipos;              
         this.equipos.forEach(equipo =>{
           this.costoequipo += equipo.costo;
-          this._servicioService.getImagesByEquipoId(equipo._id).subscribe(res =>{
+          this._servicioService.getImagesByEquipoId(equipo._id,0).subscribe(res =>{
             if(res.status == 'success'){
               equipo.imagenes = res.imagenes;
-            }
-          });
-        });
-        this.tecnico = this.equipos[0].tecnico;
+            }            
+          });          
+        });               
       }
     });
     this._servicioService.getMensajerias()
@@ -82,53 +82,55 @@ export class MoverStatusComponent implements OnInit {
 
   enviar(stage2move):void{    
     switch(stage2move){
-      case 0:
+      case 0: //Abierto
         if(this.canreapir){
-          //this.servicio.estatus = 'Enviado';
+          //'Enviado';
           this.servicio.etapa = 1;          
         }else if(this.actnnorepair == this.devolver){
-          //this.servicio.estatus = 'En espera cliente recoja';
+          //'En espera cliente recoja';
           this.servicio.etapa = 7;
         }else if(this.actnnorepair == this.resguardo){
-          //this.servicio.estatus = 'Resguardo';
+          //'Resguardo';
           this.servicio.etapa = 2;
         }
         break;      
-      case 1:
-        //this.servicio.estatus = 'Recibido';
+      case 1: //Enviado
+        //'Recibido';
         this.servicio.etapa = 3;
         break;
-      case 2:
+      case 2: //Resguardo
+        //Enviado
         this.servicio.etapa = 1;
         break;
-      case 3:
-        //this.servicio.estatus = 'Diagnosticado';
+      case 3: //Recibido
+        //'Diagnosticado';
         this.servicio.etapa = 4;
         break;
-      case 4:
+      case 4: //Diagnosticado
         if(this.servicio.cliautoriza){
-            //this.servicio.estatus = 'En reaparación';
+            // 'En reaparación';
             this.servicio.etapa = 5;
           }else{
-            //this.servicio.estatus = 'Devolución';
-            this.servicio.etapa = 7;
+            //'Devolución a TDM';
+            this.servicio.etapa = 6;
           }
         break;
-      case 5:
-          //this.servicio.estatus = 'Devuelto a TDM';
+      case 5: //En reparación
+          //'Devuelto a TDM';
           this.servicio.etapa = 6;
           break;
-        case 6:
-          //this.servicio.estatus = 'En espera cliente recoja';
+        case 6: //Devuelto a TDM          
           if(this.servicio.equipoprobado){
+            //'En espera cliente recoja';
             this.servicio.etapa = 7;
+            this.enviaCorreoFinal();
           }else{
+            //Abierto
             this.servicio.etapa = 0;
-          }
-          
+          }          
           break;
-        case 7:
-          //this.servicio.estatus = 'Entregado';
+        case 7: //Espera cliente recoja
+          //this.servicio.estatus = 'Entregado';          
           this.servicio.etapa = 8;
         break;
     }
@@ -142,7 +144,7 @@ export class MoverStatusComponent implements OnInit {
             swal('El servicio ha cambiado de estatus','Estatus actualizado','success');
           }
         });    
-    this._router.navigate(['/home']);
+    this._router.navigate(['/lista']);
   }
 
   typenoguia(): void{    
@@ -156,8 +158,7 @@ export class MoverStatusComponent implements OnInit {
           .subscribe(res=>{
             this.equipos.forEach(equipo =>{
               this.costoequipo += equipo.costo;              
-            });
-            this.tecnico = this.equipos[0].tecnico;
+            });            
           });
     };
   }
@@ -172,5 +173,10 @@ export class MoverStatusComponent implements OnInit {
   }
 
 
+  enviaCorreoFinal():void{
+    this._servicioService.enviaCorreoFinal(this.servicio).subscribe(res=>{
+      //console.log(res);
+    });
+  }
 
 }

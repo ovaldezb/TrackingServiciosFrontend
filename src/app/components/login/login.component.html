@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="box" style="width: 30%; margin: 0 auto;">
+    <form (submit)="signIn()">
+        <div class="field">
+            <label class="label">Usuario</label>
+            <div class="control has-icons-left has-icons-right">
+            <input class="input is-success" type="text" [(ngModel)]="user.clave" name="clave"  placeholder="Usuario" required>
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+            </div>        
+        </div>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-danger" type="password" [(ngModel)]="user.password" name="password" placeholder="Password" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-exclamation-triangle"></i>
+              </span>
+            </div>            
+          </div>
+          <div class="control">
+            <button class="button is-primary" >Submit</button>
+          </div>
+    </form>
+    </div>
+</div>

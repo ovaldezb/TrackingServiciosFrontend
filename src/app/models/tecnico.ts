@@ -6,6 +6,9 @@ export class Tecnico{
         public telefono:string,
         public correo:string,
         public activo:boolean,
-        public clave:string
+        public clave:string,
+        public password: string,
+        public rol: string,
+        public rolnombre: string
     ){}
 }

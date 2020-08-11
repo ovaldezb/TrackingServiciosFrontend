@@ -22,6 +22,13 @@ export class Servicio{
         public tecrecequ: boolean,
         public equipoprobado: boolean,
         public mensajeria: string,
-        public fechaactualizacion: Date
+        public fechaactualizacion: Date,
+        public fechaIngreso: Date,
+        public semaforo: string,
+        public equipo:{
+            marca:string,
+            modelo:string,
+            serie:string
+        }
     ){}
 }

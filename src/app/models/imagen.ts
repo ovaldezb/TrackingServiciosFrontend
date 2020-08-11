@@ -3,6 +3,7 @@ export class Imagen{
         public nombre: string,
         public nombreoriginal: string,
         public id_equipo:string,
-        public _id:string
+        public _id:string,
+        public tipo:number
     ){}
 }

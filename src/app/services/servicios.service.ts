@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Global } from './global';
+import { Tecnico } from '../models/tecnico';
 
 @Injectable()
 export class ServicioService{
@@ -11,7 +12,7 @@ export class ServicioService{
         this.url = Global.url;
     }
 
-    getServicios(last: any = null):Observable<any>{        
+    getServicios():Observable<any>{                
         return this._http.get(this.url+'get-servicios');
     }
 
@@ -47,19 +48,28 @@ export class ServicioService{
         return this._http.put(this.url+'equipo/'+id,params,{headers:headers});
     }
 
-    sendmailInicial(servicio):Observable<any>{
+    enviaCorreoInicial(servicio):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url+'email-inicial',servicio,{headers:headers});
+    }
+
+    enviaCorreoFinal(servicio):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'email-final',servicio,{headers:headers});
     }
 
     getetapas():Observable<any>{
         return this._http.get(this.url+'etapas');
     }
 
-    getTecnicos():Observable<any>{
-        return this._http.get(this.url+'tecnico');
+    getTecnicos(filtro):Observable<any>{
+        return this._http.get(this.url+'tecnico/'+filtro);
     }
     
+    getTecnico(usuario):Observable<any>{
+        return this._http.get(this.url + 'tecnico-by/' + usuario);
+    }
+
     createTecnico(tecnico):Observable<any>{
         let params = JSON.stringify(tecnico);
         let headers = new HttpHeaders().set('Content-Type','application/json');
@@ -72,12 +82,17 @@ export class ServicioService{
         return this._http.put(this.url+'tecnico/'+id,params,{headers:headers});
     }
 
-    getImagesByEquipoId(equipoId):Observable<any>{
-        return this._http.get(this.url+'imagenes/'+equipoId);
+    getImagesByEquipoId(equipoId,tipo):Observable<any>{        
+        return this._http.get(this.url+'imagenes/'+equipoId+'/'+tipo);
     }
 
     getMensajerias():Observable<any>{
         return this._http.get(this.url+'mensajeria');
     }
 
+    guardaImagenRegreso(imagen):Observable<any>{
+        let params = JSON.stringify(imagen);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'imagen',params,{headers:headers});
+    }
 }

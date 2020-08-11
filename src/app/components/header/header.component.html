@@ -7,24 +7,45 @@
                 <strong>Tecnología Dinámica de México</strong>
             </span>
         </div>
-        
-        <!-- MENU -->
-        <nav id="menu">
-            <ul>
-                <li>
-                    <a [routerLink]="['home']" [routerLinkActive]="['active']">Inicio</a>
-                </li>
-                <li>
-                    <a [routerLink]="['servicio']" [routerLinkActive]="['active']">Servicio</a>
-                </li>
-                <li>
-                    <a [routerLink]="['tecnicos']" [routerLinkActive]="['active']">Tecnicos</a>
-                </li>
-                <li>
-                    <a [routerLink]="['reportes']" [routerLinkActive]="['active']">Reportes</a>
-                </li>                       
-            </ul>
+        <ng-container *ngIf="authService.loggedIn();">
+            <!-- MENU LOGUEADO-->
+            <nav id="menu" >
+                <ul>
+                    <li>
+                        <div class="field">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                            <label class="label" style="margin-right:55px;margin-left:10px">{{authService.getUser()}}</label>
+                          </span>                        
+                        </div>
+                    </li>                
+                    <li>
+                        <a routerLink="/lista" [routerLinkActive]="['active']">Lista</a>
+                    </li>
+                    <li *ngIf="authService.getRol() == 0">
+                        <a routerLink="/servicio" [routerLinkActive]="['active']">Servicio</a>
+                    </li>
+                    <li *ngIf="authService.getRol() == 0">
+                        <a routerLink="/tecnicos" [routerLinkActive]="['active']">Tecnicos</a>
+                    </li>
+                    <!--li *ngIf="authService.getRol() == 0">
+                        <a [routerLink]="['reportes']" [routerLinkActive]="['active']">Reportes</a>
+                    </li-->  
+                    <li>
+                        <a (click)="authService.logout()" [routerLinkActive]="['active']">Salir</a>
+                    </li>                     
+                </ul>
+            </nav>
+        </ng-container>
+        <!--ng-template #loggedIn>
+            <nav id="menu" >    
+                <ul>   
+                    <li>
+                        <a [routerLink]="['auth']" [routerLinkActive]="['auth']">Login</a>
+                    </li>
+                </ul>        
         </nav>
+        <ng-template-->
         <!--LIMPIAR FLOTADOS-->
         <div class="clearfix"></div>
     </div>

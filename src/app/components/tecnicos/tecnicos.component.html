@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container">
     <div class="notification">
       <h1 class="title has-text-centered">Gestión de Técnicos</h1>
@@ -5,41 +6,60 @@
     <div class="box">
         <form class="mid-form" #tecnicoForm="ngForm">
         <div class="columns">
-            <div class="column">
+            <div class="column is-narrow">
                 <label class="label">Nombre</label>
             </div>
-            <div class="column">
-                <input type="text" id="nombre" name="nombre" class="input" [(ngModel)]="tecnico.nombre" required>
+            <div class="column is-narrow" style="width:150px">
+                <input type="text" id="nombre" name="nombre" class="input is-small" [(ngModel)]="tecnico.nombre" required>
             </div>
-            <div class="column">
+            <div class="column  is-narrow" style="width:85px">
                 <label class="label">Apellido</label>
             </div>
-            <div class="column">
-                <input type="text" id="apellido" name="apellido" class="input" [(ngModel)]="tecnico.apellido" required>
+            <div class="column is-narrow" style="width:150px">
+                <input type="text" id="apellido" name="apellido" class="input is-small" [(ngModel)]="tecnico.apellido" required>
             </div>
         </div>
         <div class="columns">
-            <div class="column">
+            <div class="column  is-narrow" style="width:85px">
                 <label class="label">Teléfono</label>
             </div>
-            <div class="column">
-                <input type="text" name="telefono" class="input" [(ngModel)]="tecnico.telefono" required>
+            <div class="column is-narrow" style="width:150px">
+                <input type="text" name="telefono" class="input is-small" [(ngModel)]="tecnico.telefono" required>
             </div>
-            <div class="column">
+            <div class="column is-narrow" style="width:85px">
                 <label class="label">Correo</label>
             </div>
-            <div class="column">
-                <input type="text" name="correo" class="input" [(ngModel)]="tecnico.correo" required>
+            <div class="column is-narrow" style="width:150px">
+                <input type="text" name="correo" class="input is-small" [(ngModel)]="tecnico.correo" required>
             </div>
         </div>
         <div class="columns">
-            <div class="column">
+            <div class="column is-narrow" style="width:85px">
                 <label class="label">Clave</label>
             </div>
-            <div class="column">
-                <input type="text" name="clave" class="input" [(ngModel)]="tecnico.clave" required>
+            <div class="column is-narrow" style="width:150px">
+                <input type="text" name="clave" class="input is-small" [(ngModel)]="tecnico.clave" required>
             </div>
-            <div class="column">
+            <div class="column is-narrow" style="width:85px">
+                <label class="label">Contraseña</label>
+            </div>
+            <div class="column is-narrow" style="width:150px">
+                <input type="password" name="password" class="input is-small" [(ngModel)]="tecnico.password" required>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow" style="width:85px">
+                <label class="label">Rol</label>
+            </div>
+            <div class="column is-narrow" style="width:150px">
+                <div class="select is-small">
+                    <select name="marca" [(ngModel)]="tecnico.rol" (change)="changerol($event)">
+                        <option [ngValue]="null" selected disabled>Seleccione Rol</option>
+                        <option *ngFor="let rol of roles" [ngValue]="rol.value">{{rol.viewValue}}</option>
+                    </select>
+                    </div>
+            </div>
+            <div class="column is-narrow" style="width:85px">
                 <label class="label">Activo</label>
             </div>
             <div class="column">
@@ -50,25 +70,43 @@
         </form>
     </div>
     <div class="box">
-        <table class="table" style="width: 100%;">
+        <table class="table is-bordered" style="width: 100%;">
+            <col width="18%">
+            <col width="18%">
+            <col width="17%">
+            <col width="17%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
             <tr>
-                <td>Nombre</td>
-                <td>Apellido</td>
-                <td>Teléfono</td>
-                <td>Correo</td>
-                <td>Clave</td>
-                <td>Activo</td>
+                <td style="text-align: center;">Nombre</td>
+                <td style="text-align: center;">Apellido</td>
+                <td style="text-align: center;">Teléfono</td>
+                <td style="text-align: center;">Correo</td>
+                <td style="text-align: center;">Clave</td>
+                <td style="text-align: center;">Rol</td>
+                <td style="text-align: center;">Activo</td>
             </tr>
         </table>
-        <table class="table" style="width: 100%;">
-            <tr *ngFor="let tecnico of tecnicos ; let i = index" (dblclick)="editTecnico(i)" (click)="selectRow(i)" [class.is-selected]="i == HighlightRow">
-                <td>{{tecnico.nombre}}</td>
-                <td>{{tecnico.apellido}}</td>
-                <td>{{tecnico.telefono}}</td>
-                <td>{{tecnico.correo}}</td>
-                <td>{{tecnico.clave}}</td>
-                <td>{{tecnico.activo}}</td>
-            </tr>
-        </table>
+        <div style="height: 300px; overflow: auto; margin-top: -25px;">
+            <table class="table is-bordered" style="width: 100%;">
+                <col width="18%">
+                <col width="18%">
+                <col width="17%">
+                <col width="17%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <tr *ngFor="let tecnico of tecnicos ; let i = index" (dblclick)="editTecnico(i)" (click)="selectRow(i)" [class.is-selected]="i == HighlightRow">
+                    <td>{{tecnico.nombre}}</td>
+                    <td>{{tecnico.apellido}}</td>
+                    <td>{{tecnico.telefono}}</td>
+                    <td>{{tecnico.correo}}</td>
+                    <td>{{tecnico.clave}}</td>
+                    <td>{{tecnico.rolnombre}}</td>
+                    <td style="text-align: center;">{{tecnico.activo ? 'Si':'No'}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

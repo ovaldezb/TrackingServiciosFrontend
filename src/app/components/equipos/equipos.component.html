@@ -57,7 +57,7 @@
             </nav>
             </form>
         </div>
-        <div class="column">
+        <div class="column" style="margin-top: -10px;">
             <angular-file-uploader [config]="afuConfig" 
             (ApiResponse)="imageUpload($event)"></angular-file-uploader>
             <div class="columns is-gapless is-multiline">
@@ -108,10 +108,10 @@
 
 <div class="modal is-active" *ngIf="imageActive">
     <div class="modal-background"></div>
-    <div class="modal-content">
-        <p class="image is-3by1">
+    <div class="modal-content">        
+        <figure class="image is-fullwidth">
             <img src="{{imgPath}}" alt="">
-        </p>
+        </figure>
     </div>
     <button class="modal-close is-large" (click)="closeModal()" aria-label="close"></button>
 </div>

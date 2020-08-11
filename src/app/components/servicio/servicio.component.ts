@@ -35,7 +35,7 @@ export class ServicioComponent implements OnInit {
     private _router : Router,
     private _servicioService: ServicioService
   ) { 
-    this.servicio = new Servicio('','','','','','',0,'false','','',0,'',0,true,0,'',0,0,true,false,false,'',new Date());
+    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null);
     this.url = Global.url;    
   }
 
@@ -69,13 +69,13 @@ export class ServicioComponent implements OnInit {
                 this._servicioService.createEquipo(equi)
                     .subscribe(
                       resp => {
-                        console.log(resp);
+                        //console.log(resp);
                       });
               }
               this.servicio = res.servicio;
               this.servicio.estatus = this.etapas[this.servicio.etapa].nombre;
               /*if(this.servicio.correo != ''){              
-                this._servicioService.sendmailInicial(this.servicio)
+                this._servicioService.enviaCorreoInicial(this.servicio)
                   .subscribe(resp=>{
                     console.log(res);
                   });

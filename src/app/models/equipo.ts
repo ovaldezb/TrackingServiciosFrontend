@@ -1,4 +1,5 @@
 import { Imagen } from '../models/imagen';
+import { Tecnico } from '../models/tecnico';
 
 export class Equipo{
     constructor(
@@ -8,9 +9,10 @@ export class Equipo{
         public modelo:string,
         public serie:string,
         public costo:number,
-        public tecnico:string,
+        public tecnico:Tecnico,
         public comentarios:string,
         public imagenes: Imagen[],
+        public imagenesregreso: Imagen[],
         public nombretecnico:string
     ){}
 }

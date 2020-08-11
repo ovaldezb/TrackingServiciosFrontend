@@ -5,6 +5,11 @@ import  swal  from 'sweetalert';
 import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
 
+export interface Rol {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-tecnicos',
   templateUrl: './tecnicos.component.html',
@@ -19,17 +24,24 @@ export class TecnicosComponent implements OnInit {
   public isEdit:boolean = false;
   public tecnicos: Tecnico[]=[];
   public tecnico: Tecnico;
+  public roles: Rol[] = [
+    {value: '0', viewValue: 'Administrador'},
+    {value: '1', viewValue: 'Técnico'}
+  ];
   
   constructor(private _router : Router,
     private _servicioService: ServicioService) {
-      this.tecnico = new Tecnico('','','','','',false,'');
+      this.tecnico = new Tecnico('','','','','',false,'','','0','');
       this.url = Global.url;
      }
 
   ngOnInit(): void {
-    this._servicioService.getTecnicos().subscribe(res=>{
+    this._servicioService.getTecnicos(false).subscribe(res=>{
       if(res.tecnicos.length > 0){
         this.tecnicos = res.tecnicos;
+        this.tecnicos.forEach(tecnico =>{
+          tecnico.rolnombre = this.roles[tecnico.rol].viewValue;
+        });
       }
     });
   }
@@ -38,6 +50,7 @@ export class TecnicosComponent implements OnInit {
     this.btnAccion = 'Actualizar';
     this.isEdit = true;    
     this.tecnico = this.tecnicos[index];
+    console.log(this.tecnico);
   }
 
   selectRow(index): void{
@@ -49,6 +62,7 @@ export class TecnicosComponent implements OnInit {
       this._servicioService.createTecnico(this.tecnico)
         .subscribe(res =>{
           if(res.status=='success'){
+            this.tecnicos.push(res.tecnico);
             swal('Se ha creado el Técnico exitosamente','Felicidades!','success');
           }
         });
@@ -57,13 +71,16 @@ export class TecnicosComponent implements OnInit {
         .subscribe(res =>{
           if(res.status=='success'){
             swal('Se ha actualizado el Técnico exitosamente','Felicidades!','success');
-            this.tecnico = new Tecnico('','','','','',false,'');
+            this.tecnico = new Tecnico('','','','','',false,'','',null,'');
             this.isEdit = false;
             this.btnAccion = 'Enviar';
           }
         });
-    }
-    
+    }    
+  }
+
+  changerol(event):void{
+    this.tecnico.rolnombre = this.roles[event.target.options.selectedIndex-1].viewValue;
   }
 
 }

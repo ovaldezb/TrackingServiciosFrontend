@@ -64,12 +64,12 @@ export class EquiposComponent implements OnInit {
   };
 
   constructor(private _servicioService:ServicioService) { 
-    this.equipo = new Equipo('','','','','',0,'','',[],'');
+    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'');
     this.url = Global.url;
   }
 
   ngOnInit(): void {
-    this._servicioService.getTecnicos()
+    this._servicioService.getTecnicos(true)
     .subscribe(res=>{
       if(res.status == 'success'){
         this.tecnicos = res.tecnicos;
@@ -85,7 +85,7 @@ export class EquiposComponent implements OnInit {
     } else{
       this.equipos.push(this.equipo);      
     }   
-    this.equipo = new Equipo('','','','','',0,'','',[],'');
+    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'');
     this.enviaEquipos.emit({equipos:this.equipos});
   }
 

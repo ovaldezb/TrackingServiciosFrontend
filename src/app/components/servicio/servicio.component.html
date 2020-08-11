@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container">
 <div class="notification">
   <h1 class="title has-text-centered">Alta de Servicio</h1>
@@ -54,8 +55,8 @@
         <div class="column is-narrow" style="width: 140px;">
           <label for="garantia" class="label">Tiene Garantia:</label>
         </div>
-        <div class="column is-narrow" style="width: 200px;">
-          <div class="select">
+        <div class="column is-narrow" style="width: 210px;">
+          <div class="select is-small">
           <select name="esgarantia" [(ngModel)]="servicio.esgarantia">
               <option [ngValue]="null" selected disabled>Seleccione Garantía</option>
               <option *ngFor="let garantia of garantias" [ngValue]="garantia.value">{{garantia.viewValue}}</option>
@@ -67,9 +68,9 @@
         <div class="column is-narrow" style="width: 140px;">
           <label for="receptor" class="label">Costo Revisión</label>
         </div>
-        <div class="column is-narrow" style="width: 200px;">
+        <div class="column is-narrow" style="width: 100px;">
           <input type="number" name="costorevision" class="input is-small" #costorevision="ngModel" [(ngModel)]="servicio.costorevision" required />
-          <small *ngIf="!costorevision.valid && costorevision.touched">El titulo no es válidos</small>
+          
         </div>
       </div> 
       <button class="button is-success" (click)="onSubmit()" [disabled]="equipos.length <= 0">Enviar</button>

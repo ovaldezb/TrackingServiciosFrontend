@@ -1,36 +1,50 @@
-<div class="loading" *ngIf="!servicios">
-    Cargando...
-</div>
-<div class="loading" *ngIf="servicios && servicios.length ==0">
-    No hay Articulos para mostrar
-</div>
-<div class="columns">
-    <div class="column is-narrow"><label class="label">Filtro</label></div>
-    <div class="column is-3"><input type="text"  class="input" onkeyup="doFilter(this.value,'tblservicios');"></div>
-</div>
-<table class="table" style="width:100%" *ngIf="servicios">
-    <tr>
-        <td>Folio</td>
-        <td>Cliente</td>        
-        <td>Teléfono</td>
-        <td>Correo</td>
-        <td>Garantía</td>
-        <td>Abierto</td>
-        <td>Ult Act</td>
-        <td>Estatus</td>
-    </tr>
-</table>
-<div style="height: 500px; width:100%; overflow:auto;" *ngIf="servicios">
-    <table class="table table-hover" style="width:100%" id="tblservicios" >
-        <tr  *ngFor="let servicio of servicios ; let i = index" (click)="ClickedRow(i)" (dblclick)="DoubleClickRow(i)" [class.selected]="i == HighlightRow">
-            <td>{{servicio.folio}}</td>
-            <td>{{servicio.cliente}}</td>            
-            <td>{{servicio.telefono}}</td>
-            <td>{{servicio.correo}}</td>
-            <td>{{servicio.esgarantia ? 'Si' : (servicio.costorevision | currency)}}</td>
-            <td>{{servicio.fechaIngreso | date:'short':'CST' }}</td>
-            <td>{{servicio.fechaactualizacion | amLocale: 'es' | amTimeAgo}}</td>
-            <td>{{servicio.estatus}}</td>
+<app-header></app-header>
+<div class="container">
+    <div class="loading" *ngIf="permiso">
+        Sin permiso para ver el contenido
+    </div>
+    <div class="loading" *ngIf="servicios && servicios.length ==0">
+        No hay Articulos para mostrar
+    </div>
+    <nav class="navbar" role="navigation" aria-label="main navigation" *ngIf="servicios">
+        <div class="navbar-brand">
+            <div  class="navbar-menu">
+                <div class="navbar-start">
+                    <div class="navbar-item">
+                        <label class="label">Filtro:&nbsp;</label>
+                        <input type="text"  class="input is-small" onkeyup="doFilter(this.value,'tblservicios');">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>    
+    
+    <table class="table" style="width:100%" *ngIf="servicios">
+        <tr>
+            <td>Folio</td>
+            <td>Cliente</td>        
+            <td>Teléfono</td>
+            <td>Equipo</td>
+            <td>Modelo</td>
+            <td>Garantía</td>
+            <td>Abierto</td>
+            <td>Ult Act</td>
+            <td>Estatus</td>
         </tr>
     </table>
+    <div style="height: 610px; width:100%; overflow:auto; margin-top: -25px;" *ngIf="servicios">
+        <table class="table table-hover" style="width:100%" id="tblservicios" >
+            <tr  *ngFor="let servicio of servicios ; let i = index" (click)="ClickedRow(i)" (dblclick)="DoubleClickRow(i)" [class.selected]="i == HighlightRow" [class.greenrow]="servicio.semaforo == 'g'" [class.yellowrow]="servicio.semaforo == 'y'" [class.redrow]="servicio.semaforo == 'r'">
+                <td>{{servicio.folio}}</td>
+                <td>{{servicio.cliente}}</td>            
+                <td>{{servicio.telefono}}</td>
+                <td>{{servicio.equipo.marca}}</td>
+                <td>{{servicio.equipo.modelo}}</td>
+                <td>{{servicio.esgarantia ? 'Si' : (servicio.costorevision | currency)}}</td>
+                <td>{{servicio.fechaIngreso | date:'short':'CST' }}</td>
+                <td>{{servicio.fechaactualizacion | amLocale: 'es' | amTimeAgo}}</td>
+                <td>{{servicio.estatus}}</td>
+            </tr>
+        </table>
+    </div>
 </div>

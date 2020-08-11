@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {routing, appRoutingProviders} from './app.routing';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
 import { AngularFileUploaderModule } from 'angular-file-uploader';
 
@@ -17,6 +17,11 @@ import { ListaServiciosComponent } from './components/lista-servicios/lista-serv
 import { EquiposComponent } from './components/equipos/equipos.component';
 import { MoverStatusComponent } from './components/mover-status/mover-status.component';
 import { MostrarEquiposComponent } from './components/mostrar-equipos/mostrar-equipos.component';
+import { ImgRegresoComponent } from './components/img-regreso/img-regreso.component';
+import { AuthUserComponent } from './components/auth-user/auth-user.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,10 @@ import { MostrarEquiposComponent } from './components/mostrar-equipos/mostrar-eq
     ListaServiciosComponent,
     EquiposComponent,
     MoverStatusComponent,
-    MostrarEquiposComponent
+    MostrarEquiposComponent,
+    ImgRegresoComponent,
+    AuthUserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +48,13 @@ import { MostrarEquiposComponent } from './components/mostrar-equipos/mostrar-eq
     MomentModule,
     AngularFileUploaderModule
   ],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
