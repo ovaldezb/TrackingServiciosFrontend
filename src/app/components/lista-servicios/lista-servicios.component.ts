@@ -39,9 +39,11 @@ export class ListaServiciosComponent implements OnInit {
     try{
       const resServicios = await this._servicioService.getServicios().toPromise();
       this.serviciosTmp = resServicios.servicios;            
-    } catch(error){      
-      swal("La sesión ha caducado, por favor conéctese nuevamente","Alerta sesión expirada","warning");
-      this._router.navigate(['/auth']);
+    } catch(error){
+      if(error.status==401){
+        swal("La sesión ha caducado, por favor conéctese nuevamente","Alerta sesión expirada","warning");
+        this._router.navigate(['/auth']);
+      }
     }
     const resEtapas = await this._servicioService.getetapas().toPromise();
     this.etapas = resEtapas.etapas;   
