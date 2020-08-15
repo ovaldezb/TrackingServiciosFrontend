@@ -23,8 +23,8 @@ export class ListaServiciosComponent implements OnInit {
   public serviciosTmp: Servicio[];
   public serviciosFiltro: Servicio[];
   public url: string;
-  private etapas: Etapa[];
-  private equipos: Equipo[];
+  private etapas: Etapa[];  
+  private hayDatos: Boolean = false;
 
   constructor(private _router : Router, private _servicioService: ServicioService, private authservice:AuthService) {     
     this.url = Global.url;    
@@ -39,31 +39,38 @@ export class ListaServiciosComponent implements OnInit {
     try{
       const resServicios = await this._servicioService.getServicios().toPromise();
       this.serviciosTmp = resServicios.servicios;            
+      this.hayDatos = true;
     } catch(error){
       if(error.status==401){
         swal("La sesión ha caducado, por favor conéctese nuevamente","Alerta sesión expirada","warning");
         this._router.navigate(['/auth']);
+        this.hayDatos = false;
+      }else if(error.status==404){
+        this.hayDatos = false;
+        this.servicios = [];
       }
     }
-    const resEtapas = await this._servicioService.getetapas().toPromise();
-    this.etapas = resEtapas.etapas;   
-    this.serviciosTmp.forEach(servicio =>{
-      var tecnicoId = servicio.equipos[0].tecnico.toString();            
-      servicio.estatus = this.etapas[servicio.etapa].nombre;
-      var diffdays = (Math.abs(new Date().getTime() - new Date(servicio.fechaIngreso).getTime())/1000/3600/24);                
-      if(diffdays <= 15){
-        servicio.semaforo = 'g';
-      }else if(diffdays > 15 && diffdays <= 30 ){
-        servicio.semaforo = 'y';
-      }else if(diffdays >= 31){
-        servicio.semaforo = 'r';
-      }
-      if(this.tecnico.rol=='1' && servicio.equipos[0].tecnico.toString()==idUser){
-        this.servicios.push(servicio);        
-      }else{
-        this.servicios.push(servicio);
-      }      
-     });
+    if(this.hayDatos){
+      const resEtapas = await this._servicioService.getetapas().toPromise();
+      this.etapas = resEtapas.etapas;   
+      this.serviciosTmp.forEach(servicio =>{
+        var tecnicoId = servicio.equipos[0].tecnico.toString();            
+        servicio.estatus = this.etapas[servicio.etapa].nombre;
+        var diffdays = (Math.abs(new Date().getTime() - new Date(servicio.fechaIngreso).getTime())/1000/3600/24);                
+        if(diffdays <= 15){
+          servicio.semaforo = 'g';
+        }else if(diffdays > 15 && diffdays <= 30 ){
+          servicio.semaforo = 'y';
+        }else if(diffdays >= 31){
+          servicio.semaforo = 'r';
+        }
+        if(this.tecnico.rol=='1' && servicio.equipos[0].tecnico.toString()==idUser){
+          this.servicios.push(servicio);        
+        }else{
+          this.servicios.push(servicio);
+        }      
+      });
+    }
   }
 
   ClickedRow(index) : void{      
