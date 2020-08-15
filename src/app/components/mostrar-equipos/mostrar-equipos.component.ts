@@ -2,20 +2,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Servicio } from '../../models/servicio';
 import { Equipo } from '../../models/equipo';
 import { ServicioService } from '../../services/servicios.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
   selector: 'app-mostrar-equipos',
   templateUrl: './mostrar-equipos.component.html',
   styleUrls: ['./mostrar-equipos.component.css'],
-  providers:[ServicioService]
+  providers:[ServicioService,AuthService]
 })
 export class MostrarEquiposComponent implements OnInit {
 
   @Output() enviaEquipos = new EventEmitter();
   public equipos : Equipo[];
   @Input() servicio: Servicio;
-  constructor(private _servicioService: ServicioService) { }
+  constructor(private _servicioService: ServicioService, public authService:AuthService) { }
 
   ngOnInit(): void {        
     this._servicioService.getEquiposById(this.servicio._id).subscribe(res =>{      

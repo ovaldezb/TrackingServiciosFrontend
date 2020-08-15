@@ -1,3 +1,5 @@
+import { Equipo } from './equipo';
+
 export class Servicio{
     constructor(
         public _id : string,
@@ -25,10 +27,9 @@ export class Servicio{
         public fechaactualizacion: Date,
         public fechaIngreso: Date,
         public semaforo: string,
-        public equipo:{
-            marca:string,
-            modelo:string,
-            serie:string
-        }
+        public equipos:Equipo[],
+        public linkpago:string,
+        public pagofinal:Number,
+        public metodopago:string        
     ){}
 }

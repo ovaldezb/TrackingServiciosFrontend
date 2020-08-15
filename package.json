@@ -24,6 +24,7 @@
     "angular2-moment": "^1.9.0",
     "bootstrap": "^4.5.0",
     "bulma": "^0.9.0",
+    "file-saver": "^2.0.2",
     "jquery": "^3.5.1",
     "rxjs": "~6.5.4",
     "sweetalert": "^2.1.2",

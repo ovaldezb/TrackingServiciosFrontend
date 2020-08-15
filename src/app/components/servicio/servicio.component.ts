@@ -35,10 +35,10 @@ export class ServicioComponent implements OnInit {
     private _router : Router,
     private _servicioService: ServicioService
   ) { 
-    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null);
+    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null,'',0,null);
     this.url = Global.url;    
   }
-
+  
   ngOnInit(): void {     
     this._servicioService.getFolio()
         .subscribe(
@@ -56,10 +56,29 @@ export class ServicioComponent implements OnInit {
     });
   }
 
-  onSubmit(){    
+  async onSubmit(){    
     this.servicio.fechaactualizacion = new Date();
-    this._servicioService.create(this.servicio)
-        .subscribe(
+    var servrec = await this._servicioService.create(this.servicio).toPromise();    
+    if(servrec.status == 'success'){      
+      for(var i=0;i<this.equipos.length;i++){
+        var equi = this.equipos[i];
+        var serUpdt = await this._servicioService.createEquipo(equi,servrec.servicio._id).toPromise();            
+      }        
+      console.log(serUpdt);
+      if(this.servicio.correo != ''){              
+        this._servicioService.enviaCorreoInicial(serUpdt.serviceUpdate)
+          .subscribe(res=>{
+            console.log(res);
+          });
+      }
+      swal('Servicio creado',
+        'El Servicio fue creado exitosamente',
+        'success'
+      );
+      this._router.navigate(['/lista']);
+      
+    }
+        /*.subscribe(
           res => {
             if(res.status == 'success'){
               var id_servicio = res.servicio._id;
@@ -74,20 +93,20 @@ export class ServicioComponent implements OnInit {
               }
               this.servicio = res.servicio;
               this.servicio.estatus = this.etapas[this.servicio.etapa].nombre;
-              /*if(this.servicio.correo != ''){              
+              if(this.servicio.correo != ''){              
                 this._servicioService.enviaCorreoInicial(this.servicio)
                   .subscribe(resp=>{
                     console.log(res);
                   });
-              }*/
+              }
               swal('Servicio creado',
                 'El Servicio fue creado exitosamente',
                 'success'
               );
-              this._router.navigate(['/home']);
+              this._router.navigate(['/lista']);
             }
           }
-        );
+        );*/
   }
 
   recibeEquipos(event){

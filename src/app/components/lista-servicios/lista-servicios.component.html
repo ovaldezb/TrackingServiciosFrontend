@@ -38,8 +38,8 @@
                 <td>{{servicio.folio}}</td>
                 <td>{{servicio.cliente}}</td>            
                 <td>{{servicio.telefono}}</td>
-                <td>{{servicio.equipo.marca}}</td>
-                <td>{{servicio.equipo.modelo}}</td>
+                <td>{{servicio.equipos[0].marca}}</td>
+                <td>{{servicio.equipos[0].modelo}}</td>
                 <td>{{servicio.esgarantia ? 'Si' : (servicio.costorevision | currency)}}</td>
                 <td>{{servicio.fechaIngreso | date:'short':'CST' }}</td>
                 <td>{{servicio.fechaactualizacion | amLocale: 'es' | amTimeAgo}}</td>

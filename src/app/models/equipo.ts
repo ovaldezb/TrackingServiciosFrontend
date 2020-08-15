@@ -13,6 +13,7 @@ export class Equipo{
         public comentarios:string,
         public imagenes: Imagen[],
         public imagenesregreso: Imagen[],
-        public nombretecnico:string
+        public nombretecnico:string,
+        public diagnostico: string
     ){}
 }

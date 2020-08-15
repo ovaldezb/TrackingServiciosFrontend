@@ -26,6 +26,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('rol');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('id');
     this._router.navigate(['/auth']);
   }
 
@@ -35,6 +36,10 @@ export class AuthService {
 
   getRol():number{
     return Number.parseInt(localStorage.getItem('rol'));
+  }
+
+  getIdUser(){
+    return localStorage.getItem('id');
   }
 
   getUser(){

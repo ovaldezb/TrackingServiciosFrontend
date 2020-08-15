@@ -8,6 +8,10 @@ import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
 import { AuthService } from '../../services/auth.service';
 
+export interface Metodopago {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-mover-status',
@@ -30,7 +34,18 @@ export class MoverStatusComponent implements OnInit {
   private deltaGanancia:number = 1.2;
   public equipos:Equipo[];
   public mensajeria:Mensajeria[];
+  public img_id: string;
+  public equipoIndex: number;
+  public imgIndex:number;
+  public pagosaldo:boolean=false;
   
+
+  public metodopago: Metodopago[] = [
+    {value: 'Contado', viewValue: 'Contado'},
+    {value: 'Tarjeta', viewValue: 'Tarjeta'},
+    {value: 'Mercadopago', viewValue: 'Mercadopago'},
+    {value: 'Otro', viewValue: 'Otro'}        
+  ];
   constructor(  
     private _router : Router,  private _servicioService: ServicioService, public authService: AuthService) { 
     this.canreapir = true;
@@ -130,9 +145,13 @@ export class MoverStatusComponent implements OnInit {
           }          
           break;
         case 7: //Espera cliente recoja
-          //this.servicio.estatus = 'Entregado';          
+          //'Entregado';          
           this.servicio.etapa = 8;
         break;
+        case 8: //Entregado
+          //Pendiente pago técnico
+          this.servicio.etapa = 9;
+          break;
     }
     var fechaUltAct = new Date();    
     fechaUltAct.toLocaleString('es-MX', { timeZone: 'America/Chicago' })
@@ -163,19 +182,42 @@ export class MoverStatusComponent implements OnInit {
     };
   }
 
-  clickImage(imagePath):void{
+  clickImage(imageName,img_id,equipoIndex,imgIndex):void{    
     this.imageActive = true;
-    this.imgPath = this.url+'get-image/'+imagePath;
+    this.imgPath = this.url+'get-image/'+imageName;
+    this.img_id = img_id;
+    this.equipoIndex = equipoIndex;
+    this.imgIndex = imgIndex;
+
+  }
+
+  eliminarImg(img_id,equipoIndex,imgIndex){
+    swal({
+      title: "Esta seguro que desea eliminar la imagen",
+      text: "Una vez eliminada, no se podrá recuperar!",
+      icon: "warning",
+      buttons: [true,true],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {        
+        this._servicioService.eliminaImg(img_id).subscribe(res=>{
+          this.equipos[equipoIndex].imagenes.splice(imgIndex,1)
+          swal(" El archivo ha sido eliminado!", {
+            icon: "success",
+          });
+          this.closeModal();
+        });
+      }
+    });
   }
 
   closeModal(){
     this.imageActive = false;
   }
 
-
   enviaCorreoFinal():void{
     this._servicioService.enviaCorreoFinal(this.servicio).subscribe(res=>{
-      //console.log(res);
     });
   }
 

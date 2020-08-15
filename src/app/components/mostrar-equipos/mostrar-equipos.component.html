@@ -3,9 +3,10 @@
         <td>Marca</td>
         <td>Modelo</td>
         <td>Serie</td>
-        <td>Costo</td>
+        <td *ngIf="authService.getRol() == 0">Costo</td>
         <td>Técnico</td>
-        <td>Observaciones</td>
+        <td>Comentarios</td>
+        <td>Diagnostico</td>
     </tr>
 </table>
 <div style="width:auto; height: 110px;overflow:auto;">
@@ -14,9 +15,10 @@
             <td>{{equipo.marca}}</td>
             <td>{{equipo.modelo}}</td>
             <td>{{equipo.serie}}</td>
-            <td>{{equipo.costo | currency}}</td>
+            <td *ngIf="authService.getRol() == 0">{{equipo.costo | currency}}</td>
             <td>{{equipo.tecnico.nombre}} {{equipo.tecnico.apellido}}</td>        
-            <td><textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2" (blur)="retornaequipos()"></textarea></td>
+            <td><textarea disabled rows="1">{{equipo.comentarios}}</textarea></td>
+            <td><textarea disabled rows="1">{{equipo.diagnostico}}</textarea></td>
         </tr>
     </table>
 </div>

@@ -10,10 +10,6 @@ export interface Marcas {
   viewValue: string;
 }
 
-export interface Imagenes {
-  
-}
-
 @Component({
   selector: 'app-equipos',
   templateUrl: './equipos.component.html',
@@ -38,7 +34,9 @@ export class EquiposComponent implements OnInit {
     {value: 'Supermicro', viewValue: 'Supermicro'},
     {value: 'WebDT', viewValue: 'WebDT'}        
   ];
-
+   
+   public imgname:string;
+   public imgIndex:number;
   afuConfig = {
     multiple: true,
     formatsAllowed: ".jpg,.png,.gif,.jpeg",
@@ -64,7 +62,7 @@ export class EquiposComponent implements OnInit {
   };
 
   constructor(private _servicioService:ServicioService) { 
-    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'');
+    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','');
     this.url = Global.url;
   }
 
@@ -85,7 +83,7 @@ export class EquiposComponent implements OnInit {
     } else{
       this.equipos.push(this.equipo);      
     }   
-    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'');
+    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','');
     this.enviaEquipos.emit({equipos:this.equipos});
   }
 
@@ -114,9 +112,32 @@ export class EquiposComponent implements OnInit {
     this.equipo.imagenes.push(data.body.imagen);    
   }
 
-  clickImage(imagePath){    
+  clickImage(imagePath,imgIndex){    
     this.imageActive = true;
-    this.imgPath = this.url+'get-image/'+imagePath;
+    this.imgPath = this.url+'get-image/'+imagePath;    
+    this.imgIndex = imgIndex;
+    this.imgname = imagePath;
+  }
+
+  eliminarImg(imgname,imgIndex){
+    swal({
+      title: "Esta seguro que desea eliminar la imagen",
+      text: "Una vez eliminada, no se podrá recuperar!",
+      icon: "warning",
+      buttons: [true,true],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {        
+        this._servicioService.eliminaImgbyName(imgname).subscribe(res=>{
+          this.equipo.imagenes.splice(imgIndex,1)
+          swal(" El archivo ha sido eliminado!", {
+            icon: "success",
+          });
+          this.closeModal();
+        });
+      }
+    });    
   }
 
   closeModal(){

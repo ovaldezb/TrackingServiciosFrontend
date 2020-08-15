@@ -1,1 +1,64 @@
-<p>reportes works!</p>
+<app-header></app-header>
+<div class="container">
+    <div class="notification">
+        <h1 class="title has-text-centered">Reporte de Servicio</h1>
+    </div>
+    <div class="columns">
+        <div class="column is-3"><label class="label">En que formato desea ver los reportes</label></div>
+        <div class="column is-1">HTML<input type="radio" [(ngModel)]="tipo" name="tipor" value="html"></div>
+        <div class="column is-1">Excel<input type="radio" [(ngModel)]="tipo" name="tipor" value="xls"></div>
+    </div>
+    <button class="button is-success" (click)="enviar()">Enviar</button>    
+</div>
+
+<table class="table is-bordered" style="width: 100%;" *ngIf="tipo=='html'">    
+    <tr>
+        <th>Item</th>
+        <th>Folio</th>
+        <th>Cliente</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Ingreso</th>
+        <!--td>Receptor</td-->
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Serie</th>
+        <th>Garantia</th>
+        <th>Estatus</th>
+        <th>Costo Envio</th>
+        <!--td>Número de Guía</td-->
+        <!--td>Mensajería</td-->
+        <th>Costo Técnico</th>
+        <th>Anticipo Técnico</th>                
+        <th>Costo Cliente</th>
+        <th>Pago final</th>
+        <th>Método Pago</th>
+    </tr>    
+</table>
+<div style="height:450px; overflow: auto; margin-top:-25px" >    
+    <table class="table is-bordered" style="width: 100%;">
+        <tr *ngFor="let servicio of servicios; let i = index;">
+            <td>{{(i+1)}}</td>
+            <td>{{servicio.folio}}</td>
+            <td>{{servicio.cliente}}</td>
+            <td>{{servicio.correo}}</td>
+            <td>{{servicio.telefono}}</td>
+            <td>{{servicio.fechaIngreso | date:'short':'CST'}}</td>
+            <!--td>{{servicio.receptor}}</td-->
+            <td>{{servicio.equipos[0].marca}}</td>
+            <td>{{servicio.equipos[0].modelo}}</td>
+            <td>{{servicio.equipos[0].serie}}</td>                
+            <td>{{servicio.esgarantia ? 'Si' : (servicio.costorevision | currency)}}</td>
+            <td>{{servicio.estatus}}</td>
+            <td>{{servicio.costoenvio}}</td>
+            <!--td>{{servicio.numeroguia}}</td-->
+            <!--td>{{servicio.mensajeria}}</td-->
+            <td>{{servicio.costotecnico}}</td>
+            <td>{{servicio.pagoanticipotecnico}}</td>                                
+            <td>{{servicio.pagofinal}}</td>
+            <td>{{servicio.metodopago}}</td>
+        </tr>
+    </table>
+</div>
+
+

@@ -2,10 +2,10 @@
 <div class="container">
     <div class="box">
         <div class="columns">
-            <div class="column is-narrow">
+            <div class="column is-narrow" style="width:100px">
                 <label for="folio" class="label">Folio: </label>
             </div>
-            <div class="column">
+            <div class="column is-narrow" style="width: 200px;">
                 <label for="folio">{{servicio.folio}} </label>
             </div>
             <div class="column is-narrow">
@@ -16,30 +16,30 @@
             </div>
         </div>
         <div class="columns">
-            <div class="column is-narrow">
+            <div class="column is-narrow" style="width:100px">
                 <label for="folio" class="label">Cliente: </label>
             </div>
-            <div class="column">
+            <div class="column is-narrow" style="width: 200px;">
                 <label for="folio">{{servicio.cliente}} </label>
             </div>        
-                <div class="column is-narrow" *ngIf="servicio.esgarantia">
-                    <label for="folio" class="label">Garantía: </label>
-                </div>
-                <div class="column" *ngIf="servicio.esgarantia">
-                    <label for="folio">Si</label>
-                </div>
-                <div class="column" *ngIf="!servicio.esgarantia">
-                    <label for="folio" class="label">Costo Revisión: </label>
-                </div>
-                <div class="column" *ngIf="!servicio.esgarantia">
-                    <label for="folio">{{servicio.costorevision | currency}}</label>
-                </div>            
+            <div class="column is-narrow" *ngIf="servicio.esgarantia">
+                <label for="folio" class="label">Garantía: </label>
+            </div>
+            <div class="column is-narrow" *ngIf="servicio.esgarantia">
+                <label for="folio">Si</label>
+            </div>
+            <div class="column is-narrow" *ngIf="!servicio.esgarantia">
+                <label for="folio" class="label">Costo Revisión: </label>
+            </div>
+            <div class="column is-narrow" *ngIf="!servicio.esgarantia">
+                <label for="folio">{{servicio.costorevision | currency}}</label>
+            </div>            
         </div>
-        <div class="columns">
-            <div class="column is-narrow">
+        <div class="columns" *ngIf="authService.getRol() == 0">
+            <div class="column is-narrow" style="width:100px">
                 <label for="folio" class="label">Teléfono: </label>
             </div>
-            <div class="column">
+            <div class="column is-narrow" style="width: 200px;">
                 <label for="folio">{{servicio.telefono}} </label>
             </div>        
             <div class="column is-narrow">
@@ -55,24 +55,27 @@
             </div>
         </div>
     </div>
-    <div class="box" *ngFor="let equipo of equipos;">
+    <div class="box" *ngFor="let equipo of equipos; let i = index;">
         <div class="columns is-gapless is-multiline">
-            <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes">
-                <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre)" />
+            <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes, let j = index">
+                <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre,img._id,i,j)" />
             </div>
         </div>
     </div>
     <div class="modal is-active" *ngIf="imageActive">
         <div class="modal-background"></div>
-        <div class="modal-content">
-            <!--p class="image is-5by3">
-                <img src="{{imgPath}}" alt="">
-            </p-->
+        <div class="modal-content">            
             <figure class="image is-fullwidth">
                 <img src="{{imgPath}}" alt="">
             </figure>
         </div>
         <button class="modal-close is-large" (click)="closeModal()" aria-label="close"></button>
+        <div class="modal-card">
+            <footer class="modal-card-foot">
+                <button class="button is-success" (click)="eliminarImg(img_id,equipoIndex,imgIndex)">Eliminar</button>
+                <button class="button" (click)="closeModal()">Cerrar</button>
+            </footer>
+        </div>
     </div>
     <div class="box" [class.etapaactiva]="servicio.etapa == 0" [class.etapaanterior]="servicio.etapa > 0" *ngIf="authService.getRol() == 0">
         <div class="columns">
@@ -143,14 +146,14 @@
             <div class="column">
                 <div class="field">
                     <div class="control">
-                        <textarea name="diagnostico" [(ngModel)]="servicio.diagnostico" class="textarea is-primary" rows="2"></textarea>
+                        <textarea name="diagnostico" [(ngModel)]="servicio.diagnostico" class="textarea is-primary" rows="2" required></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="columns">
             <div class="column is-narrow"><label class="label">Costo de la reparación</label></div>
-            <div class="column is-narrow" style="width: 100px;"><input class="input" type="number" [(ngModel)]="servicio.costotecnico"></div>
+            <div class="column is-narrow" style="width: 100px;"><input class="input is-small" type="number" [(ngModel)]="servicio.costotecnico"></div>
         </div>
         <div class="columns">
             <div class="column">
@@ -224,6 +227,14 @@
             <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="true" >Si</div>
             <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="false" >No</div>
         </div>
+        <div class="columns" *ngIf="servicio.equipoprobado">
+            <div class="column is-narrow">               
+                <label class="label">Enlace de pago:</label>
+            </div>
+            <div class="column is-2">               
+                <input type="text" class="input is-small" [(ngModel)]="servicio.linkpago" name="linkpago">
+            </div>
+        </div>
         <div class="columns">
             <div class="column">
                 <button class="button is-success" (click)="enviar(6)" *ngIf="servicio.etapa == 6">Enviar</button>
@@ -232,43 +243,60 @@
     </div>
     <div class="box" [class.etapaactiva]="servicio.etapa == 7" [class.etapaposterior]="servicio.etapa < 7" [class.etapaanterior]="servicio.etapa > 7" *ngIf="authService.getRol() == 0">
         <div class="columns">
-            <div class="column is-narrow" style="width: 230px;">            
+            <div class="column is-narrow" style="width: 200px; margin-right:-20px">            
                 <label class="label">Costo de la reparación:</label>
-            </div>
-            <div class="column is-narrow">
+            </div>            
+            <div class="column is-narrow" style="width:105px">
                 <label class="label">{{servicio.costotecnico | currency}}</label>
             </div>
-        </div>
-        <div class="columns">
+            <div class="column is-narrow">&nbsp;</div>
             <div class="column is-narrow" style="width: 230px;">
-                <label class="label">Anticipo al Técnico:</label>
+                <label class="label">Costo al cliente:</label>
             </div>
-            <div class="column is-narrow">
-                <label class="label">{{servicio.pagoanticipotecnico | currency}}</label>
-            </div>
-        </div>    
-        <div class="columns">
-            <div class="column is-narrow" style="width: 230px;">
-                <label class="label">Saldo pendiente al Técnico:</label>
-            </div>
-            <div class="column is-narrow">
-                <label class="label">{{servicio.costotecnico - servicio.pagoanticipotecnico | currency}}</label>
-            </div>
-        </div>
-        <div class="columns">
-            <div class="column is-narrow" style="width: 230px;">
-                <label class="label">Cobrar al cliente:</label>
-            </div>
-            <div class="column is-narrow">
+            <div class="column is-narrow" style="width:105px">
                 <label class="label">{{servicio.costocliente | currency}}</label>
             </div>
         </div>
         <div class="columns">
+            <div class="column is-narrow" style="width: 200px; margin-right:-20px">
+                <label class="label">Anticipo al Técnico:</label>
+            </div>
+            <div class="column is-narrow" style="width:105px">
+                <label class="label">{{servicio.pagoanticipotecnico | currency}}</label>
+            </div>
+            <div class="column is-narrow">&nbsp;</div>
+            <div class="column is-narrow" style="width: 230px;">
+                <label class="label">Saldo pendiente al Técnico:</label>
+            </div>
+            <div class="column is-narrow" style="width:105px">
+                <label class="label">{{servicio.costotecnico - servicio.pagoanticipotecnico | currency}}</label>
+            </div>
+        </div>           
+        
+        <div class="columns">
+            <div class="column is-narrow" style="width: 200px; margin-right:-20px">
+                <label class="label">Cobro al cliente:</label>
+            </div>
+            <div class="column is-narrow" style="width:105px">
+                <input type="number"  class="input is-small" name="cobro" [(ngModel)]="servicio.pagofinal" required>
+            </div>
+            <div class="column is-narrow">&nbsp;</div>
             <div class="column is-narrow" style="width: 230px;">
                 <label class="label">Margen de ganancia:</label>
             </div>
-            <div class="column is-narrow">
+            <div class="column is-narrow" style="width:105px">
                 <label class="label">{{servicio.costocliente - servicio.costotecnico - servicio.costoenvio | currency}}</label>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-narrow" style="width: 200px;margin-right:-20px"><label class="label">Método de pago</label></div>
+            <div class="column">
+                <div class="select is-small">
+                    <select name="tecnico" [(ngModel)]="servicio.metodopago">
+                        <option [ngValue]="null" disabled selected="selected">Seleccione Método de Pago</option>
+                        <option *ngFor="let mp of metodopago" [ngValue]="mp.value">{{mp.viewValue}}</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="column is-narrow">
@@ -276,7 +304,25 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-success" (click)="enviar(7)" *ngIf="servicio.etapa == 7">Enviar</button>
+                <button class="button is-success" (click)="enviar(7)" *ngIf="servicio.etapa == 7" [disabled]="servicio.pagofinal < servicio.costocliente">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <div class="box" [class.etapaactiva]="servicio.etapa == 8" [class.etapaposterior]="servicio.etapa < 8" [class.etapaanterior]="servicio.etapa > 8" *ngIf="authService.getRol() == 0">
+        <div class="columns">
+            <div class="column is-narrow" style="width: 230px;">            
+                <label class="label">Pagar saldo pendiente al Técnico:</label>
+            </div>
+            <div class="column is-narrow">
+                <label class="label">{{servicio.costotecnico - servicio.pagoanticipotecnico | currency}}</label>
+            </div>
+            <div class="column is-narrow">
+                <input type="checkbox"  name="pagosaldo" [(ngModel)]="pagosaldo" >
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success" (click)="enviar(8)" *ngIf="servicio.etapa == 8" [disabled]="!pagosaldo">Enviar</button>
             </div>
         </div>
     </div>

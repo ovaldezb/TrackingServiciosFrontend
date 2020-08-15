@@ -32,10 +32,10 @@ export class ServicioService{
         return this._http.get(this.url+'get-folio/folio');
     }
 
-    createEquipo(equipo):Observable<any>{
+    createEquipo(equipo,idServicio):Observable<any>{
         let params = JSON.stringify(equipo);
         let headers = new HttpHeaders().set('Content-Type','application/json');
-        return this._http.post(this.url+'equipo',params,{headers:headers});
+        return this._http.post(this.url+'equipo/'+idServicio,params,{headers:headers});
     }
 
     getEquiposById(id):Observable<any>{        
@@ -94,5 +94,23 @@ export class ServicioService{
         let params = JSON.stringify(imagen);
         let headers = new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url+'imagen',params,{headers:headers});
+    }
+
+    eliminaImg(imageid):Observable<any>{
+        return this._http.delete(this.url+'imagen/'+imageid);
+    }
+
+    eliminaImgbyName(imageName):Observable<any>{
+        return this._http.delete(this.url+'imagen-name/'+imageName);
+    }
+
+    getreportehtml():Observable<any>{
+        return this._http.get(this.url+'reportehtml');
+    }
+
+    getreportexls():Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        return this._http.get(this.url+'reportexls',{
+            responseType: 'arraybuffer',headers:headers});
     }
 }

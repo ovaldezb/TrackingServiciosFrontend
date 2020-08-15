@@ -1,9 +1,9 @@
 <div class="box" style="height: 600px;">
-    <div class="columns">
+    <div class="columns" style="margin-top:-25px">
         <div class="column is-narrow">
             <form #equiposForm="ngForm">
             <div class="columns">
-                <div class="column is-narrow" style="width:70px"><label class="label">Marca:</label></div>
+                <div class="column is-narrow" style="width:115px"><label class="label">Marca:</label></div>
                 <div class="column is-narrow" style="width: 180px;">
                     <div class="select is-small">
                     <select name="marca" [(ngModel)]="equipo.marca" >
@@ -11,20 +11,18 @@
                         <option *ngFor="let marca of marcas" [ngValue]="marca.value">{{marca.viewValue}}</option>
                     </select>
                     </div>
-                </div>    
-                <div class="column is-narrow" style="width: 36px;">&nbsp;</div>
+                </div>                    
                 <div class="column is-narrow" style="width:110px"><label class="label">Modelo:</label></div>
                 <div class="column is-narrow" style="width: 180px;"><input type="text" class="input is-small" name="modelo" #modelo="ngModel" [(ngModel)]="equipo.modelo" required></div>
             </div>
-            <div class="columns">
-                <div class="column is-narrow" style="width:70px"><label class="label">Serie:</label></div>
-                <div class="column is-narrow" style="width:165px;"><input type="text" class="input is-small" name="serie" #serie="ngModel" [(ngModel)]="equipo.serie" required></div>            
-                <div class="column is-narrow" style="width: 50px;">&nbsp;</div>
+            <div class="columns" style="margin-top:-25px">
+                <div class="column is-narrow" style="width:115px"><label class="label">Serie:</label></div>
+                <div class="column is-narrow" style="width:180px;"><input type="text" class="input is-small" name="serie" #serie="ngModel" [(ngModel)]="equipo.serie" required></div>                            
                 <div class="column is-narrow" style="width:110px"><label class="label">Costo:</label></div>
                 <div class="column is-narrow" style="width: 180px;"><input type="number" class="input is-small" name="costo" #costo="ngModel" [(ngModel)]="equipo.costo" required></div>
             </div>
-            <div class="columns">
-                <div class="column is-narrow" style="width:70px"><label class="label">Técnico:</label></div>
+            <div class="columns" style="margin-top:-25px">
+                <div class="column is-narrow" style="width:115px"><label class="label">Técnico:</label></div>
                 <div class="column is-narrow" style="width:180px;">
                     <div class="select is-small">
                     <select name="tecnico" [(ngModel)]="equipo.tecnico" (change)="changetecnico($event)">
@@ -33,16 +31,19 @@
                     </select>
                     </div>
                 </div>
-                <div class="column is-narrow" style="width: 36px;">&nbsp;</div>
-                <div class="column is-narrow" style="width:110px"><label class="label">Comentarios:</label></div>            
-                <div class="column is-narrow" style="width: 180px;">
-                    <div class="field">
-                        <div class="control">
-                            <textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="2" required></textarea>
-                        </div>
-                    </div>
+            </div>  
+            <div class="field" style="margin-top:-15px">
+                <label class="label">Comentarios:</label>
+                <div class="control">
+                    <textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="1" required></textarea>
                 </div>
-            </div>            
+            </div>       
+            <div class="field" style="margin-top:-15px">
+                <label class="label">Diagnóstico Inicial:</label>
+                <div class="control">
+                    <textarea name="diagnostico" [(ngModel)]="equipo.diagnostico" class="textarea is-primary" rows="1" required></textarea>
+                </div>
+            </div>
             <nav class="level">
                 <div class="level-left">
                     <div class="level-item">
@@ -61,14 +62,14 @@
             <angular-file-uploader [config]="afuConfig" 
             (ApiResponse)="imageUpload($event)"></angular-file-uploader>
             <div class="columns is-gapless is-multiline">
-                <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes;">
-                    <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre)" />
+                <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes; let i=index;">
+                    <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre,i)" />
                 </div>
             </div>
         </div>        
     </div>    
     
-    <table class="table" style="width:100%">
+    <table class="table" style="width:100%" style="margin-top:-25px">
         <col width="10%">
         <col width="15%">
         <col width="15%">
@@ -114,5 +115,11 @@
         </figure>
     </div>
     <button class="modal-close is-large" (click)="closeModal()" aria-label="close"></button>
+    <div class="modal-card">
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="eliminarImg(imgname,imgIndex)">Eliminar</button>
+            <button class="button" (click)="closeModal()">Cerrar</button>
+        </footer>
+    </div>
 </div>
 

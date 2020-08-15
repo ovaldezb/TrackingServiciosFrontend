@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', res.dataUser.accessToken);
       localStorage.setItem('rol',res.dataUser.rol);
       localStorage.setItem('usuario',res.dataUser.clave);
+      localStorage.setItem('id',res.dataUser.clave);
       this._router.navigate(['/lista']);
     }, err=>{
       swal('Ooops! algo salió mal','Asegúrese que el usuario y la contraseña sean correctas','error');

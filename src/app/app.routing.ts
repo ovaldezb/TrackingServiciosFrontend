@@ -10,6 +10,7 @@ import { MoverStatusComponent } from './components/mover-status/mover-status.com
 import { ListaServiciosComponent } from './components/lista-servicios/lista-servicios.component';
 import { LoginComponent } from './components/login/login.component';
 
+
 //Array de Componentes
 const appRoutes: Routes = [
     {path:'', redirectTo:'/auth', pathMatch: 'full'},
@@ -18,7 +19,7 @@ const appRoutes: Routes = [
     {path:'reportes',component:ReportesComponent},
     {path:'tecnicos',component:TecnicosComponent},
     {path:'servicio',component:ServicioComponent},
-    {path:'movserv',component:MoverStatusComponent}
+    {path:'movserv',component:MoverStatusComponent}    
 ];
 
 // Exportar el modulo de rutas
