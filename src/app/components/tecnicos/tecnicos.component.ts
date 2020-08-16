@@ -48,9 +48,9 @@ export class TecnicosComponent implements OnInit {
 
   editTecnico(index):void{
     this.btnAccion = 'Actualizar';
-    this.isEdit = true;    
+    this.isEdit = true;
     this.tecnico = this.tecnicos[index];
-    console.log(this.tecnico);
+    this.tecnico.password = '';
   }
 
   selectRow(index): void{
@@ -67,7 +67,11 @@ export class TecnicosComponent implements OnInit {
           }
         });
     }else{
-      this._servicioService.updateTecnico(this.tecnico._id,this.tecnico)
+      var tecnicoTmp = this.tecnico;
+      if(this.tecnico.password == ''){
+        delete tecnicoTmp.password;
+      }
+      this._servicioService.updateTecnico(tecnicoTmp._id,tecnicoTmp)
         .subscribe(res =>{
           if(res.status=='success'){
             swal('Se ha actualizado el Técnico exitosamente','Felicidades!','success');
