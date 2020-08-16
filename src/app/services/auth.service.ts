@@ -15,7 +15,7 @@ export class AuthService {
    }
 
    signInUser(user):Observable<any> {
-    return this._http.post(this.url + '/login', user);
+    return this._http.post(this.url + 'login', user);
   }
 
   loggedIn() {
