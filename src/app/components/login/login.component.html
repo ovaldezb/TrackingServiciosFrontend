@@ -1,33 +1,72 @@
-<div class="container">
-    <div class="box" style="width: 30%; margin: 0 auto;">
-    <form (submit)="signIn()">
-        <div class="field">
-            <label class="label">Usuario</label>
-            <div class="control has-icons-left has-icons-right">
-            <input class="input is-success" type="text" [(ngModel)]="user.clave" name="clave"  placeholder="Usuario" required>
-            <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-            </span>
-            <span class="icon is-small is-right">
-                <i class="fas fa-check"></i>
-            </span>
-            </div>        
-        </div>
-        <div class="field">
-            <label class="label">Password</label>
-            <div class="control has-icons-left has-icons-right">
-              <input class="input is-danger" type="password" [(ngModel)]="user.password" name="password" placeholder="Password" required>
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
-            </div>            
-          </div>
-          <div class="control">
-            <button class="button is-primary" >Submit</button>
-          </div>
-    </form>
-    </div>
-</div>
+<table width="400" border="0" align="center"  background="assets/images/background-login.jpg"cellpadding="0" cellspacing="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="366"><table width="324" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="43">&nbsp;</td>
+        <td width="281"><img src="assets/images/logotdm.png" width="259" height="49" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="465"><table width="319" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="319" height="388" background="assets/images/arriba.png"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td colspan="2" align="center"><img src="assets/images/hi.png" width="131" height="120" /></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2"><table width="250" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="32"><img src="assets/images/usuario.png" width="27" height="23" /></td>
+                <td width="218" class="texto">
+                  <input class="input is-success" type="text" [(ngModel)]="user.clave" name="clave"  placeholder="Usuario" required>
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                </tr>
+              <tr>
+                <td><img src="assets/images/candado.png" width="27" height="33" /></td>
+                <td valign="middle" class="texto">
+                  <input class="input is-danger" type="password" [(ngModel)]="user.password" name="password" placeholder="Password" required>
+                </td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr>
+            <td width="33">&nbsp;</td>
+            <td width="217">&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="59" background="assets/images/abajo.png"><table width="306" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="159"><img src="assets/images/login.png" width="159" height="33" (click)="signIn()"/></td>
+            <td width="12">&nbsp;</td>
+            <td width="135" class="texto">Olvidaste tu contraseña?</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="18">&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center"><img src="assets/images/logos.png" width="837" height="37" /></td>
+  </tr>
+</table>

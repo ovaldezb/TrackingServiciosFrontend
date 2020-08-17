@@ -7,6 +7,7 @@ import { Mensajeria } from '../../models/mensajeria';
 import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
 import { AuthService } from '../../services/auth.service';
+import { PrintService } from '../../services/print.service';
 
 export interface Metodopago {
   value: string;
@@ -17,7 +18,7 @@ export interface Metodopago {
   selector: 'app-mover-status',
   templateUrl: './mover-status.component.html',
   styleUrls: ['./mover-status.component.css'],
-  providers:[ServicioService, AuthService]
+  providers:[ServicioService, AuthService, PrintService]
 })
 export class MoverStatusComponent implements OnInit {
   url:string;
@@ -47,7 +48,7 @@ export class MoverStatusComponent implements OnInit {
     {value: 'Otro', viewValue: 'Otro'}        
   ];
   constructor(  
-    private _router : Router,  private _servicioService: ServicioService, public authService: AuthService) { 
+    private _router : Router,  private _servicioService: ServicioService, public authService: AuthService,private printService: PrintService) { 
     this.canreapir = true;
     this.actnnorepair = 'devolver';
     this.url = Global.url;
@@ -219,6 +220,10 @@ export class MoverStatusComponent implements OnInit {
   enviaCorreoFinal():void{
     this._servicioService.enviaCorreoFinal(this.servicio).subscribe(res=>{
     });
+  }
+
+  imprimir() {   
+    this.printService.printDocument(this.servicio._id, this.servicio);
   }
 
 }

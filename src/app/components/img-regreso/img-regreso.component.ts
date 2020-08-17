@@ -72,7 +72,7 @@ export class ImgRegresoComponent implements OnInit {
     this.imagen.tipo = 1;    
     this._servicioService.guardaImagenRegreso(this.imagen)
         .subscribe(res=>{
-          console.log(res);
+          //console.log(res);
         });
   }
 

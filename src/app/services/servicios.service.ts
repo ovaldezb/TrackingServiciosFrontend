@@ -113,4 +113,14 @@ export class ServicioService{
         return this._http.get(this.url+'reportexls',{
             responseType: 'arraybuffer',headers:headers});
     }
+
+    guardaImgPagTec(imagen,serviceId):Observable<any>{
+        let params = JSON.stringify(imagen);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'img-pagtec/'+serviceId,params,{headers:headers});
+    }
+
+    getServicioById(serviceId):Observable<any>{
+        return this._http.get(this.url+'servicio/'+serviceId);
+    }
 }

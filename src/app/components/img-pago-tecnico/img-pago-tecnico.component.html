@@ -1,0 +1,32 @@
+<div class="columns">
+    <div class="column is-narrow" style="width:210px">
+        <angular-file-uploader [config]="afuConfig" 
+            (ApiResponse)="imageUpload($event)"></angular-file-uploader>
+    </div>
+    <div class="column">
+        <div class="columns is-gapless is-multiline">
+            <div class="column is-narrow" style="width:55px ;" *ngFor="let img of servicio.imgpagotecnico; let i=index;">
+                <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre,i)" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal is-active" *ngIf="imageActive">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <!--p class="image is-5by3">
+            <img src="{{imgPath}}" alt="">
+        </p-->
+        <figure class="image is-fullwidth">
+            <img src="{{imgPath}}" alt="">
+        </figure>
+    </div>
+    <button class="modal-close is-large" (click)="closeModal()" aria-label="close"></button>
+    <div class="modal-card">
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="eliminarImg(imgname,imgIndex)">Eliminar</button>
+            <button class="button" (click)="closeModal()">Cerrar</button>
+        </footer>
+    </div>
+</div>
+

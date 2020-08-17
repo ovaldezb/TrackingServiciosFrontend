@@ -1,4 +1,5 @@
 import { Equipo } from './equipo';
+import { Imagen } from './imagen';
 
 export class Servicio{
     constructor(
@@ -30,6 +31,7 @@ export class Servicio{
         public equipos:Equipo[],
         public linkpago:string,
         public pagofinal:Number,
-        public metodopago:string        
+        public metodopago:string,
+        public imgpagotecnico:Imagen[]  
     ){}
 }

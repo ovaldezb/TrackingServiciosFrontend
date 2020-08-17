@@ -62,7 +62,7 @@ export class EquiposComponent implements OnInit {
   };
 
   constructor(private _servicioService:ServicioService) { 
-    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','');
+    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
     this.url = Global.url;
   }
 
@@ -83,7 +83,7 @@ export class EquiposComponent implements OnInit {
     } else{
       this.equipos.push(this.equipo);      
     }   
-    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','');
+    this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
     this.enviaEquipos.emit({equipos:this.equipos});
   }
 
@@ -93,15 +93,13 @@ export class EquiposComponent implements OnInit {
     this.equipo = this.equipos[index];
   }
 
-  eliminarEquipo():void{
-    console.log('Eliminar');
+  eliminarEquipo():void{    
     if(this.HighlightRow<0 || this.HighlightRow==null){
       swal('Oops...', 'Debe elegir un equipo!', 'error');
       return;
     }else{
       this.equipos.splice(this.HighlightRow,1);
-    }
-    
+    }    
   }
 
   selectRow(index): void{

@@ -1,52 +1,42 @@
-<header id="header">
-    <div class="center">
-        <!-- LOGO -->
-        <div id="logo">
-            <img src="assets/images/logotdm.jpg" class="app-logo" alt="Logotipo" />
-            <span id="brand">
-                <strong>Tecnología Dinámica de México</strong>
-            </span>
-        </div>
-        <ng-container *ngIf="authService.loggedIn();">
-            <!-- MENU LOGUEADO-->
+<div class="container" style="margin:0 auto;">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+        <td width="148" rowspan="2">
+            <div id="logo">
+            <img src="assets/images/logotdm.jpg" alt="Logotipo" />
+            </div>
+        </td>
+        <td width="77" height="48" valign="bottom" bgcolor="#EEEEEE">&nbsp;</td>
+        <td width="703" rowspan="2" align="left" valign="middle" bgcolor="#EEEEEE">
             <nav id="menu" >
-                <ul>
-                    <li>
-                        <div class="field">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-user"></i>
-                            <label class="label" style="margin-right:55px;margin-left:10px">{{authService.getUser()}}</label>
-                          </span>                        
-                        </div>
-                    </li>                
-                    <li>
-                        <a routerLink="/lista" [routerLinkActive]="['active']">Lista</a>
-                    </li>
-                    <li *ngIf="authService.getRol() == 0">
-                        <a routerLink="/servicio" [routerLinkActive]="['active']">Servicio</a>
-                    </li>
-                    <li *ngIf="authService.getRol() == 0">
-                        <a routerLink="/tecnicos" [routerLinkActive]="['active']">Técnicos</a>
-                    </li>
-                    <li *ngIf="authService.getRol() == 0">
-                        <a routerLink="/reportes" [routerLinkActive]="['active']">Reportes</a>
-                    </li>  
-                    <li>
-                        <a (click)="authService.logout()" [routerLinkActive]="['active']">Salir</a>
-                    </li>                     
-                </ul>
+            <ul>
+                <li>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                        <label class="label" style="margin-right:55px;margin-left:10px">{{authService.getUser()}}</label>
+                    </span>
+                </li>
+                <li>
+                    <a routerLink="/lista" [routerLinkActive]="['active']" >Lista</a></li>
+                <li *ngIf="authService.getRol() == 0">
+                    <a routerLink="/servicio"  [routerLinkActive]="['active']">Servicio</a></li>
+                <li *ngIf="authService.getRol() == 0">
+                    <a routerLink="/tecnicos"  [routerLinkActive]="['active']">Técnico</a></li>
+                <li *ngIf="authService.getRol() == 0">
+                    <a routerLink="/reportes"  [routerLinkActive]="['active']">Reportes</a></li>
+                <li>
+                    <a (click)="authService.logout()" [routerLinkActive]="['active']">Salir</a>
+                </li> 
+            </ul>
             </nav>
-        </ng-container>
-        <!--ng-template #loggedIn>
-            <nav id="menu" >    
-                <ul>   
-                    <li>
-                        <a [routerLink]="['auth']" [routerLinkActive]="['auth']">Login</a>
-                    </li>
-                </ul>        
-        </nav>
-        <ng-template-->
-        <!--LIMPIAR FLOTADOS-->
-        <div class="clearfix"></div>
-    </div>
-</header>
+        </td>
+        </tr>
+        <tr>
+            <td height="18" bgcolor="#EEEEEE">&nbsp;</td>
+        </tr>        
+    </table>
+
+<script type="text/javascript">
+    var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
+</script>
+</div>

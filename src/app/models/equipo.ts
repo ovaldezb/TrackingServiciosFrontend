@@ -14,6 +14,7 @@ export class Equipo{
         public imagenes: Imagen[],
         public imagenesregreso: Imagen[],
         public nombretecnico:string,
-        public diagnostico: string
+        public diagnostico: string,
+        public folioequipo: string
     ){}
 }

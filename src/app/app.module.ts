@@ -22,6 +22,8 @@ import { AuthUserComponent } from './components/auth-user/auth-user.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { ImgPagoTecnicoComponent } from './components/img-pago-tecnico/img-pago-tecnico.component';
+import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     MostrarEquiposComponent,
     ImgRegresoComponent,
     AuthUserComponent,
-    LoginComponent
+    LoginComponent,
+    ImgPagoTecnicoComponent,
+    PrintLayoutComponent
   ],
   imports: [
     BrowserModule,
