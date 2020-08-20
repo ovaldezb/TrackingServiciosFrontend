@@ -192,3 +192,22 @@ tr:hover{
     app-root > * { display: none; }
     app-root app-print-layout { display: block; }
   }
+
+  .titulos {
+	font-family: "Source Sans Pro Semibold", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;
+}
+.titulossmall {
+	font-family: "Source Sans Pro Semibold", Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+}
+#rcorners2 {
+  border-radius: 25px;
+  border: 2px solid grey;
+  padding: 10px;
+  width: 200px;
+  height: 60px;
+} 

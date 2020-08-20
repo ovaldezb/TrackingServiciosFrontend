@@ -1,85 +1,230 @@
-<table style="width: 100%;margin-top: 20px;">
-    <tr>
-        <td><label class="label">Reporte de Servicio</label></td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <table style="width: 100%;">
-            <tr>
-                <td><label class="label">Fecha Ingreso</label></td>
-                <td><label class="label">Fecha Salida</label></td>
-                <td><label class="label">Folio No.</label></td>
-            </tr>
-            <tr>
-                <td>{{servicio.fechaIngreso | date:'medium':'CST'}}</td>
-                <td></td>
-                <td>{{servicio.folio}}</td>
-            </tr>
-        </table>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td><label class="label">Nombre de quien Recibe</label></td>
-    </tr>
-    <tr>
-        <td>{{servicio.receptor}}</td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td>Datos del Cliente</td>
-    </tr>
-    <tr>
-        <td>
-            <table style="width: 100%;">
-                <tr>
-                    <td><label class="label">Nombre</label></td>
-                    <td><label class="label">Telefono</label></td>
-                    <td><label class="label">Correo</label></td>
+<table width="817" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="3" height="117" valign="top" bgcolor="#FFFFFF">
+		<img src="assets/images/top-hoja-servicio.jpg" width="812" height="110" />
+	</td>
+  </tr>
+  <tr>
+    <td width="33%" align="center" align="center" bgcolor="#FFFFFF">
+		<table id="rcorners2" style="width:90%;" >
+		  <tr>
+			<td valign="top" ><label class="titulossmall">Fecha de ingreso</label></td>        
+		  </tr>   
+		  <tr>
+			<td valign="top" align="center"><label class="titulossmall">{{servicio.fechaIngreso | date:'medium':'CST'}}</label></td>        
+		  </tr>		  
+		</table>
+	</td>
+	<td height="10" width="33%" align="center" valign="top" bgcolor="#FFFFFF">
+		<table id="rcorners2" style="width:90%;">
+		  <tr>        
+			<td valign="top" ><label class="titulossmall">Fecha de Salida</label></td>        
+		  </tr>  
+			<tr>        
+				<td valign="top" ><label class="titulossmall">&nbsp;</label></td>        
+		  </tr>		  
+		</table>
+	</td>
+	<td align="center" width="33%" valign="top" bgcolor="#FFFFFF">
+		<table id="rcorners2" style="width:85%;">
+		  <tr>        
+			<td width="261" valign="top"><label class="titulossmall">Folio No.</label></td>
+		  </tr>      
+		  <tr>        
+			<td width="261" valign="top"><label class="titulossmall">{{servicio.folio}}</label></td>
+		  </tr>
+		</table>
+	</td>
+  </tr>
+  <tr>
+  <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+	<td colspan="3" bgcolor="#FFFFFF" align="center" style="vertical-align:top">
+		<table id="rcorners2" style="width:95%;height:50px;margin-top:-10px">
+			<tr>
+				<td  style="vertical-align:top"	><label class="titulossmall">Nombre de quien recibe</label></td>
+			</tr>
+			<tr>
+				<td  style="vertical-align:top"	><label class="titulossmall">{{servicio.receptor}}</label></td>
+			</tr>
+		</table>		
+	</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" height="33" align="center" bgcolor="#FFFFFF" class="titulos">DATOS DEL CLIENTE </td>
+  </tr>
+  <tr>
+    <td colspan="3" height="50" align="center" valign="top" bgcolor="#FFFFFF" style="padding-left: 0px;">
+		<table id="rcorners2"  cellspacing="0" cellpadding="0" style="width:95%;border-bottom:-10px" >
+		  <tr>
+			<td height="20" colspan="2" valign="top" style="padding-top:-15px;"><label class="titulos">Nombre/Empresa</label></td>
+		  </tr>
+		  <tr>
+			<td height="30" colspan="2" valign="top" style=" border-bottom: 1px solid grey;"><label class="titulossmall">{{servicio.cliente}}</label></td>
+		  </tr>
+		  <tr>
+			<td height="25" colspan="2" valign="top" ><label class="titulos">Dirección</label></td>
+		  </tr>
+		  <tr>
+			<td height="30" colspan="2" valign="top" style=" border-bottom: 1px solid grey;"><label class="titulossmall"></label></td>
+		  </tr>
+		  <tr>
+			<td  height="20" valign="top"><label class="titulos">Tel.</label></td>
+			<td  valign="top"><label class="titulos">Correo</label></td>
+		  </tr>
+		  <tr>
+			<td  height="33" valign="top"><label class="titulossmall">{{servicio.telefono}}</label></td>
+			<td  valign="top" ><label class="titulossmall">{{servicio.correo}}</label></td>
+		  </tr>
+		</table>
+	</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" height="31" align="center" bgcolor="#FFFFFF"><span class="titulos">DATOS DEL EQUIPO</span></td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center" bgcolor="#FFFFFF">
+	<table id="rcorners2" style="width:95%;" cellspacing="0" cellpadding="0">	
+      <tr>
+		<td>
+			<table>
+				<tr>
+					<td width="170" align="center" valign="top" ><label class="titulos">Marca</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulos">Modelo</label></td>
+					<td width="139" align="center" valign="top" ><label class="titulos">Serie</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulos">Observaciones</label></td>
+					<td width="112" align="center" valign="top" ><label class="titulos">Costo</label></td>
+				</tr>
+				<tr style="height:40px">
+					<td width="170" align="center" valign="top" style="padding-top: 5px;"><label class="titulossmall">{{servicio.equipos[0].marca}}</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].modelo}}</label></td>
+					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].serie}}</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].comentarios}}</label></td>
+					<td width="112" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].costo | currency}}</label></td>		
+				</tr>
+				<tr>
+				<td colspan="5" style=" border-bottom: 2px solid grey;"></td>
+				</tr>
+			</table>
+		</td>
+	  </tr>
+	  <tr>
+		<td>
+			<table style="padding-top:-25px;margin-top:5px">
+				<tr>
+					<td width="170" align="center" valign="top" ><label class="titulos">Marca</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulos">Modelo</label></td>
+					<td width="139" align="center" valign="top" ><label class="titulos">Serie</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulos">Observaciones</label></td>
+					<td width="112" align="center" valign="top" ><label class="titulos">Costo</label></td>
+				</tr>
+				<tr style="height:40px" *ngIf="servicio.equipos[1]">
+					<td width="170" align="center" valign="top" style="padding-top: 5px;"><label class="titulossmall">{{servicio.equipos[1].marca}}</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].modelo}}</label></td>
+					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].serie}}</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].comentarios}}</label></td>
+					<td width="112" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].costo | currency}}</label></td>				
+                </tr>
+                <tr style="height:40px" *ngIf="!servicio.equipos[1]">
+                    <td colspan="5">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>
-                        {{servicio.cliente}}
-                    </td>
-                    <td>{{servicio.telefono}}</td>
-                    <td>{{servicio.correo}}</td>
-                </tr>               
-            </table>
-        </td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td style="text-align: center;">Datos del Equipo</td>
-    </tr>
-    <tr>
-        <td>
-            <table style="width: 100%;">
-                <tr>
-                    <td><label class="label">Marca</label></td>
-                    <td><label class="label">Modelo</label></td>
-                    <td><label class="label">Serie</label></td>
-                    <td><label class="label">Observaciones</label></td>
-                    <td><label class="label">Costo</label></td>
+				    <td colspan="5" style=" border-bottom: 2px solid grey;"></td>
+				</tr>				
+			</table>
+		</td>
+	  </tr>
+	  <tr>
+		<td>
+			<table style="padding-top:-25px;margin-top:5px">
+				<tr>
+					<td width="170" align="center" valign="top" ><label class="titulos">Marca</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulos">Modelo</label></td>
+					<td width="139" align="center" valign="top" ><label class="titulos">Serie</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulos">Observaciones</label></td>
+					<td width="112" align="center" valign="top" ><label class="titulos">Costo</label></td>
+				</tr>
+				<tr style="height:40px" *ngIf="servicio.equipos[2]">
+					<td width="170" align="center" valign="top" style="padding-top: 5px;"><label class="titulossmall">{{servicio.equipos[2].marca}}</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].modelo}}</label></td>
+					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].serie}}</label></td>
+					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].comentarios}}</label></td>
+					<td width="112" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].costo | currency}}</label></td>		
                 </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table style="width: 100%;">
-                <tr *ngFor="let equipo of servicio.equipos">
-                    <td>{{equipo.marca}}</td>
-                    <td>{{equipo.modelo}}</td>
-                    <td>{{equipo.serie}}</td>
-                    <td>{{equipo.comentarios}}</td>
-                    <td>{{equipo.costo | currency}}</td>
+                <tr style="height:40px" *ngIf="!servicio.equipos[2]">
+                    <td colspan="5">&nbsp;</td>
                 </tr>
-            </table>
-        </td>
-    </tr>
+			</table>
+		</td>
+	  </tr>
+	</table>
+	</td>
+	</tr>	
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>  
+  <tr style="height:80px">
+    <td colspan="3" align="center" bgcolor="#FFFFFF" >
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="33%" align="center">
+					<table width="270" id="rcorners2" cellspacing="0" cellpadding="0" >
+						<tr>
+							<td width="254" height="80" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+						</tr>
+						<tr>
+							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
+						</tr>
+						<tr>
+							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
+						</tr>
+					</table>
+				</td>
+				<td width="33%" align="center">
+					<table width="270" id="rcorners2" cellspacing="0" cellpadding="0" >
+						<tr>
+							<td width="254" height="80" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+						</tr>
+						<tr>
+							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
+						</tr>
+						<tr>
+							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
+						</tr>
+					</table>
+                </td>
+                <td width="33%" align="center">
+					<table width="270" id="rcorners2" cellspacing="0" cellpadding="0" >
+						<tr>
+							<td width="254" height="80" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+						</tr>
+						<tr>
+							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
+						</tr>
+						<tr>
+							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
 </table>
-<div class="header">COOL HEADER</div>
-<div class="footer">AWESOME FOOTER</div>
+
