@@ -13,8 +13,9 @@ import { PrintLayoutComponent } from './components/print-layout/print-layout.com
 
 //Array de Componentes
 const appRoutes: Routes = [
-    {path:'', redirectTo:'/auth', pathMatch: 'full'},
-    {path: 'auth',  component:LoginComponent },    
+    //{path:'', redirectTo:'/auth', pathMatch: 'full'},
+    {path:'',  component:LoginComponent },    
+    {path:'auth',  component:LoginComponent },    
     {path:'lista',component:ListaServiciosComponent},
     {path:'reportes',component:ReportesComponent},
     {path:'tecnicos',component:TecnicosComponent},
