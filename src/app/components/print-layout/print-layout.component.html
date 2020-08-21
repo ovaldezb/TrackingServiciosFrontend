@@ -107,7 +107,7 @@
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].modelo}}</label></td>
 					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].serie}}</label></td>
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].comentarios}}</label></td>
-					<td width="112" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].costo | currency}}</label></td>		
+					<td width="112" align="center" valign="top" ></td>		
 				</tr>
 				<tr>
 				<td colspan="5" style=" border-bottom: 2px solid grey;"></td>
@@ -130,7 +130,7 @@
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].modelo}}</label></td>
 					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].serie}}</label></td>
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].comentarios}}</label></td>
-					<td width="112" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].costo | currency}}</label></td>				
+					<td width="112" align="center" valign="top" >&nbsp;</td>				
                 </tr>
                 <tr style="height:40px" *ngIf="!servicio.equipos[1]">
                     <td colspan="5">&nbsp;</td>
@@ -156,7 +156,7 @@
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].modelo}}</label></td>
 					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].serie}}</label></td>
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].comentarios}}</label></td>
-					<td width="112" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].costo | currency}}</label></td>		
+					<td width="112" align="center" valign="top" >&nbsp;</td>		
                 </tr>
                 <tr style="height:40px" *ngIf="!servicio.equipos[2]">
                     <td colspan="5">&nbsp;</td>
@@ -168,14 +168,11 @@
 	</td>
 	</tr>	
   <tr>
-    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+    <td colspan="3" bgcolor="#FFFFFF" style="border-bottom-style: dashed;">&nbsp;</td>
   </tr>
   <tr>
-    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
+    <td colspan="3" bgcolor="#FFFFFF" >&nbsp;</td>
   </tr>
-  <tr>
-    <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
-  </tr>  
   <tr style="height:80px">
     <td colspan="3" align="center" bgcolor="#FFFFFF" >
 		<table width="100%" cellspacing="0" cellpadding="0">
@@ -183,40 +180,85 @@
 				<td width="33%" align="center">
 					<table width="270" id="rcorners2" cellspacing="0" cellpadding="0" >
 						<tr>
-							<td width="254" height="80" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+							<td width="254" height="20" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+                        </tr>
+                        <tr>
+							<td width="254" height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.equipos[0].folioequipo}}</label></td>
+                        </tr>
+						<tr>
+							<td height="20" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
+                        </tr>
+                        <tr>
+							<td height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.cliente}}</label></td>
 						</tr>
 						<tr>
-							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
-						</tr>
-						<tr>
-							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
-						</tr>
+							<td height="20" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
+                        </tr>
+                        <tr>
+							<td width="254" height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.equipos[0].diagnostico}}</label></td>
+                        </tr>
 					</table>
 				</td>
 				<td width="33%" align="center">
 					<table width="270" id="rcorners2" cellspacing="0" cellpadding="0" >
 						<tr>
-							<td width="254" height="80" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
-						</tr>
+							<td width="254" height="20" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+                        </tr>
+                        <tr *ngIf="servicio.equipos[1]">
+							<td width="254" height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.equipos[1].folioequipo}}</label></td>
+                        </tr>
+                        <tr *ngIf="!servicio.equipos[1]">
+							<td width="254" height="60" align="center" style="vertical-align:top">&nbsp;</td>
+                        </tr>
 						<tr>
-							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
-						</tr>
+							<td height="20" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
+                        </tr>
+                        <tr *ngIf="servicio.equipos[1]">
+							<td height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.cliente}}</label></td>
+                        </tr>
+                        <tr *ngIf="!servicio.equipos[1]">
+							<td width="254" height="60" align="center" style="vertical-align:top">&nbsp;</td>
+                        </tr>
 						<tr>
-							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
-						</tr>
+							<td height="20" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
+                        </tr>
+                        <tr *ngIf="servicio.equipos[1]">
+							<td width="254" height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.equipos[1].diagnostico}}</label></td>
+                        </tr>
+                        <tr *ngIf="!servicio.equipos[1]">
+							<td width="254" height="60" align="center" style="vertical-align:top">&nbsp;</td>
+                        </tr>
 					</table>
-                </td>
+				</td>
                 <td width="33%" align="center">
 					<table width="270" id="rcorners2" cellspacing="0" cellpadding="0" >
 						<tr>
-							<td width="254" height="80" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
-						</tr>
+							<td width="254" height="20" align="center" style="vertical-align:top"><label class="titulos">No. de Folio</label></td>
+                        </tr>
+                        <tr *ngIf="servicio.equipos[2]">
+							<td width="254" height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.equipos[2].folioequipo}}</label></td>
+                        </tr>
+                        <tr *ngIf="!servicio.equipos[2]">
+							<td width="254" height="60" align="center" style="vertical-align:top">&nbsp;</td>
+                        </tr>
 						<tr>
-							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
-						</tr>
+							<td height="20" align="center" style="vertical-align:top"><label class="titulos">Cliente</label></td>
+                        </tr>
+                        <tr *ngIf="servicio.equipos[2]">
+							<td height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.cliente}}</label></td>
+                        </tr>
+                        <tr *ngIf="!servicio.equipos[2]">
+							<td width="254" height="60" align="center" style="vertical-align:top">&nbsp;</td>
+                        </tr>
 						<tr>
-							<td height="80" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
-						</tr>
+							<td height="20" align="center" style="vertical-align:top"><label class="titulos">Falla</label></td>
+                        </tr>
+                        <tr *ngIf="servicio.equipos[2]">
+							<td width="254" height="60" align="center" style="vertical-align:top"><label class="titulos">{{servicio.equipos[2].diagnostico}}</label></td>
+                        </tr>
+                        <tr *ngIf="!servicio.equipos[2]">
+							<td width="254" height="60" align="center" style="vertical-align:top">&nbsp;</td>
+                        </tr>
 					</table>
 				</td>
 			</tr>

@@ -65,10 +65,10 @@ export class ServicioComponent implements OnInit {
       for(var i=0;i<this.equipos.length;i++){
         var equi = this.equipos[i];
         if(this.equipos.length==1){
-          equi.folioequipo = servrec.folio;
+          equi.folioequipo = servrec.servicio.folio;          
         }else{
-          equi.folioequipo = servrec.folio+'-'+i;
-        }        
+          equi.folioequipo = servrec.servicio.folio+'-'+(i+1);          
+        }
         var serUpdt = await this._servicioService.createEquipo(equi,servrec.servicio._id).toPromise();            
       }
       if(this.servicio.correo != ''){              

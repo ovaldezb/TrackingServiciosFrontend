@@ -49,7 +49,7 @@
           <label for="receptor" class="label">Receptor</label>
         </div>
         <div class="column is-narrow" style="width: 200px;">
-          <input type="text" name="receptor" class="input is-small" #receptor="ngModel" [(ngModel)]="servicio.receptor" required />
+          <input type="text" name="receptor" class="input is-small" #receptor="ngModel" [(ngModel)]="servicio.receptor" (ngModelChange)="servicio.receptor = $event.toUpperCase()" required />
           <small *ngIf="!receptor.valid && receptor.touched">Nombre no es válido</small>
         </div>
       </div>      

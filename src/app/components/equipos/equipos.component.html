@@ -9,7 +9,7 @@
                 </div>                    
                 <div class="column is-narrow" style="width:110px"><label class="label">Modelo:</label></div>
                 <div class="column is-narrow" style="width: 180px;">
-                    <input type="text" class="input is-small" name="modelo" #modelo="ngModel" [(ngModel)]="equipo.modelo" (ngModelChange)="equipo.marca = $event.toUpperCase()" required>
+                    <input type="text" class="input is-small" name="modelo" #modelo="ngModel" [(ngModel)]="equipo.modelo" (ngModelChange)="equipo.modelo = $event.toUpperCase()" required>
                 </div>
             </div>
             <div class="columns" style="margin-top:-25px">
