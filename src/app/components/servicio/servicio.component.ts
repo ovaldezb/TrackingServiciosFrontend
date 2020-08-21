@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import  swal  from 'sweetalert';
 import { Servicio } from '../../models/servicio';
 import { Equipo } from '../../models/equipo';
 import { Etapa } from '../../models/etapa';
 import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
+
 
 export interface Garantia {
   value: string;
@@ -25,6 +26,7 @@ export class ServicioComponent implements OnInit {
   public showGarantia:boolean;  
   equipos: Equipo[] = [];
   etapas: Etapa[] = [];
+  public errTel: Boolean = false;
 
   garantias: Garantia[] = [
     {value: 'true', viewValue: 'Si'},
@@ -86,6 +88,14 @@ export class ServicioComponent implements OnInit {
 
   recibeEquipos(event){
     this.equipos = event.equipos;    
+  }
+
+  validaTel(){
+    this.errTel = false;    
+    if(this.servicio.telefono.length != 10 || Number(this.servicio.telefono)==NaN){
+      this.errTel = true;
+      this.servicio.telefono = '';
+    }
   }
 
 }

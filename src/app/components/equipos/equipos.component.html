@@ -5,19 +5,18 @@
             <div class="columns">
                 <div class="column is-narrow" style="width:115px"><label class="label">Marca:</label></div>
                 <div class="column is-narrow" style="width: 180px;">
-                    <div class="select is-small">
-                    <select name="marca" [(ngModel)]="equipo.marca" >
-                        <option [ngValue]="null" selected disabled>Seleccione Marca</option>
-                        <option *ngFor="let marca of marcas" [ngValue]="marca.value">{{marca.viewValue}}</option>
-                    </select>
-                    </div>
+                    <input type="text" class="input is-small" name="marca" #marca="ngModel" [(ngModel)]="equipo.marca" (ngModelChange)="equipo.marca = $event.toUpperCase()" required>                    
                 </div>                    
                 <div class="column is-narrow" style="width:110px"><label class="label">Modelo:</label></div>
-                <div class="column is-narrow" style="width: 180px;"><input type="text" class="input is-small" name="modelo" #modelo="ngModel" [(ngModel)]="equipo.modelo" required></div>
+                <div class="column is-narrow" style="width: 180px;">
+                    <input type="text" class="input is-small" name="modelo" #modelo="ngModel" [(ngModel)]="equipo.modelo" (ngModelChange)="equipo.marca = $event.toUpperCase()" required>
+                </div>
             </div>
             <div class="columns" style="margin-top:-25px">
                 <div class="column is-narrow" style="width:115px"><label class="label">Serie:</label></div>
-                <div class="column is-narrow" style="width:180px;"><input type="text" class="input is-small" name="serie" #serie="ngModel" [(ngModel)]="equipo.serie" required></div>                            
+                <div class="column is-narrow" style="width:180px;">
+                    <input type="text" class="input is-small" name="serie" #serie="ngModel" [(ngModel)]="equipo.serie" (ngModelChange)="equipo.serie = $event.toUpperCase()" required>
+                </div>                            
                 <div class="column is-narrow" style="width:110px"><label class="label">Costo:</label></div>
                 <div class="column is-narrow" style="width: 180px;"><input type="number" class="input is-small" name="costo" #costo="ngModel" [(ngModel)]="equipo.costo" required></div>
             </div>
@@ -103,7 +102,7 @@
                 <td align="center">{{equipo.costo | currency}}</td>
                 <td>{{equipo.nombretecnico}}</td>
                 <td align="right"><textarea rows="1" disabled>{{equipo.comentarios}}</textarea></td>
-                <td align="right"><textarea rows="1" disabled>{{equipo.diagnostico}</textarea></td>
+                <td align="right"><textarea rows="1" disabled>{{equipo.diagnostico}}</textarea></td>
             </tr>
         </table>
     </div>        

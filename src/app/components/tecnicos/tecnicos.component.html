@@ -10,13 +10,13 @@
                 <label class="label">Nombre</label>
             </div>
             <div class="column is-narrow" style="width:150px">
-                <input type="text" id="nombre" name="nombre" class="input is-small" [(ngModel)]="tecnico.nombre" required>
+                <input type="text" id="nombre" name="nombre" class="input is-small" [(ngModel)]="tecnico.nombre" (ngModelChange)="tecnico.nombre = $event.toUpperCase()"  required>
             </div>
-            <div class="column  is-narrow" style="width:85px">
+            <div class="column  is-narrow" style="width:95px">
                 <label class="label">Apellido</label>
             </div>
             <div class="column is-narrow" style="width:150px">
-                <input type="text" id="apellido" name="apellido" class="input is-small" [(ngModel)]="tecnico.apellido" required>
+                <input type="text" id="apellido" name="apellido" class="input is-small" [(ngModel)]="tecnico.apellido" (ngModelChange)="tecnico.apellido = $event.toUpperCase()" required>
             </div>
         </div>
         <div class="columns">
@@ -26,7 +26,7 @@
             <div class="column is-narrow" style="width:150px">
                 <input type="text" name="telefono" class="input is-small" [(ngModel)]="tecnico.telefono" required>
             </div>
-            <div class="column is-narrow" style="width:85px">
+            <div class="column is-narrow" style="width:95px">
                 <label class="label">Correo</label>
             </div>
             <div class="column is-narrow" style="width:150px">
@@ -35,12 +35,12 @@
         </div>
         <div class="columns">
             <div class="column is-narrow" style="width:85px">
-                <label class="label">Clave</label>
+                <label class="label">Usuario</label>
             </div>
             <div class="column is-narrow" style="width:150px">
                 <input type="text" name="clave" class="input is-small" [(ngModel)]="tecnico.clave" required>
             </div>
-            <div class="column is-narrow" style="width:85px">
+            <div class="column is-narrow" style="width:95px">
                 <label class="label">Contraseña</label>
             </div>
             <div class="column is-narrow" style="width:150px">

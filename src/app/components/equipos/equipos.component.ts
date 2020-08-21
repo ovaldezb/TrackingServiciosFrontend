@@ -84,6 +84,7 @@ export class EquiposComponent implements OnInit {
       this.equipos.push(this.equipo);      
     }   
     this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
+    console.log(this.equipos);
     this.enviaEquipos.emit({equipos:this.equipos});
   }
 

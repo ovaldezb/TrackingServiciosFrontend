@@ -62,7 +62,10 @@ export class TecnicosComponent implements OnInit {
       this._servicioService.createTecnico(this.tecnico)
         .subscribe(res =>{
           if(res.status=='success'){
-            this.tecnicos.push(res.tecnico);
+            this.tecnico = res.tecnico;
+            this.tecnico.password = '';
+            this.tecnico.rolnombre = this.roles[this.tecnico.rol].viewValue;
+            this.tecnicos.push(this.tecnico);
             swal('Se ha creado el Técnico exitosamente','Felicidades!','success');
           }
         });
