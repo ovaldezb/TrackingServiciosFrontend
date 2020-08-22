@@ -25,29 +25,29 @@
     </nav>    
     <table width="100%" border="1" cellspacing="0" cellpadding="0"  *ngIf="servicios">
         <tr class="column1">
-            <td width="94" bgcolor="#19377B">Folio</td>
-            <td width="260" bgcolor="#19377B">Cliente</td>        
+            <td width="101" bgcolor="#19377B">Folio</td>
+            <td width="195" bgcolor="#19377B">Cliente</td>        
             <td width="140" bgcolor="#19377B">Teléfono</td>
-            <td width="109" bgcolor="#19377B">Equipo</td>
+            <td width="150" bgcolor="#19377B">Marca</td>
             <td width="163" bgcolor="#19377B">Modelo</td>
             <td width="119" bgcolor="#19377B">Garantía</td>
             <td width="152" bgcolor="#19377B">Abierto</td>
             <td width="152" bgcolor="#19377B">Ult Act</td>
-            <td width="119" bgcolor="#19377B">Estatus</td>
+            <td width="140" bgcolor="#19377B">Estatus</td>
         </tr>
     </table>
-    <div style="height: 610px; width:100%; overflow:auto;" *ngIf="servicios">
-        <table style="width:100%" id="tblservicios" >
+    <div style="height: 510px; width:100%; overflow:auto;" *ngIf="servicios">
+        <table style="width:100%" id="tblservicios" class="table is-bordered">
             <tr  *ngFor="let servicio of servicios ; let i = index" (click)="ClickedRow(i)" (dblclick)="DoubleClickRow(i)" [class.selected]="i == HighlightRow" [class.greenrow]="servicio.semaforo == 'g'" [class.yellowrow]="servicio.semaforo == 'y'" [class.redrow]="servicio.semaforo == 'r'">
-                <td width="106">{{servicio.folio}}</td>
-                <td width="260">{{servicio.cliente}}</td>            
-                <td width="140">{{servicio.telefono}}</td>
-                <td width="109">{{servicio.equipos[0].marca}}</td>
-                <td width="163">{{servicio.equipos[0].modelo}}</td>
-                <td width="119">{{servicio.esgarantia ? 'Si' : (servicio.costorevision | currency)}}</td>
-                <td width="152">{{servicio.fechaIngreso | date:'short':'CST' }}</td>
-                <td width="152">{{servicio.fechaactualizacion | amLocale: 'es' | amTimeAgo}}</td>
-                <td width="140">{{servicio.estatus}}</td>
+                <td style="width:115px;text-align: center;">{{servicio.folio}}</td>
+                <td style="width:145;padding-left: 5px;">{{servicio.cliente}}</td>            
+                <td style="width:140px;text-align: left;">{{servicio.telefono}}</td>
+                <td style="width:135px;text-align: center;">{{servicio.equipos[0].marca}}</td>
+                <td style="width:163px;text-align: center;">{{servicio.equipos[0].modelo}}</td>
+                <td style="width:119px;text-align: center;">{{servicio.esgarantia ? 'Si' : (servicio.costorevision | currency)}}</td>
+                <td style="width:152px;text-align: center;">{{servicio.fechaIngreso | date:'short':'CST' }}</td>
+                <td style="width:152px;text-align: center;">{{servicio.fechaactualizacion | amLocale: 'es' | amTimeAgo}}</td>
+                <td style="width:140px;text-align: center;">{{servicio.estatus}}</td>
             </tr>
         </table>
     </div>

@@ -68,41 +68,29 @@
         </div>        
     </div>    
     
-    <table class="table" style="width:100%" style="margin-top:-25px">
-        <col width="10%">
-        <col width="15%">
-        <col width="15%">
-        <col width="15%">
-        <col width="25%">
-        <col width="20%">
+    <table class="table is-bordered" style="width:100%;margin-top:-15px">        
         <thead>
         <tr>
-            <td>Marca</td>
-            <td>Modelo</td>
-            <td>Serie</td>
-            <td align="center">Costo</td>
-            <td align="center">Técnico</td>
-            <td>Comentarios</td>
-            <td>Diagnóstico</td>
+            <td style="width: 85px;text-align: center;">Marca</td>
+            <td style="width: 96px;text-align: center;">Modelo</td>
+            <td style="width: 85px;text-align: center;">Serie</td>
+            <td style="width: 71px;text-align: center;">Costo</td>
+            <td style="width: 117px;text-align: center;">Técnico</td>
+            <td style="width: 147px;text-align: center;">Comentarios</td>
+            <td style="width: 152px;text-align: center;">Diagnóstico</td>
         </tr>
         </thead>
     </table>
-    <div style="width:100%; height:150px; overflow:auto;">
-        <table class="table is-hoverable" style="width:100%">
-            <col width="10%">
-            <col width="15%">
-            <col width="15%">
-            <col width="15%">
-            <col width="25%">
-            <col width="20%">
+    <div style="width:100%; height:150px; overflow:auto; margin-top:-20px">
+        <table class="table is-hoverable" style="width:100%">            
             <tr *ngFor="let equipo of equipos; let i = index" (dblclick)="editEquipo(i)" (click)="selectRow(i)" [class.is-selected]="i == HighlightRow">
-                <td>{{equipo.marca}}</td>
-                <td>{{equipo.modelo}}</td>
-                <td>{{equipo.serie}}</td>
-                <td align="center">{{equipo.costo | currency}}</td>
-                <td>{{equipo.nombretecnico}}</td>
-                <td align="right"><textarea rows="1" disabled>{{equipo.comentarios}}</textarea></td>
-                <td align="right"><textarea rows="1" disabled>{{equipo.diagnostico}}</textarea></td>
+                <td style="width: 108px;text-align: center;font-size:12px">{{equipo.marca}}</td>
+                <td style="width: 124px;text-align: center;font-size:12px">{{equipo.modelo}}</td>
+                <td style="width: 103px;text-align: center;font-size:12px">{{equipo.serie}}</td>
+                <td style="width: 87px;text-align: center;font-size:12px">{{equipo.costo | currency}}</td>
+                <td style="width: 150px;text-align: center;font-size:12px">{{equipo.nombretecnico}}</td>
+                <td style="width: 100px;text-align: center;"><textarea rows="1" disabled style="font-size:12px;">{{equipo.comentarios}}</textarea></td>
+                <td style="width: 160px;text-align: center;"><textarea rows="1" disabled style="font-size:12px;">{{equipo.diagnostico}}</textarea></td>
             </tr>
         </table>
     </div>        

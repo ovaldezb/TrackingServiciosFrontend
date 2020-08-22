@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="box" *ngFor="let equipo of equipos; let i = index;">
+    <div class="box" *ngFor="let equipo of equipos; let i = index;">        
         <div class="columns is-gapless is-multiline">
             <div class="column is-narrow" style="width:55px ;" *ngFor="let img of equipo.imagenes, let j = index">
                 <img src="{{url+'get-image/'+img.nombre}}" title="{{img.nombreoriginal}}" class="equipos" (click)="clickImage(img.nombre,img._id,i,j)" />

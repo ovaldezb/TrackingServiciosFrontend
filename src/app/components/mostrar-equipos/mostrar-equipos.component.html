@@ -1,24 +1,24 @@
-<table class="table" style="width: 100%;">
+<table class="table is-bordered" style="width: 100%;">
     <tr>
-        <td>Marca</td>
-        <td>Modelo</td>
-        <td>Serie</td>
-        <td *ngIf="authService.getRol() == 0">Costo</td>
-        <td>Técnico</td>
-        <td>Comentarios</td>
-        <td>Diagnostico</td>
+        <td style="width: 150px;text-align: left;">Marca</td>
+        <td style="width: 150px;text-align: center;">Modelo</td>
+        <td style="width: 160px;text-align: center;">Serie</td>
+        <td *ngIf="authService.getRol() == 0"  style="width: 160px;text-align: center;">Costo</td>
+        <td  style="width: 160px;text-align: center;">Técnico</td>
+        <td  style="width: 260px;text-align: center;">Comentarios</td>
+        <td  style="width: 260px;text-align: center;">Diagnostico</td>
     </tr>
 </table>
-<div style="width:auto; height: 110px;overflow:auto;">
-    <table class="table" style="width: 100%;">
+<div style="width:auto; height: 180px;overflow:auto;margin-top: -25px;">
+    <table class="table is-bordered" style="width: 100%;">
         <tr *ngFor="let equipo of equipos ; let i = index">
-            <td>{{equipo.marca}}</td>
-            <td>{{equipo.modelo}}</td>
-            <td>{{equipo.serie}}</td>
-            <td *ngIf="authService.getRol() == 0">{{equipo.costo | currency}}</td>
-            <td>{{equipo.tecnico.nombre}} {{equipo.tecnico.apellido}}</td>        
-            <td><textarea disabled rows="1">{{equipo.comentarios}}</textarea></td>
-            <td><textarea disabled rows="1">{{equipo.diagnostico}}</textarea></td>
+            <td style="width: 150px;text-align: left;">{{equipo.marca}}</td>
+            <td style="width: 150px;text-align: center;">{{equipo.modelo}}</td>
+            <td style="width: 160px;text-align: center;">{{equipo.serie}}</td>
+            <td *ngIf="authService.getRol() == 0" style="width: 160px;text-align: center;">{{equipo.costo | currency}}</td>
+            <td style="width: 160px;text-align: center;">{{equipo.tecnico.nombre}} {{equipo.tecnico.apellido}}</td>        
+            <td style="width: 260px;text-align: center;"><textarea disabled rows="1">{{equipo.comentarios}}</textarea></td>
+            <td style="width: 260px;text-align: center;"><textarea disabled rows="1">{{equipo.diagnostico}}</textarea></td>
         </tr>
     </table>
 </div>
