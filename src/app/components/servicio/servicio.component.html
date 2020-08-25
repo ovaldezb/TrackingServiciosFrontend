@@ -75,7 +75,7 @@
           
         </div>
       </div> 
-      <button class="button is-success" (click)="onSubmit()" [disabled]="equipos.length <= 0">Enviar</button>
+      <button class="button is-success" (click)="onSubmit()" [disabled]="equipos.length <= 0 || servicio.esgarantia==null">Enviar</button>
     </form>    
     </div>
   </div>
