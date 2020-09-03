@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Equipo } from '../../models/equipo';
 import { Tecnico } from '../../models/tecnico';
 import { Global } from '../../services/global';
 import { ServicioService } from '../../services/servicios.service';
 import  swal  from 'sweetalert';
+import { Servicio } from 'src/app/models/servicio';
 
 export interface Marcas {
   value: string;
@@ -18,50 +19,25 @@ export interface Marcas {
 })
 export class EquiposComponent implements OnInit {
 
-  @Output() enviaEquipos = new EventEmitter();
+  @Input() servicio : Servicio;
+  @Output() recFolio = new EventEmitter();
   url:string;
-  HighlightRow : number; 
+  HighlightRow : number;
   isEdit:boolean = false;
   public btnAccion:string = 'Agregar';
   public imageActive:boolean = false;
   public imgPath:string = "";
   public equipo:Equipo;
+  private folio: string;
   public equipos:Equipo[]=[];
-  public tecnicos:Tecnico[];  
-  public marcas: Marcas[] = [
-    {value: 'Apple', viewValue: 'Apple'},
-    {value: 'Bose', viewValue: 'Bose'},
-    {value: 'Supermicro', viewValue: 'Supermicro'},
-    {value: 'WebDT', viewValue: 'WebDT'}        
-  ];
-   
+  public tecnicos:Tecnico[];
+
+
    public imgname:string;
    public imgIndex:number;
-  afuConfig = {
-    multiple: true,
-    formatsAllowed: ".jpg,.png,.gif,.jpeg",
-    maxSize: "50",
-    uploadAPI: {
-      url: Global.url + 'upload-img'  
-    },
-    theme: "attachPin",
-    hideProgressBar: true,
-    hideResetBtn: true,
-    hideSelectBtn: false,
-    fileNameIndex: true,
-    replaceTexts: {
-      selectFileBtn: 'Select Files',
-      resetBtn: 'Reset',
-      uploadBtn: 'Upload',
-      dragNDropBox: 'Drag N Drop',
-      attachPinBtn: 'Sube tu imagen...',
-      afterUploadMsg_success: 'Successfully Uploaded !',
-      afterUploadMsg_error: 'Upload Failed !',
-      sizeLimit: 'Size Limit'
-    }
-  };
 
-  constructor(private _servicioService:ServicioService) { 
+
+  constructor(private _servicioService:ServicioService) {
     this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
     this.url = Global.url;
   }
@@ -79,71 +55,81 @@ export class EquiposComponent implements OnInit {
     if(this.isEdit){
       this.equipos[this.HighlightRow] = this.equipo;
       this.isEdit = false;
-      this.btnAccion = 'Agregar';
+      this.btnAccion = 'Agregar Equipo';
     } else{
-      this.equipos.push(this.equipo);      
-    }   
+      this.equipos.push(this.equipo);
+    }
     this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
-    console.log(this.equipos);
-    this.enviaEquipos.emit({equipos:this.equipos});
   }
 
   editEquipo(index):void{
-    this.btnAccion = 'Actualizar';
-    this.isEdit = true;    
+    this.btnAccion = 'Actualizar Equipo';
+    this.isEdit = true;
     this.equipo = this.equipos[index];
   }
 
-  eliminarEquipo():void{    
+  eliminarEquipo():void{
     if(this.HighlightRow<0 || this.HighlightRow==null){
       swal('Oops...', 'Debe elegir un equipo!', 'error');
       return;
     }else{
       this.equipos.splice(this.HighlightRow,1);
-    }    
+    }
   }
 
   selectRow(index): void{
     this.HighlightRow = index;
   }
 
-  imageUpload(data) {    
-    this.equipo.imagenes.push(data.body.imagen);    
-  }
-
-  clickImage(imagePath,imgIndex){    
-    this.imageActive = true;
-    this.imgPath = this.url+'get-image/'+imagePath;    
-    this.imgIndex = imgIndex;
-    this.imgname = imagePath;
-  }
-
-  eliminarImg(imgname,imgIndex){
-    swal({
-      title: "Esta seguro que desea eliminar la imagen",
-      text: "Una vez eliminada, no se podrá recuperar!",
-      icon: "warning",
-      buttons: [true,true],
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {        
-        this._servicioService.eliminaImgbyName(imgname).subscribe(res=>{
-          this.equipo.imagenes.splice(imgIndex,1)
-          swal(" El archivo ha sido eliminado!", {
-            icon: "success",
-          });
-          this.closeModal();
-        });
+  async onSubmit(){
+    this.servicio.fechaactualizacion = new Date();
+    var servrec = await this._servicioService.create(this.servicio).toPromise();
+    if(servrec.status == 'success'){
+      for(var i=0;i<this.equipos.length;i++){
+        var equi = this.equipos[i];
+        if(this.equipos.length==1){
+          equi.folioequipo = servrec.servicio.folio;
+        }else{
+          equi.folioequipo = servrec.servicio.folio+'-'+(i+1);
+        }
+        var serUpdt = await this._servicioService.createEquipo(equi,servrec.servicio._id).toPromise();
       }
-    });    
+      /*if(this.servicio.correo != ''){
+        this._servicioService.enviaCorreoInicial(serUpdt.serviceUpdate)
+          .subscribe(res=>{
+            console.log(res);
+          });
+      }*/
+      swal('Servicio creado',
+        'El Servicio fue creado exitosamente',
+        'success'
+      );
+      this.equipos = [];
+      this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
+      //this._router.navigate(['/lista']);
+      this.getFolio();
+
+    }
   }
+
+  getFolio(){
+    this._servicioService.getFolio()
+        .subscribe(
+          res =>{
+            if(res.status == 'success'){
+              this.folio = res.folio;
+              this.recFolio.emit({folio:this.folio});
+            }
+          }
+        );
+  }
+
 
   closeModal(){
     this.imageActive = false;
   }
 
-  changetecnico(event):void{    
+  changetecnico(event):void{
     this.equipo.nombretecnico = this.tecnicos[event.target.options.selectedIndex-1].nombre + ' ' +this.tecnicos[event.target.options.selectedIndex-1].apellido;
   }
 

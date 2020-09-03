@@ -11,7 +11,7 @@
     <form class="mid-form" #serviceForm="ngForm">
       <div class="columns">
         <div class="column is-narrow" style="width: 140px;">
-          <label for="folio" class="label">Folio:</label>  
+          <label for="folio" class="label">Folio:</label>
         </div>
         <div class="column">
           <label class="label">{{servicio.folio}}</label>
@@ -39,9 +39,9 @@
         <div class="column is-narrow" style="width: 140px;">
           <label for="correo" class="label">Correo</label>
         </div>
-        <div class="column is-narrow" style="width: 200px;">            
-          <input type="email" name="correo" class="input is-small" #correo="ngModel" [(ngModel)]="servicio.correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />          
-            <small *ngIf="!correo.valid && correo.touched" >Correo es requerido</small>            
+        <div class="column is-narrow" style="width: 200px;">
+          <input type="email" name="correo" class="input is-small" #correo="ngModel" [(ngModel)]="servicio.correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+            <small *ngIf="!correo.valid && correo.touched" >Correo es requerido</small>
         </div>
       </div>
       <div class="columns">
@@ -52,7 +52,7 @@
           <input type="text" name="receptor" class="input is-small" #receptor="ngModel" [(ngModel)]="servicio.receptor" (ngModelChange)="servicio.receptor = $event.toUpperCase()" required />
           <small *ngIf="!receptor.valid && receptor.touched">Nombre no es válido</small>
         </div>
-      </div>      
+      </div>
       <div class="columns">
         <div class="column is-narrow" style="width: 140px;">
           <label for="garantia" class="label">Tiene Garantia:</label>
@@ -72,16 +72,16 @@
         </div>
         <div class="column is-narrow" style="width: 100px;">
           <input type="number" name="costorevision" class="input is-small" #costorevision="ngModel" [(ngModel)]="servicio.costorevision" required />
-          
+
         </div>
-      </div> 
-      <button class="button is-success" (click)="onSubmit()" [disabled]="equipos.length <= 0 || servicio.esgarantia==null || (servicio.esgarantia == 'false' && servicio.costorevision == 0)">Enviar</button>
-    </form>    
+      </div>
+      <button class="button is-success" (click)="nuevoServicio()" >Nuevo Servicio</button>
+    </form>
     </div>
   </div>
   <div class="column">
-    <app-equipos (enviaEquipos)="recibeEquipos($event)"></app-equipos>
+    <app-equipos  [servicio]="servicio" (recFolio)="recFolio($event)"></app-equipos>
   </div>
-</div>  
+</div>
 
 

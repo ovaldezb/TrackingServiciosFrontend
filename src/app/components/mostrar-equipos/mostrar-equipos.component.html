@@ -3,7 +3,7 @@
         <td style="width: 150px;text-align: left;">Marca</td>
         <td style="width: 150px;text-align: center;">Modelo</td>
         <td style="width: 160px;text-align: center;">Serie</td>
-        <td *ngIf="authService.getRol() == 0"  style="width: 160px;text-align: center;">Costo</td>
+        <td *ngIf="authService.getRol() == 0"  style="width: 160px;text-align: center;">Costo Referencia</td>
         <td  style="width: 160px;text-align: center;">Técnico</td>
         <td  style="width: 260px;text-align: center;">Comentarios</td>
         <td  style="width: 260px;text-align: center;">Diagnostico</td>
@@ -16,7 +16,7 @@
             <td style="width: 150px;text-align: center;">{{equipo.modelo}}</td>
             <td style="width: 160px;text-align: center;">{{equipo.serie}}</td>
             <td *ngIf="authService.getRol() == 0" style="width: 160px;text-align: center;">{{equipo.costo | currency}}</td>
-            <td style="width: 160px;text-align: center;">{{equipo.tecnico.nombre}} {{equipo.tecnico.apellido}}</td>        
+            <td style="width: 160px;text-align: center;">{{equipo.tecnico.nombre}} {{equipo.tecnico.apellido}}</td>
             <td style="width: 260px;text-align: center;"><textarea disabled rows="1">{{equipo.comentarios}}</textarea></td>
             <td style="width: 260px;text-align: center;"><textarea disabled rows="1">{{equipo.diagnostico}}</textarea></td>
         </tr>

@@ -12,7 +12,7 @@ export class ServicioService{
         this.url = Global.url;
     }
 
-    getServicios():Observable<any>{                
+    getServicios():Observable<any>{
         return this._http.get(this.url+'get-servicios');
     }
 
@@ -38,7 +38,7 @@ export class ServicioService{
         return this._http.post(this.url+'equipo/'+idServicio,params,{headers:headers});
     }
 
-    getEquiposById(id):Observable<any>{        
+    getEquiposById(id):Observable<any>{
         return this._http.get(this.url+'equipos/'+id);
     }
 
@@ -65,7 +65,7 @@ export class ServicioService{
     getTecnicos(filtro):Observable<any>{
         return this._http.get(this.url+'tecnico/'+filtro);
     }
-    
+
     getTecnico(usuario):Observable<any>{
         return this._http.get(this.url + 'tecnico-by/' + usuario);
     }
@@ -82,7 +82,7 @@ export class ServicioService{
         return this._http.put(this.url+'tecnico/'+id,params,{headers:headers});
     }
 
-    getImagesByEquipoId(equipoId,tipo):Observable<any>{        
+    getImagesByEquipoId(equipoId,tipo):Observable<any>{
         return this._http.get(this.url+'imagenes/'+equipoId+'/'+tipo);
     }
 
@@ -122,5 +122,11 @@ export class ServicioService{
 
     getServicioById(serviceId):Observable<any>{
         return this._http.get(this.url+'servicio/'+serviceId);
+    }
+
+    createImagenByEquipoId(equipoId,imagen):Observable<any>{
+      let params = JSON.stringify(imagen);
+      let headers = new HttpHeaders().set('Content-Type','application/json');
+      return this._http.post(this.url+'equipo-imagen/'+equipoId,params,{headers:headers});
     }
 }

@@ -39,34 +39,56 @@ export class MoverStatusComponent implements OnInit {
   public equipoIndex: number;
   public imgIndex:number;
   public pagosaldo:boolean=false;
-  
+  afuConfig = {
+    multiple: true,
+    formatsAllowed: ".jpg,.png,.gif,.jpeg",
+    maxSize: "50",
+    uploadAPI: {
+      url: Global.url + 'upload-img'
+    },
+    theme: "attachPin",
+    hideProgressBar: true,
+    hideResetBtn: true,
+    hideSelectBtn: false,
+    fileNameIndex: true,
+    replaceTexts: {
+      selectFileBtn: 'Select Files',
+      resetBtn: 'Reset',
+      uploadBtn: 'Upload',
+      dragNDropBox: 'Drag N Drop',
+      attachPinBtn: 'Sube tu imagen...',
+      afterUploadMsg_success: 'Successfully Uploaded !',
+      afterUploadMsg_error: 'Upload Failed !',
+      sizeLimit: 'Size Limit'
+    }
+  };
 
   public metodopago: Metodopago[] = [
     {value: 'Contado', viewValue: 'Contado'},
     {value: 'Tarjeta', viewValue: 'Tarjeta'},
     {value: 'Mercadopago', viewValue: 'Mercadopago'},
-    {value: 'Otro', viewValue: 'Otro'}        
+    {value: 'Otro', viewValue: 'Otro'}
   ];
-  constructor(  
-    private _router : Router,  private _servicioService: ServicioService, public authService: AuthService,private printService: PrintService) { 
+  constructor(
+    private _router : Router,  private _servicioService: ServicioService, public authService: AuthService,private printService: PrintService) {
     this.canreapir = true;
     this.actnnorepair = 'devolver';
     this.url = Global.url;
   }
 
-  ngOnInit(): void {    
-    this.servicio = history.state;    
-    this._servicioService.getEquiposById(this.servicio._id).subscribe(res =>{      
+  ngOnInit(): void {
+    this.servicio = history.state;
+    this._servicioService.getEquiposById(this.servicio._id).subscribe(res =>{
       if(res.equipos.length > 0){
-        this.equipos = res.equipos;              
+        this.equipos = res.equipos;
         this.equipos.forEach(equipo =>{
           this.costoequipo += equipo.costo;
           this._servicioService.getImagesByEquipoId(equipo._id,0).subscribe(res =>{
             if(res.status == 'success'){
               equipo.imagenes = res.imagenes;
-            }            
-          });          
-        });               
+            }
+          });
+        });
       }
     });
     this._servicioService.getMensajerias()
@@ -82,26 +104,26 @@ export class MoverStatusComponent implements OnInit {
     }else{
       this.servicio.pagoanticipotecnico = 0;
     }
-    
+
   }
 
-  Canrepair(flag):void{    
-    this.canreapir = flag;    
+  Canrepair(flag):void{
+    this.canreapir = flag;
     if(!flag){
       this.servicio.numeroguia = '';
       this.servicio = this.servicio;
       this.enableBtn = false;
     }else{
-      this.enableBtn = this.servicio.numeroguia.length<1;    
+      this.enableBtn = this.servicio.numeroguia.length<1;
     }
   }
 
-  enviar(stage2move):void{    
+  enviar(stage2move):void{
     switch(stage2move){
       case 0: //Abierto
         if(this.canreapir){
           //'Enviado';
-          this.servicio.etapa = 1;          
+          this.servicio.etapa = 1;
         }else if(this.actnnorepair == this.devolver){
           //'En espera cliente recoja';
           this.servicio.etapa = 7;
@@ -109,7 +131,7 @@ export class MoverStatusComponent implements OnInit {
           //'Resguardo';
           this.servicio.etapa = 2;
         }
-        break;      
+        break;
       case 1: //Enviado
         //'Recibido';
         this.servicio.etapa = 3;
@@ -135,7 +157,7 @@ export class MoverStatusComponent implements OnInit {
           //'Devuelto a TDM';
           this.servicio.etapa = 6;
           break;
-        case 6: //Devuelto a TDM          
+        case 6: //Devuelto a TDM
           if(this.servicio.equipoprobado){
             //'En espera cliente recoja';
             this.servicio.etapa = 7;
@@ -143,10 +165,10 @@ export class MoverStatusComponent implements OnInit {
           }else{
             //Abierto
             this.servicio.etapa = 0;
-          }          
+          }
           break;
         case 7: //Espera cliente recoja
-          //'Entregado';          
+          //'Entregado';
           this.servicio.etapa = 8;
         break;
         case 8: //Entregado
@@ -154,36 +176,43 @@ export class MoverStatusComponent implements OnInit {
           this.servicio.etapa = 9;
           break;
     }
-    var fechaUltAct = new Date();    
+    var fechaUltAct = new Date();
     fechaUltAct.toLocaleString('es-MX', { timeZone: 'America/Chicago' })
-    this.servicio.fechaactualizacion = fechaUltAct;    
+    this.servicio.fechaactualizacion = fechaUltAct;
     this.servicio = this.servicio;
     this._servicioService.updateServicio(this.servicio._id,this.servicio)
         .subscribe(res=>{
           if(res.status=='success'){
             swal('El servicio ha cambiado de estatus','Estatus actualizado','success');
           }
-        });    
+        });
     this._router.navigate(['/lista']);
   }
 
-  typenoguia(): void{    
-    this.enableBtn = this.servicio.numeroguia.length<1;    
+  typenoguia(): void{
+    this.enableBtn = this.servicio.numeroguia.length<1;
   }
 
   recibeEquipos(event):void{
-    this.equipos = event.equipos;        
-    for(var i=0; i<this.equipos.length;i++) {          
+    this.equipos = event.equipos;
+    for(var i=0; i<this.equipos.length;i++) {
       this._servicioService.updateEquipoById(this.equipos[i]._id,this.equipos[i])
           .subscribe(res=>{
             this.equipos.forEach(equipo =>{
-              this.costoequipo += equipo.costo;              
-            });            
+              this.costoequipo += equipo.costo;
+            });
           });
     };
   }
 
-  clickImage(imageName,img_id,equipoIndex,imgIndex):void{    
+  imageUpload(data,i) {
+    this._servicioService.createImagenByEquipoId(this.equipos[i]._id,data.body.imagen)
+        .subscribe(res => {
+          this.equipos[i].imagenes.push(res.imagenSaved);
+        });
+  }
+
+  clickImage(imageName,img_id,equipoIndex,imgIndex):void{
     this.imageActive = true;
     this.imgPath = this.url+'get-image/'+imageName;
     this.img_id = img_id;
@@ -201,7 +230,7 @@ export class MoverStatusComponent implements OnInit {
       dangerMode: true,
     })
     .then((willDelete) => {
-      if (willDelete) {        
+      if (willDelete) {
         this._servicioService.eliminaImg(img_id).subscribe(res=>{
           this.equipos[equipoIndex].imagenes.splice(imgIndex,1)
           swal(" El archivo ha sido eliminado!", {
@@ -222,7 +251,7 @@ export class MoverStatusComponent implements OnInit {
     });
   }
 
-  imprimir() {   
+  imprimir() {
     this.printService.printDocument(this.servicio._id, this.servicio);
   }
 
