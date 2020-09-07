@@ -94,12 +94,12 @@ export class EquiposComponent implements OnInit {
         }
         var serUpdt = await this._servicioService.createEquipo(equi,servrec.servicio._id).toPromise();
       }
-      /*if(this.servicio.correo != ''){
+      if(this.servicio.correo != ''){
         this._servicioService.enviaCorreoInicial(serUpdt.serviceUpdate)
           .subscribe(res=>{
             console.log(res);
           });
-      }*/
+      }
       swal('Servicio creado',
         'El Servicio fue creado exitosamente',
         'success'
