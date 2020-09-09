@@ -30,8 +30,8 @@ export class Servicio{
         public semaforo: string,
         public equipos:Equipo[],
         public linkpago:string,
-        public pagofinal:Number,
+        public pagofinal:number,
         public metodopago:string,
-        public imgpagotecnico:Imagen[]  
+        public imgpagotecnico:Imagen[]
     ){}
 }
