@@ -78,6 +78,7 @@ export class MoverStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.servicio = history.state;
+    console.log(this.servicio);
     this._servicioService.getEquiposById(this.servicio._id).subscribe(res =>{
       if(res.equipos.length > 0){
         this.equipos = res.equipos;
@@ -98,13 +99,10 @@ export class MoverStatusComponent implements OnInit {
           }
         });
 
-    if(this.servicio.costotecnico > 0){
+    if(this.servicio.costotecnico > 0 && this.servicio.costocliente == 0){
       this.servicio.pagoanticipotecnico = this.servicio.costotecnico * 0.7;
       this.servicio.costocliente = (this.servicio.costotecnico + this.servicio.costoenvio) * this.deltaGanancia;
-    }else{
-      this.servicio.pagoanticipotecnico = 0;
     }
-
   }
 
   Canrepair(flag):void{

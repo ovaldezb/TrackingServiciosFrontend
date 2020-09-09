@@ -16,29 +16,29 @@ import swal from 'sweetalert';
   providers:[ServicioService,AuthService]
 })
 export class ListaServiciosComponent implements OnInit {
-  HighlightRow : Number;    
-  public tecnico: Tecnico;  
+  public HighlightRow : number;
+  public tecnico: Tecnico;
   public permiso: Boolean = false;;
   public servicios: Servicio[];
   public serviciosTmp: Servicio[];
   public serviciosFiltro: Servicio[];
   public url: string;
-  private etapas: Etapa[];  
+  private etapas: Etapa[];
   private hayDatos: Boolean = false;
 
-  constructor(private _router : Router, private _servicioService: ServicioService, private authservice:AuthService) {     
-    this.url = Global.url;    
+  constructor(private _router : Router, private _servicioService: ServicioService, private authservice:AuthService) {
+    this.url = Global.url;
     this.servicios =  [];
   }
 
   async ngOnInit() {
     const idUser = localStorage.getItem('id');
-    const user = localStorage.getItem('usuario');    
+    const user = localStorage.getItem('usuario');
     const res =  await this._servicioService.getTecnico(user).toPromise();
-    this.tecnico = res.tecnico;   
+    this.tecnico = res.tecnico;
     try{
       const resServicios = await this._servicioService.getServicios().toPromise();
-      this.serviciosTmp = resServicios.servicios;            
+      this.serviciosTmp = resServicios.servicios;
       this.hayDatos = true;
     } catch(error){
       if(error.status==401){
@@ -52,11 +52,10 @@ export class ListaServiciosComponent implements OnInit {
     }
     if(this.hayDatos){
       const resEtapas = await this._servicioService.getetapas().toPromise();
-      this.etapas = resEtapas.etapas;   
+      this.etapas = resEtapas.etapas;
       this.serviciosTmp.forEach(servicio =>{
-        var tecnicoId = servicio.equipos[0].tecnico.toString();            
         servicio.estatus = this.etapas[servicio.etapa].nombre;
-        var diffdays = (Math.abs(new Date().getTime() - new Date(servicio.fechaIngreso).getTime())/1000/3600/24);                
+        var diffdays = (Math.abs(new Date().getTime() - new Date(servicio.fechaIngreso).getTime())/1000/3600/24);
         if(diffdays <= 15){
           servicio.semaforo = 'g';
         }else if(diffdays > 15 && diffdays <= 30 ){
@@ -65,27 +64,27 @@ export class ListaServiciosComponent implements OnInit {
           servicio.semaforo = 'r';
         }
         if(this.tecnico.rol=='1' && servicio.equipos[0].tecnico.toString()==idUser){
-          this.servicios.push(servicio);        
+          this.servicios.push(servicio);
         }else{
           this.servicios.push(servicio);
-        }      
+        }
       });
     }
   }
 
-  ClickedRow(index) : void{      
-    this.HighlightRow = index; 
+  ClickedRow(index) : void{
+    this.HighlightRow = index;
   }
 
-  DoubleClickRow(index):void{    
+  DoubleClickRow(index):void{
     if(this.authservice.getRol()==0){
-      this._router.navigateByUrl('/movserv',{ state: this.servicios[index] });        
+      this._router.navigateByUrl('/movserv',{ state: this.servicios[index] });
     }else{
       if(this.servicios[index].etapa == 1 || this.servicios[index].etapa == 3 || this.servicios[index].etapa == 5){
-        this._router.navigateByUrl('/movserv',{ state: this.servicios[index] });        
+        this._router.navigateByUrl('/movserv',{ state: this.servicios[index] });
       }
     }
-    
+
   }
 
 

@@ -206,7 +206,7 @@
             </div>
         </div>
         <div class="columns" *ngIf="servicio.cliautoriza">
-            <div class="column is-narrow"><label class="label">Anticipo para el Técnico: {{servicio.equipos[0].tecnico.nombre}} {{servicio.equipos[0].tecnico.apellido}}</label></div>
+            <div class="column is-narrow"><label class="label">Anticipo para el Técnico: {{equipos[0].tecnico.nombre}} {{equipos[0].tecnico.apellido}}</label></div>
             <div class="column is-1">
                 <input type="number" class="input is-small" [(ngModel)]="servicio.pagoanticipotecnico">
             </div>
