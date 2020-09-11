@@ -37,7 +37,7 @@ export class ServicioComponent implements OnInit {
     private _router : Router,
     private _servicioService: ServicioService
   ) {
-    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null,'',0,null,[]);
+    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null,'',0,null,[],false);
     this.url = Global.url;
   }
 
@@ -67,7 +67,7 @@ export class ServicioComponent implements OnInit {
   }
 
   nuevoServicio(){
-    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null,'',0,null,[]);
+    this.servicio = new Servicio('','','','','','',0,null,'','',0,'',0,true,0,'',0,0,true,false,false,'',new Date(),null,'',null,'',0,null,[],false);
     this.getFolio();
   }
 

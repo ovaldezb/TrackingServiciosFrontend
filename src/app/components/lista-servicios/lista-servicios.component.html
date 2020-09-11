@@ -36,7 +36,7 @@
             <td width="140" bgcolor="#19377B">Estatus</td>
         </tr>
     </table>
-    <div style="height: 510px; width:100%; overflow:auto;" *ngIf="servicios">
+    <div style="height: 380px; width:100%; overflow:auto;" *ngIf="servicios">
         <table style="width:100%" id="tblservicios" class="table is-bordered">
             <tr  *ngFor="let servicio of servicios ; let i = index" (click)="ClickedRow(i)" (dblclick)="DoubleClickRow(i)" [class.selected]="i == HighlightRow" [class.greenrow]="servicio.semaforo == 'g'" [class.yellowrow]="servicio.semaforo == 'y'" [class.redrow]="servicio.semaforo == 'r'">
                 <td style="width:115px;text-align: center;">{{servicio.folio}}</td>

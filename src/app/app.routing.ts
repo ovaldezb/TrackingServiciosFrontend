@@ -10,17 +10,19 @@ import { MoverStatusComponent } from './components/mover-status/mover-status.com
 import { ListaServiciosComponent } from './components/lista-servicios/lista-servicios.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
+import { EnviosComponent } from './components/envios/envios.component';
 
 //Array de Componentes
 const appRoutes: Routes = [
     //{path:'', redirectTo:'/auth', pathMatch: 'full'},
-    {path:'',  component:LoginComponent },    
-    {path:'auth',  component:LoginComponent },    
+    {path:'',  component:LoginComponent },
+    {path:'auth',  component:LoginComponent },
     {path:'lista',component:ListaServiciosComponent},
     {path:'reportes',component:ReportesComponent},
     {path:'tecnicos',component:TecnicosComponent},
     {path:'servicio',component:ServicioComponent},
     {path:'movserv',component:MoverStatusComponent},
+    {path:'envios',component:EnviosComponent},
     {path:'print/:serviceId',outlet: 'print',component:PrintLayoutComponent}
 ];
 

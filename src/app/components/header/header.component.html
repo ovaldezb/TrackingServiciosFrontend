@@ -17,23 +17,30 @@
                     </span>
                 </li>
                 <li>
-                    <a routerLink="/lista" [routerLinkActive]="['active']" >Lista</a></li>
+                    <a routerLink="/lista" [routerLinkActive]="['active']" >Lista</a>
+                </li>
                 <li *ngIf="authService.getRol() == 0">
-                    <a routerLink="/servicio"  [routerLinkActive]="['active']">Servicio</a></li>
+                    <a routerLink="/servicio"  [routerLinkActive]="['active']">Servicio</a>
+                </li>
                 <li *ngIf="authService.getRol() == 0">
-                    <a routerLink="/tecnicos"  [routerLinkActive]="['active']">Técnico</a></li>
+                    <a routerLink="/tecnicos"  [routerLinkActive]="['active']">Técnico</a>
+                </li>
                 <li *ngIf="authService.getRol() == 0">
-                    <a routerLink="/reportes"  [routerLinkActive]="['active']">Reportes</a></li>
+                  <a routerLink="/envios"  [routerLinkActive]="['active']">Envios</a>
+              </li>
+                <li *ngIf="authService.getRol() == 0">
+                    <a routerLink="/reportes"  [routerLinkActive]="['active']">Reportes</a>
+                </li>
                 <li>
                     <a (click)="authService.logout()" [routerLinkActive]="['active']">Salir</a>
-                </li> 
+                </li>
             </ul>
             </nav>
         </td>
         </tr>
         <tr>
             <td height="18" bgcolor="#EEEEEE">&nbsp;</td>
-        </tr>        
+        </tr>
     </table>
 
 <script type="text/javascript">

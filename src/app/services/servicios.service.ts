@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Global } from './global';
-import { Tecnico } from '../models/tecnico';
 
 @Injectable()
 export class ServicioService{
@@ -128,5 +127,17 @@ export class ServicioService{
       let params = JSON.stringify(imagen);
       let headers = new HttpHeaders().set('Content-Type','application/json');
       return this._http.post(this.url+'equipo-imagen/'+equipoId,params,{headers:headers});
+    }
+
+    getservnoenv():Observable<any>{
+      return this._http.get(this.url+'servabierto');
+    }
+
+    /*Actualixa el servicio al paso 1 */
+    updtservngce(idServicio,servicio):Observable<any>{
+      let params = JSON.stringify(servicio);
+      let headers = new HttpHeaders().set('Content-Type','application/json');
+      return this._http.put(this.url+'servudptng/'+idServicio,params,{headers:headers});
+
     }
 }

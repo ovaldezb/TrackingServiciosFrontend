@@ -32,6 +32,7 @@ export class Servicio{
         public linkpago:string,
         public pagofinal:number,
         public metodopago:string,
-        public imgpagotecnico:Imagen[]
+        public imgpagotecnico:Imagen[],
+        public seleccionado:boolean
     ){}
 }

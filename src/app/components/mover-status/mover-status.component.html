@@ -101,10 +101,10 @@
                 <label class="label">¿El técnico puede reparar el/los equipo(s)?</label>
             </div>
             <div class="column">
-                <input type="radio" name="canrepair" [(ngModel)]="servicio.puedereparar"  [value]="true" (click)="Canrepair(true)">Si
+                <input type="radio" name="canrepair" [(ngModel)]="servicio.puedereparar"  [value]="true" (click)="Canrepair(true)" [disabled]="servicio.etapa != 0">Si
             </div>
             <div class="column">
-                <input type="radio" name="canrepair" [(ngModel)]="servicio.puedereparar" [value]="false" (click)="Canrepair(false)">No
+                <input type="radio" name="canrepair" [(ngModel)]="servicio.puedereparar" [value]="false" (click)="Canrepair(false)" [disabled]="servicio.etapa != 0">No
             </div>
         </div>
         <div class="columns" *ngIf="canreapir">
@@ -112,24 +112,27 @@
                 <label class="label">Número de guía</label>
             </div>
             <div class="column is-narrow" style="width: 170px;">
-                <input type="text" class="input is-small" [(ngModel)]="servicio.numeroguia" (keyup)="typenoguia()" required="servicio.puedereparar">
+                <input type="text" class="input is-small" [(ngModel)]="servicio.numeroguia" (keyup)="typenoguia()" required="servicio.puedereparar" [disabled]="servicio.etapa != 0">
             </div>
             <div class="column is-narrow">
                 <label class="label">Empresa de Mensajeria</label>
             </div>
             <div class="column is-narrow">
                 <div class="select is-small">
-                    <select name="mensajeria" [(ngModel)]="servicio.mensajeria" >
+                    <select name="mensajeria" [(ngModel)]="servicio.mensajeria" [disabled]="servicio.etapa != 0">
                         <option [ngValue]="null" disabled selected="selected">Seleccione Técnico</option>
                         <option *ngFor="let mensaj of mensajeria" [ngValue]="mensaj.nombre">{{mensaj.nombre}}</option>
                     </select>
-                    </div>
+                  </div>
             </div>
             <div class="column is-narrow">
                 <label class="label">Costo del Envio</label>
             </div>
-            <div class="column is-narrow" style="width: 90px;" >
-                <input type="number" class="input is-small" [(ngModel)]="servicio.costoenvio" >
+            <div class="column is-narrow" style="width: 100px;" *ngIf="servicio.etapa == 0">
+                <input type="text" class="input is-small" [(ngModel)]="servicio.costoenvio" >
+            </div>
+            <div class="column is-narrow" style="width: 100px;" *ngIf="servicio.etapa != 0">
+                <label>{{servicio.costoenvio | currency}}</label>
             </div>
         </div>
         <div class="columns" *ngIf="!canreapir">
@@ -137,10 +140,14 @@
                 <label class="label">¿Qué desea hacer?</label>
             </div>
             <div class="column">
-                <label class="label"><input type="radio" name="actnnorepair"  [(ngModel)]="actnnorepair" [value]="devolver">Devolver al cliente</label>
+                <label class="label">
+                  <input type="radio" name="actnnorepair"  [(ngModel)]="actnnorepair" [value]="devolver" [disabled]="servicio.etapa != 0">Devolver al cliente
+                </label>
             </div>
             <div class="column">
-                <label class="label"><input type="radio" name="actnnorepair" [(ngModel)]="actnnorepair" [value]="resguardo">Poner en Resguardo</label>
+                <label class="label">
+                  <input type="radio" name="actnnorepair" [(ngModel)]="actnnorepair" [value]="resguardo" [disabled]="servicio.etapa != 0">Poner en Resguardo
+                </label>
             </div>
         </div>
         <div class="columns">
@@ -150,7 +157,7 @@
     <div class="box" [class.etapaactiva]="servicio.etapa == 1" [class.etapaposterior]="servicio.etapa < 1" [class.etapaanterior]="servicio.etapa > 1" >
         <div class="columns">
             <div class="column"><label class="label">Confirmo que he recibido el/los equipo(s)</label></div>
-            <div class="column"><input type="checkbox" name="tecrecequ" [(ngModel)]="servicio.tecrecequ"></div>
+            <div class="column"><input type="checkbox" name="tecrecequ" [(ngModel)]="servicio.tecrecequ" [disabled]="servicio.etapa != 1" ></div>
         </div>
         <div class="columns">
             <div class="column">
@@ -164,14 +171,16 @@
             <div class="column">
                 <div class="field">
                     <div class="control">
-                        <textarea name="diagnostico" [(ngModel)]="servicio.diagnostico" class="textarea is-primary" rows="2" required></textarea>
+                        <textarea name="diagnostico" [(ngModel)]="servicio.diagnostico" class="textarea is-primary" rows="2" required [disabled]="servicio.etapa != 3"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="columns">
             <div class="column is-narrow"><label class="label">Costo de la reparación</label></div>
-            <div class="column is-narrow" style="width: 100px;"><input class="input is-small" type="number" [(ngModel)]="servicio.costotecnico"></div>
+            <div class="column is-narrow" style="width: 100px;">
+              <input class="input is-small" type="number" [(ngModel)]="servicio.costotecnico" [disabled]="servicio.etapa != 3">
+            </div>
         </div>
         <div class="columns">
             <div class="column">
@@ -179,6 +188,7 @@
             </div>
         </div>
     </div>
+
     <div class="box" [class.etapaactiva]="servicio.etapa == 4" [class.etapaposterior]="servicio.etapa < 4" [class.etapaanterior]="servicio.etapa > 4" *ngIf="authService.getRol() == 0">
         <div class="columns">
             <div class="column">
@@ -189,9 +199,11 @@
             <div class="column"><label class="label">El costo de la reparación es: {{servicio.costotecnico | currency}}</label></div>
         </div>
         <div class="columns">
-            <div class="column is-narrow"><label class="label">El costo para el cliente es: </label></div>
+            <div class="column is-narrow">
+              <label class="label">El costo para el cliente es: </label>
+            </div>
             <div class="column is-1">
-                <input type="number" class="input is-small" [(ngModel)]="servicio.costocliente">
+                <input type="number" class="input is-small" [(ngModel)]="servicio.costocliente" [disabled]="servicio.etapa != 4">
             </div>
         </div>
         <div class="columns">
@@ -199,16 +211,20 @@
                 <label class="label">¿El cliente autoriza la reparación?</label>
             </div>
             <div class="column">
-                <label class="label"><input type="radio" name="actnnorepair"  [(ngModel)]="servicio.cliautoriza" [value]="true">Si</label>
+                <label class="label">
+                  <input type="radio" name="actnnorepair"  [(ngModel)]="servicio.cliautoriza" [value]="true" [disabled]="servicio.etapa != 4">Si
+                </label>
             </div>
             <div class="column">
-                <label class="label"><input type="radio" name="actnnorepair" [(ngModel)]="servicio.cliautoriza" [value]="false">No</label>
+                <label class="label">
+                  <input type="radio" name="actnnorepair" [(ngModel)]="servicio.cliautoriza" [value]="false" [disabled]="servicio.etapa != 4">No
+                </label>
             </div>
         </div>
         <div class="columns" *ngIf="servicio.cliautoriza">
             <div class="column is-narrow"><label class="label">Anticipo para el Técnico: {{equipos[0].tecnico.nombre}} {{equipos[0].tecnico.apellido}}</label></div>
             <div class="column is-1">
-                <input type="number" class="input is-small" [(ngModel)]="servicio.pagoanticipotecnico">
+                <input type="number" class="input is-small" [(ngModel)]="servicio.pagoanticipotecnico" [disabled]="servicio.etapa != 4">
             </div>
         </div>
         <div class="columns">
@@ -217,13 +233,14 @@
             </div>
         </div>
     </div>
+
     <div class="box" [class.etapaactiva]="servicio.etapa == 5" [class.etapaposterior]="servicio.etapa < 5" [class.etapaanterior]="servicio.etapa > 5">
         <div class="columns">
             <div class="column is-narrow">
                 <label class="label">Condiciones de devolución:</label>
             </div>
             <div class="column">
-                <textarea name="diagnostico" [(ngModel)]="servicio.condregreso" class="textarea is-primary" rows="2"></textarea>
+                <textarea name="diagnostico" [(ngModel)]="servicio.condregreso" class="textarea is-primary" rows="2" [disabled]="servicio.etapa != 5"></textarea>
             </div>
         </div>
         <div class="columns" *ngFor="let equipo of equipos;">
@@ -235,6 +252,7 @@
             </div>
         </div>
     </div>
+
     <div class="box" [class.etapaactiva]="servicio.etapa == 6" [class.etapaposterior]="servicio.etapa < 6" [class.etapaanterior]="servicio.etapa > 6" *ngIf="authService.getRol() == 0">
         <div class="columns">
             <div class="column is-narrow">
@@ -242,15 +260,15 @@
             </div>
         </div>
         <div class="columns">
-            <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="true" >Si</div>
-            <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="false" >No</div>
+            <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="true" [disabled]="servicio.etapa != 6">Si</div>
+            <div class="column is-1"><input type="radio" [(ngModel)]="servicio.equipoprobado"  [value]="false" [disabled]="servicio.etapa != 6">No</div>
         </div>
         <div class="columns" *ngIf="servicio.equipoprobado">
             <div class="column is-narrow">
                 <label class="label">Enlace de pago:</label>
             </div>
             <div class="column is-2">
-                <input type="text" class="input is-small" [(ngModel)]="servicio.linkpago" name="linkpago">
+                <input type="text" class="input is-small" [(ngModel)]="servicio.linkpago" name="linkpago" [disabled]="servicio.etapa != 6">
             </div>
         </div>
         <div class="columns">
@@ -259,6 +277,7 @@
             </div>
         </div>
     </div>
+
     <div class="box" [class.etapaactiva]="servicio.etapa == 7" [class.etapaposterior]="servicio.etapa < 7" [class.etapaanterior]="servicio.etapa > 7" *ngIf="authService.getRol() == 0">
         <div class="columns">
             <div class="column is-narrow" style="width: 200px; margin-right:-20px">
@@ -290,13 +309,12 @@
                 <label class="label">{{servicio.costotecnico - servicio.pagoanticipotecnico | currency}}</label>
             </div>
         </div>
-
         <div class="columns">
             <div class="column is-narrow" style="width: 200px; margin-right:-20px">
                 <label class="label">Cobro al cliente:</label>
             </div>
             <div class="column is-narrow" style="width:105px">
-                <input type="number"  class="input is-small" name="cobro" [(ngModel)]="servicio.pagofinal" required>
+                <input type="number"  class="input is-small" name="cobro" [(ngModel)]="servicio.pagofinal" required [disabled]="servicio.etapa != 7">
             </div>
             <div class="column is-narrow">&nbsp;</div>
             <div class="column is-narrow" style="width: 230px;">
@@ -310,7 +328,7 @@
             <div class="column is-narrow" style="width: 200px;margin-right:-20px"><label class="label">Método de pago</label></div>
             <div class="column">
                 <div class="select is-small">
-                    <select name="tecnico" [(ngModel)]="servicio.metodopago">
+                    <select name="tecnico" [(ngModel)]="servicio.metodopago" [disabled]="servicio.etapa != 7">
                         <option [ngValue]="null" disabled selected="selected">Seleccione Método de Pago</option>
                         <option *ngFor="let mp of metodopago" [ngValue]="mp.value">{{mp.viewValue}}</option>
                     </select>
@@ -326,6 +344,7 @@
             </div>
         </div>
     </div>
+
     <div class="box" [class.etapaactiva]="servicio.etapa == 8" [class.etapaposterior]="servicio.etapa < 8" [class.etapaanterior]="servicio.etapa > 8" *ngIf="authService.getRol() == 0">
         <div class="columns">
             <div class="column is-narrow" style="width: 230px;">
@@ -335,7 +354,7 @@
                 <label class="label">{{servicio.costotecnico - servicio.pagoanticipotecnico | currency}}</label>
             </div>
             <div class="column is-narrow">
-                <input type="checkbox"  name="pagosaldo" [(ngModel)]="pagosaldo" >
+                <input type="checkbox"  name="pagosaldo" [(ngModel)]="pagosaldo" [disabled]="servicio.etapa != 8">
             </div>
         </div>
         <div class="columns">
