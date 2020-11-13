@@ -39,6 +39,7 @@ export class MoverStatusComponent implements OnInit {
   public equipoIndex: number;
   public imgIndex:number;
   public pagosaldo:boolean=false;
+  public iscobrar:boolean=false;
   afuConfig = {
     multiple: true,
     formatsAllowed: ".jpg,.png,.gif,.jpeg",
@@ -251,6 +252,29 @@ export class MoverStatusComponent implements OnInit {
 
   imprimir() {
     this.printService.printDocument(this.servicio._id, this.servicio);
+  }
+
+  cobrar(){
+    if(this.servicio.pagofinal > 0){
+      swal({
+        title: "Esta seguro que desea hacer el cobro de esta reparación",
+        text: "Una vez hecho el cobro, el servicio se cerrará!",
+        icon: "warning",
+        buttons: [true,true],
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.enviar(7);
+          console.log('Cobrando'+this.servicio.pagofinal);
+        }
+      });
+    }else if(this.servicio.pagofinal ==0){
+      swal("La cantidad a cobrar debe ser mayor a $0");
+    }else{
+      swal("Solo se aceptan numeros");
+      this.servicio.pagofinal = 0;
+    }
   }
 
 }

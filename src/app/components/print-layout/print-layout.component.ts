@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Servicio } from '../../models/servicio'; 
+import { Servicio } from '../../models/servicio';
 import { ServicioService } from '../../services/servicios.service';
 import {PrintService } from '../../services/print.service';
 
@@ -16,7 +16,7 @@ export class PrintLayoutComponent implements OnInit {
   public servicio: Servicio;
   constructor(route: ActivatedRoute,private _servicioService: ServicioService,private printService: PrintService) {
     this.serviceId = route.snapshot.params['serviceId'];
-    console.log(this.serviceId);
+    //console.log(this.serviceId);
    }
 
   ngOnInit(): void {
