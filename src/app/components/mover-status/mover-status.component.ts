@@ -266,7 +266,6 @@ export class MoverStatusComponent implements OnInit {
       .then((willDelete) => {
         if (willDelete) {
           this.enviar(7);
-          console.log('Cobrando'+this.servicio.pagofinal);
         }
       });
     }else if(this.servicio.pagofinal ==0){
