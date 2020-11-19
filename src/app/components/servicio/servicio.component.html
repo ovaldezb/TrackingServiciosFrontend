@@ -53,28 +53,6 @@
           <small *ngIf="!receptor.valid && receptor.touched">Nombre no es válido</small>
         </div>
       </div>
-      <div class="columns">
-        <div class="column is-narrow" style="width: 140px;">
-          <label for="garantia" class="label">Tiene Garantia:</label>
-        </div>
-        <div class="column is-narrow" style="width: 210px;">
-          <div class="select is-small">
-          <select name="esgarantia" [(ngModel)]="servicio.esgarantia">
-              <option [ngValue]="null" selected disabled>Seleccione Garantía</option>
-              <option *ngFor="let garantia of garantias" [ngValue]="garantia.value">{{garantia.viewValue}}</option>
-          </select>
-          </div>
-        </div>
-      </div>
-      <div class="columns" *ngIf="servicio.esgarantia=='false'">
-        <div class="column is-narrow" style="width: 140px;">
-          <label for="receptor" class="label">Costo Revisión</label>
-        </div>
-        <div class="column is-narrow" style="width: 100px;">
-          <input type="number" name="costorevision" class="input is-small" #costorevision="ngModel" [(ngModel)]="servicio.costorevision" required />
-
-        </div>
-      </div>
       <button class="button is-success" (click)="nuevoServicio()" >Nuevo Servicio</button>
     </form>
     </div>

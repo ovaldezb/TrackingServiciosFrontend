@@ -10,6 +10,10 @@ export interface Marcas {
   value: string;
   viewValue: string;
 }
+export interface Garantia {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-equipos',
@@ -24,14 +28,19 @@ export class EquiposComponent implements OnInit {
   url:string;
   HighlightRow : number;
   isEdit:boolean = false;
-  public btnAccion:string = 'Agregar';
+  public btnAccion:string = 'Agregar Equipo';
   public imageActive:boolean = false;
   public imgPath:string = "";
   public equipo:Equipo;
   private folio: string;
   public equipos:Equipo[]=[];
   public tecnicos:Tecnico[];
-
+  private tieneGarantia:string;
+  public costoRev:number;
+  garantias: Garantia[] = [
+    {value: 'true', viewValue: 'Si'},
+    {value: 'false', viewValue: 'No'}
+  ];
 
    public imgname:string;
    public imgIndex:number;
@@ -58,6 +67,10 @@ export class EquiposComponent implements OnInit {
       this.btnAccion = 'Agregar Equipo';
     } else{
       this.equipos.push(this.equipo);
+      this.tieneGarantia = this.servicio.esgarantia;
+      this.costoRev = this.servicio.costorevision;
+      this.servicio.esgarantia = this.garantias[0].value;
+      this.servicio.costorevision = 0;
     }
     this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
   }
@@ -83,6 +96,8 @@ export class EquiposComponent implements OnInit {
 
   async onSubmit(){
     this.servicio.fechaactualizacion = new Date();
+    this.servicio.esgarantia = this.tieneGarantia;
+      this.servicio.costorevision = this.costoRev;
     var servrec = await this._servicioService.create(this.servicio).toPromise();
     if(servrec.status == 'success'){
       for(var i=0;i<this.equipos.length;i++){
@@ -97,7 +112,7 @@ export class EquiposComponent implements OnInit {
       if(this.servicio.correo != ''){
         this._servicioService.enviaCorreoInicial(serUpdt.serviceUpdate)
           .subscribe(res=>{
-            console.log(res);
+            //console.log(res);
           });
       }
       swal('Servicio creado',

@@ -22,7 +22,7 @@
             </div>
             <div class="columns" style="margin-top:-25px">
                 <div class="column is-narrow" style="width:90px"><label class="label">Técnico:</label></div>
-                <div class="column is-narrow" style="width:180px;">
+                <div class="column is-narrow" style="width:210px;">
                     <div class="select is-small">
                     <select name="tecnico" [(ngModel)]="equipo.tecnico" (change)="changetecnico($event)">
                         <option [ngValue]="null" disabled selected="selected">Seleccione Técnico</option>
@@ -30,14 +30,25 @@
                     </select>
                     </div>
                 </div>
+                <div class="column is-narrow" style="width: 145px;">
+                  <label for="garantia" class="label">Tiene Garantia:</label>
+                </div>
+                <div class="column is-narrow" style="width: 115px;">
+                  <div class="select is-small">
+                  <select name="esgarantia" [(ngModel)]="servicio.esgarantia">
+                      <option [ngValue]="null" selected disabled>Garantía</option>
+                      <option *ngFor="let garantia of garantias" [ngValue]="garantia.value">{{garantia.viewValue}}</option>
+                  </select>
+                  </div>
+                </div>
             </div>
-            <div class="field" style="margin-top:-15px">
+            <div class="field" style="margin-top:-15px; width:600px">
                 <label class="label">Comentarios:</label>
                 <div class="control">
                     <textarea name="comentarios" [(ngModel)]="equipo.comentarios" class="textarea is-primary" rows="1" required></textarea>
                 </div>
             </div>
-            <div class="field" style="margin-top:-15px">
+            <div class="field" style="margin-top:-15px; width:600px">
                 <label class="label">Diagnóstico Inicial:</label>
                 <div class="control">
                     <textarea name="diagnostico" [(ngModel)]="equipo.diagnostico" class="textarea is-primary" rows="1" required></textarea>
@@ -46,7 +57,7 @@
             <nav class="level">
                 <div class="level-left">
                     <div class="level-item">
-                        <button type="button" class="button is-success" (click)="addEquipo()" [disabled]="equiposForm.invalid || equipo.tecnico==null ">{{btnAccion}}</button>
+                        <button type="button" class="button is-success" (click)="addEquipo()" [disabled]="equiposForm.invalid || equipo.tecnico==null || servicio.esgarantia==null || (equipos.length>0 && !isEdit) || (servicio.esgarantia == 'false' && servicio.costorevision == 0)">{{btnAccion}}</button>
                     </div>
                 </div>
                 <div class="level-right">
@@ -58,9 +69,20 @@
             </form>
         </div>
         <div class="column" style="margin:auto 0% ">
-          <button class="button is-rounded is-info" (click)="onSubmit()" [disabled]="equipos.length <= 0 || servicio.esgarantia==null || (servicio.esgarantia == 'false' && servicio.costorevision == 0)" style="margin-left: 80px;">Enviar Servicio</button>
+          <div class="columns" style="margin-top: -80px;">
+            <div class="column is-narrow" style="width: 140px;" *ngIf="servicio.esgarantia=='false'">
+              <label for="receptor" class="label">Costo Revisión</label>
+            </div>
+            <div class="column is-narrow" style="width: 100px;" *ngIf="servicio.esgarantia=='false'">
+              <input type="number" name="costorevision" class="input is-small" #costorevision="ngModel" [(ngModel)]="servicio.costorevision" required />
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <button class="button is-rounded is-info" (click)="onSubmit()" [disabled]="equipos.length <= 0 || servicio.esgarantia==null || (servicio.esgarantia == 'false' && servicio.costorevision == 0) || servicio.cliente =='' || servicio.telefono=='' || servicio.correo == '' || servicio.receptor == ''" style="margin-left: 80px;">Enviar Servicio</button>
+            </div>
+          </div>
         </div>
-
     </div>
 
     <table class="table is-bordered" style="width:100%;margin-top:-15px">
@@ -69,7 +91,7 @@
             <td style="width: 85px;text-align: center;">Marca</td>
             <td style="width: 96px;text-align: center;">Modelo</td>
             <td style="width: 85px;text-align: center;">Serie</td>
-            <td style="width: 71px;text-align: center;">Costo</td>
+            <td style="width: 71px;text-align: center;">Costo Rev.</td>
             <td style="width: 117px;text-align: center;">Técnico</td>
             <td style="width: 147px;text-align: center;">Comentarios</td>
             <td style="width: 152px;text-align: center;">Diagnóstico</td>
@@ -82,7 +104,7 @@
                 <td style="width: 108px;text-align: center;font-size:12px">{{equipo.marca}}</td>
                 <td style="width: 124px;text-align: center;font-size:12px">{{equipo.modelo}}</td>
                 <td style="width: 103px;text-align: center;font-size:12px">{{equipo.serie}}</td>
-                <td style="width: 87px;text-align: center;font-size:12px">{{equipo.costo | currency}}</td>
+                <td style="width: 87px;text-align: center;font-size:12px">{{costoRev | currency}}</td>
                 <td style="width: 150px;text-align: center;font-size:12px">{{equipo.nombretecnico}}</td>
                 <td style="width: 100px;text-align: center;"><textarea rows="1" disabled style="font-size:12px;">{{equipo.comentarios}}</textarea></td>
                 <td style="width: 160px;text-align: center;"><textarea rows="1" disabled style="font-size:12px;">{{equipo.diagnostico}}</textarea></td>
