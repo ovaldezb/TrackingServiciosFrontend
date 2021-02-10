@@ -112,7 +112,7 @@ export class EquiposComponent implements OnInit {
       if(this.servicio.correo != ''){
         this._servicioService.enviaCorreoInicial(serUpdt.serviceUpdate)
           .subscribe(res=>{
-            //console.log(res);
+
           });
       }
       swal('Servicio creado',

@@ -57,7 +57,7 @@
             <nav class="level">
                 <div class="level-left">
                     <div class="level-item">
-                        <button type="button" class="button is-success" (click)="addEquipo()" [disabled]="equiposForm.invalid || equipo.tecnico==null || servicio.esgarantia==null || (equipos.length>0 && !isEdit) || (servicio.esgarantia == 'false' && servicio.costorevision == 0)">{{btnAccion}}</button>
+                        <button type="button" class="button is-success" (click)="addEquipo()" [disabled]="equiposForm.invalid || equipo.tecnico==null || servicio.esgarantia==null || (equipos.length>3 && !isEdit) || (servicio.esgarantia == 'false' && servicio.costorevision == 0)">{{btnAccion}}</button>
                     </div>
                 </div>
                 <div class="level-right">
