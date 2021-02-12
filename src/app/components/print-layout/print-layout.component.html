@@ -5,32 +5,32 @@
 	</td>
   </tr>
   <tr>
-    <td width="33%" align="center" align="center" bgcolor="#FFFFFF">
-		<table id="rcorners2" style="width:90%;" >
+    <td  style="width:30%; text-align: center;background:#FFFFFF ;">
+		<table id="rcorners2" style="width:95%;height:50px;" >
 		  <tr>
-			<td valign="top" ><label class="titulossmall">Fecha de ingreso</label></td>        
-		  </tr>   
+			<td valign="top" ><label class="titulossmall">Fecha de ingreso</label></td>
+		  </tr>
 		  <tr>
-			<td valign="top" align="center"><label class="titulossmall">{{servicio.fechaIngreso | date:'medium':'CST'}}</label></td>        
-		  </tr>		  
+			<td valign="top" align="center"><label class="titulossmall">{{servicio.fechaIngreso | date:'medium':'CST'}}</label></td>
+		  </tr>
 		</table>
 	</td>
-	<td height="10" width="33%" align="center" valign="top" bgcolor="#FFFFFF">
-		<table id="rcorners2" style="width:90%;">
-		  <tr>        
-			<td valign="top" ><label class="titulossmall">Fecha de Salida</label></td>        
-		  </tr>  
-			<tr>        
-				<td valign="top" ><label class="titulossmall">&nbsp;</label></td>        
-		  </tr>		  
+	<td height="10" style="width:30%" align="center" valign="top" bgcolor="#FFFFFF">
+		<table id="rcorners2" style="width:95%;height:50px">
+		  <tr>
+			<td valign="top" style="text-align: center;" ><label class="titulossmall">Fecha de Salida</label></td>
+		  </tr>
+			<tr>
+				<td valign="top" ><label class="titulossmall">&nbsp;</label></td>
+		  </tr>
 		</table>
 	</td>
-	<td align="center" width="33%" valign="top" bgcolor="#FFFFFF">
-		<table id="rcorners2" style="width:85%;">
-		  <tr>        
+	<td style="vertical-align:top; text-align: center;" bgcolor="#FFFFFF">
+		<table id="rcorners2" style="width:95%;height:50px">
+		  <tr>
 			<td width="261" valign="top"><label class="titulossmall">Folio No.</label></td>
-		  </tr>      
-		  <tr>        
+		  </tr>
+		  <tr>
 			<td width="261" valign="top"><label class="titulossmall">{{servicio.folio}}</label></td>
 		  </tr>
 		</table>
@@ -40,16 +40,36 @@
   <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
   </tr>
   <tr>
-	<td colspan="3" bgcolor="#FFFFFF" align="center" style="vertical-align:top">
+	<td  bgcolor="#FFFFFF" align="center" style="vertical-align:top">
 		<table id="rcorners2" style="width:95%;height:50px;margin-top:-10px">
 			<tr>
-				<td  style="vertical-align:top"	><label class="titulossmall">Nombre de quien recibe</label></td>
+				<td style="vertical-align:top; text-align: center;"	><label class="titulossmall">Nombre de quien recibe</label></td>
 			</tr>
 			<tr>
 				<td  style="vertical-align:top"	><label class="titulossmall">{{servicio.receptor}}</label></td>
 			</tr>
-		</table>		
+		</table>
 	</td>
+  <td bgcolor="#FFFFFF" align="center" style="vertical-align:top">
+    <table id="rcorners2" style="width:95%;height:50px;margin-top:-10px">
+      <tr>
+        <td><label class="titulossmall">Costo de la revisión</label></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;"><label class="titulossmall">{{servicio.costorevision | currency}}</label></td>
+      </tr>
+    </table>
+  </td>
+  <td>
+    <table id="rcorners2" style="width:95%;height:50px;margin-top:-10px">
+      <tr>
+        <td><label class="titulossmall">Tiempo estimado de revisión</label></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;"><label class="titulossmall">2 semanas</label></td>
+      </tr>
+    </table>
+  </td>
   </tr>
   <tr>
     <td colspan="3" bgcolor="#FFFFFF">&nbsp;</td>
@@ -91,7 +111,7 @@
   </tr>
   <tr>
     <td colspan="3" align="center" bgcolor="#FFFFFF">
-	<table id="rcorners2" style="width:95%;" cellspacing="0" cellpadding="0">	
+	<table id="rcorners2" style="width:95%;" cellspacing="0" cellpadding="0">
       <tr>
 		<td>
 			<table>
@@ -107,7 +127,7 @@
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].modelo}}</label></td>
 					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].serie}}</label></td>
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[0].comentarios}}</label></td>
-					<td width="112" align="center" valign="top" ></td>		
+					<td width="112" align="center" valign="top" ></td>
 				</tr>
 				<tr>
 				<td colspan="5" style=" border-bottom: 2px solid grey;"></td>
@@ -130,14 +150,14 @@
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].modelo}}</label></td>
 					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].serie}}</label></td>
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[1].comentarios}}</label></td>
-					<td width="112" align="center" valign="top" >&nbsp;</td>				
+					<td width="112" align="center" valign="top" >&nbsp;</td>
                 </tr>
                 <tr style="height:40px" *ngIf="!servicio.equipos[1]">
                     <td colspan="5">&nbsp;</td>
                 </tr>
                 <tr>
 				    <td colspan="5" style=" border-bottom: 2px solid grey;"></td>
-				</tr>				
+				</tr>
 			</table>
 		</td>
 	  </tr>
@@ -156,7 +176,7 @@
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].modelo}}</label></td>
 					<td width="139" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].serie}}</label></td>
 					<td width="174" align="center" valign="top" ><label class="titulossmall">{{servicio.equipos[2].comentarios}}</label></td>
-					<td width="112" align="center" valign="top" >&nbsp;</td>		
+					<td width="112" align="center" valign="top" >&nbsp;</td>
                 </tr>
                 <tr style="height:40px" *ngIf="!servicio.equipos[2]">
                     <td colspan="5">&nbsp;</td>
@@ -166,7 +186,7 @@
 	  </tr>
 	</table>
 	</td>
-	</tr>	
+	</tr>
   <tr>
     <td colspan="3" bgcolor="#FFFFFF" style="border-bottom-style: dashed;">&nbsp;</td>
   </tr>
