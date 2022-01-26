@@ -1,0 +1,68 @@
+<app-header></app-header>
+<div class="container" style="margin:0 auto;">
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><img id="top-img" src="assets/images/top-alta.jpg"/></td>
+      </tr>
+  </table>
+  <div class="notification">
+    <div class="columns">
+      <div class="columm is-2">
+        <button class="button is-success is-rounded" (click)="habilita(true,false,false)">Entradas</button>
+      </div>
+      <div class="column is-1"></div>
+      <div class="columm is-2">
+        <button class="button is-info  is-rounded" (click)="habilita(false,true,false)">Salidas</button>
+      </div>
+      <div class="column is-1"></div>
+      <div class="columm is-2">
+        <button class="button is-warning  is-rounded" (click)="habilita(false,false,true)">Lista</button>
+      </div>
+    </div>
+  </div>
+  <app-inventario *ngIf="isEntradas"></app-inventario>
+  <div *ngIf="isLista">
+  <table class="table is-bordered" style="width: 100%;">
+    <colgroup>
+      <col width="10%"/>
+      <col width="20%"/>
+      <col width="15%"/>
+      <col width="15%"/>
+      <col width="25%"/>
+      <col width="15%"/>
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="text-align: center;">Stock</th>
+        <th style="text-align: center;">Marca</th>
+        <th style="text-align: center;">Modelo</th>
+        <th style="text-align: center;">Familia</th>
+        <th style="text-align: center;">No de Parte</th>
+        <th style="text-align: center;">Proveedor</th>
+      </tr>
+    </thead>
+  </table>
+    <div style="height: 450px; width: 100%; overflow: auto; border: 2px solid black;margin-top: -25px;">
+      <table  class="table is-bordered is-striped" style="width: 100%;">
+        <colgroup>
+          <col width="10%"/>
+          <col width="20%"/>
+          <col width="15%"/>
+          <col width="15%"/>
+          <col width="25%"/>
+          <col width="15%"/>
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let producto of productos ; let i = index" >
+            <td style="text-align: center;">{{producto.stock}}</td>
+            <td>{{producto.marca}}</td>
+            <td><a href="{{producto.url}}">{{producto.modelo}}</a></td>
+            <td>{{producto.familia}}</td>
+            <td>{{producto.noParte}}</td>
+            <td>{{producto.proveedor}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

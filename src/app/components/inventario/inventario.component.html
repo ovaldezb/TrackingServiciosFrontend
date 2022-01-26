@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="columns" style="width: 100%;">
+    <div class="column" >
+      <div class="box">
+          <div class="columns">
+            <div class="column">
+              <label for="" class="label">Marca</label>
+            </div>
+            <div class="column">
+              <input type="text" name="marca" id="" class="small" #marca="ngModel" [(ngModel)]="producto.marca" required placeholder="MARCA">
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label for="" class="label">Modelo</label>
+            </div>
+            <div class="column">
+              <input type="text" name="modelo"  class="small" #modelo="ngModel" [(ngModel)]="producto.modelo" required >
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label for="" class="label">Familia</label>
+            </div>
+            <div class="column">
+              <input type="text" name="familia" class="small" #familia="ngModel" [(ngModel)]="producto.familia" required>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label for="" class="label">No Parte</label>
+            </div>
+            <div class="column">
+              <input type="text" name="noParte" class="small" #noParte="ngModel" [(ngModel)]="producto.noParte" (keyup.enter)="buscaProducto()" required>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label for="" class="label">Proveedor</label>
+            </div>
+            <div class="column">
+              <input type="text" name="proveedor" class="small" #proveedor="ngModel" [(ngModel)]="producto.proveedor">
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label for="" class="label">URL</label>
+            </div>
+            <div class="column">
+              <input type="text" name="url" class="small" #url="ngModel" [(ngModel)]="producto.url">
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="box">
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">No Factura Compra</label>
+          </div>
+          <div class="column">
+            <input type="text" class="is-small" name="noFacturaCompra" #noFacturaCompra="ngModel" [(ngModel)]="mercancia.noFacturaCompra">
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">Estado</label>
+          </div>
+          <div class="column">
+            <div class="select is-small">
+              <select name="estado" [(ngModel)]="mercancia.estado" class="small">
+                <option *ngFor="let estado of estados" [ngValue]="estado.value">{{estado.viewValue}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">Bodega</label>
+          </div>
+          <div class="column">
+            <div class="select is-small">
+              <select name="bodega" [(ngModel)]="mercancia.bodega" >
+                <option *ngFor="let bodega of bodegas" [ngValue]="bodega.value">{{bodega.viewValue}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">Costo</label>
+          </div>
+          <div class="column">
+            <input type="text" class="is-small" name="precioCompra" #precioCompra="ngModel" [(ngModel)]="mercancia.precioCompra">
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">Fecha Compra</label>
+          </div>
+          <div class="column">
+            <input type="text" class="is-small" name="fechaCompra" #fechaCompra="ngModel" [(ngModel)]="mercancia.fechaCompra">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="box" style="height: 300px;overflow: auto;">
+        <div class="columns">
+          <div class="column is-narrow">
+            <label for="" class="label">Equipos a capturar</label>
+          </div>
+          <div class="column is-narrow" style="width:50px;">
+            <input type="number" name="cantMercCapturar" class="is-small" [(ngModel)]="cantMercCapturar" (change)="changeCantCapturar($event)">
+          </div>
+        </div>
+        <div *ngFor="let i of helperArray" class="columns">
+          <div class="column is-narrow">
+            <label for="" class="label">No Serie {{i+1}}</label>
+          </div>
+          <div class="column">
+            <input type="text" name="" id="noSerie{{i}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="button is-success" (click)="nuevaMercancia($event)" >Agregar Mercancia</button>
+  <button class="button is-warning" (click)="limpiarForma()" >Limpiar</button>
+</div>

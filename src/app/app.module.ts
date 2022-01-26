@@ -25,6 +25,10 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ImgPagoTecnicoComponent } from './components/img-pago-tecnico/img-pago-tecnico.component';
 import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
 import { EnviosComponent } from './components/envios/envios.component';
+import { InventarioComponent } from './components/inventario/inventario.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenuinventarioComponent } from './components/menuinventario/menuinventario.component';
+import { SalidainventarioComponent } from './components/salidainventario/salidainventario.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,10 @@ import { EnviosComponent } from './components/envios/envios.component';
     LoginComponent,
     ImgPagoTecnicoComponent,
     PrintLayoutComponent,
-    EnviosComponent
+    EnviosComponent,
+    InventarioComponent,
+    MenuinventarioComponent,
+    SalidainventarioComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,8 @@ import { EnviosComponent } from './components/envios/envios.component';
     FormsModule,
     HttpClientModule,
     MomentModule,
-    AngularFileUploaderModule
+    AngularFileUploaderModule,
+    BrowserAnimationsModule
   ],
   providers: [appRoutingProviders,
     AuthGuard,

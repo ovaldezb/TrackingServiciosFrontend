@@ -27,9 +27,12 @@
                 </li>
                 <li *ngIf="authService.getRol() == 0">
                   <a routerLink="/envios"  [routerLinkActive]="['active']">Envios</a>
-              </li>
+                </li>
                 <li *ngIf="authService.getRol() == 0">
                     <a routerLink="/reportes"  [routerLinkActive]="['active']">Reportes</a>
+                </li>
+                <li>
+                    <a routerLink="/menuinventario" [routerLinkActive]="['active']" >Inventario</a>
                 </li>
                 <li>
                     <a (click)="authService.logout()" [routerLinkActive]="['active']">Salir</a>
