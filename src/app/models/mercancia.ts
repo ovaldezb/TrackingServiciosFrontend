@@ -2,14 +2,22 @@ import { Producto } from "./producto";
 
 export class Mercancia{
   constructor(
+    public producto:Producto,
     public estado: String,
-    public serie: String,
     public bodega: String,
-    public fechaCompra:Date,
+    public serie: String,
     public precioCompra:Number,
-    public estatusVendido:Boolean,
+    public fechaCompra:Date,
     public capturoEntrada:String,
+    public capturoSalida:String,
+    public precioVenta:Number,
     public noFacturaCompra:String,
-    public producto:Producto
+    public noFacturaVenta:String,
+    public fechaVenta:Date,
+    public cliente:String,
+    public tiempoGarantia:Number,
+    public fechaVencimientoGarantia:Date,    
+    public motivo:String,
+    public observaciones:String
   ){}
 }

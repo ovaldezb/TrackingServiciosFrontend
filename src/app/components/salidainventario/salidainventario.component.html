@@ -1,1 +1,136 @@
-<p>salidainventario works!</p>
+<div class="container">
+  <div class="columns" >
+    <div class="column">
+      <div class="box">
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">Busqueda Producto</label>
+          </div>
+          <div class="column">
+            <div class="select is-small">
+              <select name="" id="">
+                <option value="">Número de Parte</option>
+                <option value="">Número de Serie</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-4">
+            <input type="text" class="input is-small" name="descripcion" [(ngModel)]="descripcion"  (keyup)="buscaProductoByCaracteristica($event)" >
+          </div>
+        </div>
+        <div class="columns" *ngIf="productos.length > 0">
+          <div class="column" style="height: 152px; overflow: auto;border: 2px solid greenyellow;">
+            <table class="table is-hoverable" style="width: 100%;">
+              <tr *ngFor="let producto of productos; let i = index" (click)="ClickedRow(i)"  [class.selected]="i == HighlightRow" >
+                <td>{{producto.stock}}</td>
+                <td>{{producto.marca}}</td>
+                <td>{{producto.modelo}}</td>
+                <td>{{producto.familia}}</td>
+                <td>{{producto.noParte}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="columns" *ngIf="mercancias.length > 0">
+          <div class="column" style="height: 110px; overflow: auto;border: 2px solid blue;">
+            <table class="table is-striped" style="width: 100%;">
+              <tr *ngFor="let mercancia of mercancias; let i = index" (click)="clickedRowMercancia(i)" (dblclick)="seleccionaMercancia(i)" [class.selected]="i == HighlightRowMerc">
+                <td>{{mercancia.serie}}</td>
+                <td>{{mercancia.estado}}</td>
+                <td>{{mercancia.bodega}}</td>
+                <td>{{mercancia.precioCompra | currency}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="box" style="height: 520px;">
+        <div class="columns">
+          <div class="column is-narrow"><label for="" class="label">Productos a sacar:</label></div>
+          <div class="column">
+            <div class="select is-small">
+              <select name="motivoSelect" [(ngModel)]="motivoSelect">
+                <option *ngFor="let motivo of motivos" [ngValue]="motivo.value">{{motivo.valueView}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="column">
+            <label for="" class="label">Equipo:
+              <input type="checkbox" name="isEquipo" [(ngModel)]="isEquipo" >
+            </label>
+          </div>
+          <div class="column">
+            <input type="text" name="nombreEquipo" [(ngModel)]="nombreEquipo" *ngIf="isEquipo">
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-narrow">
+            <label for="" class="label">Cliente:</label>
+          </div>
+          <div class="column">
+            <input type="text" class="input is-small" name="cliente" [(ngModel)]="cliente">
+          </div>
+          <div class="column is-narrow">
+            <label for="" class="label">No de Factura</label>
+          </div>
+          <div class="column">
+            <input type="text" class="input is-small" name="facturaVenta" [(ngModel)]="facturaVenta"> 
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-narrow">
+            <label for="" class="label">Tiempo de Garantia</label>
+          </div>
+          <div class="column">
+            <input type="number" class="input is-small" name="tiempoGarantia" [(ngModel)]="tiempoGarantia" (change)="calculaGarantia()">
+          </div>
+          <div class="column">
+            <label for="" class="label">Vence Garantia</label>
+          </div>
+          <div class="column">
+            <input type="text" class="input is-small" name="fechaVenceGarantia" [(ngModel)]="fechaVenceGarantia">
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <input type="text" class="input is-small" name="observaciones" [(ngModel)]="observaciones" placeholder="OBSERVACIONES">
+          </div>
+        </div>
+        <div style="height: 240px;">
+          <div class="columns" *ngIf="mercanciaSalida.length > 0">
+            <div class="column" style="height: 160px; overflow: auto;  border: 2px solid seagreen;">
+              <table class="table" style="width: 100%;">
+                <tr *ngFor="let mercancia of mercanciaSalida; let i = index">
+                  <td>{{mercancia.producto.modelo}}</td>
+                  <td>{{mercancia.producto.familia}}</td>
+                  <td>{{mercancia.serie}}</td>
+                  <td>{{mercancia.bodega}}</td>
+                  <td>{{mercancia.precioCompra | currency}}</td>
+                  <td>
+                    <input type="number" name="" id="mercancia{{i}}">
+                  </td>
+                  <td>
+                    <button>
+                      <span class="icon is-small">
+                        <a (click)="eliminaMercancia(i)"><i class="far fa-times-circle"></i></a>
+                    </span>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <button class="button is-info is-rounded" [disabled]="mercanciaSalida.length === 0" (click)="submit()">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

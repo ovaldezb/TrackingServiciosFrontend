@@ -43,7 +43,7 @@ export class InventarioComponent implements OnInit {
   constructor(private _router : Router,
     private _servicioService: ServicioService) { 
       this.producto = new Producto("","","","","","","",0);
-      this.mercancia = new Mercancia("","","",null,0,false,"","",null);
+      this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
       
   }
 
@@ -66,19 +66,20 @@ export class InventarioComponent implements OnInit {
         var element = (<HTMLInputElement>document.getElementById("noSerie"+i)).value
         this.mercancia.serie = element;
         this.mercancia.producto = servrec.productoSaved;
+        this.mercancia.capturoEntrada = localStorage.getItem('usuario');
         this._servicioService.createMercancia(this.mercancia)
         .subscribe((res)=>{
           //console.log(res);
         },
         (err=>{
-          console.log(err);
+          //console.log(err);
           swal('Hubo un error al guardar el Producto','Error','error');  
           return;
         }));
       }
       swal('Se ha creado el Producto exitosamente','Felicidades!','success');  
       this.producto = new Producto("","","","","","","",0);
-      this.mercancia = new Mercancia("","","",null,0,false,"","",null);
+      this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
       for(let i=0;i<this.helperArray.length;i++){
         (<HTMLInputElement>document.getElementById("noSerie"+i)).value = '';
       }
@@ -115,7 +116,7 @@ export class InventarioComponent implements OnInit {
     this.helperArray.push(0);
     this.cantMercCapturar = 1;
     this.producto = new Producto("","","","","","","",0);
-    this.mercancia = new Mercancia("","","",null,0,false,"","",null);
+    this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
   }
   
 }

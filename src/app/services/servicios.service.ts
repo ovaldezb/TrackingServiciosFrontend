@@ -157,5 +157,16 @@ export class ServicioService{
     getProductos():Observable<any>{
         return this._http.get(this.url+'producto');
     }
+    getMercanciaByNoSerie(descripcion):Observable<any>{
+        return this._http.get(this.url+'mercancia/'+descripcion);
+    }
+    getMercanciaByProductoId(idProducto):Observable<any>{
+        return this._http.get(this.url+'mercancia/producto/'+idProducto);
+    }
+    createMercanciaVendida(mercancia):Observable<any>{
+        let params = JSON.stringify(mercancia);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'mercancia/vendido',params,{headers});
+    }
 
 }
