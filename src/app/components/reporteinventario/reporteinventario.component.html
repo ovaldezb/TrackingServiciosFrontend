@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="columns">
+    <div class="column is-narrow">
+      <label for="" class="label">Filtro:</label>
+    </div>
+    <div class="column is-2">
+      <input type="text" class="input is-small" name="filtro" [(ngModel)]="filtro" (keyup)="filtrarResultados()">
+    </div>
+    <div class="column is-narrow">
+      <label for="" class="label">Desde:</label>
+    </div>
+    <div class="column is-narrow">
+      <div class="input-box-container">
+        <input class="input-box" 
+        name="fecIni" 
+        placeholder="Fecha Inicio" 
+        angular-mydatepicker #dpFini="angular-mydatepicker" 
+        [(ngModel)]="fecIni"
+        [options]="myDpOptions" 
+        (dateChanged)="onDateChangedIni($event)"
+        (click)="dpFini.toggleCalendar()"
+        [locale]="locale">
+      </div>
+    </div>
+    <div class="column is-narrow">
+      <label for="" class="label">Hasta:</label>
+    </div>
+    <div class="column is-narrow">
+      <div class="input-box-container">
+        <input class="input-box" 
+        name="fechaFin" 
+        placeholder="Fecha Fin" 
+        angular-mydatepicker #dpFfin="angular-mydatepicker" 
+        [(ngModel)]="fecFin"
+        [options]="myDpOptions" 
+        (dateChanged)="onDateChangedFin($event)"
+        (click)="dpFfin.toggleCalendar()"
+        [locale]="locale">
+      </div>
+    </div>
+    <div class="column"><button class="button is-info" (click)="buscaPorFechas()">Buscar</button></div>
+  </div>
+  <table class="table is-bordered" style="width: 100%;">
+    <colgroup>
+      <col width="7%">
+      <col width="7%">
+      <col width="8%">
+      <col width="9%">
+      <col width="7%">
+      <col width="6%">
+      <col width="6%">
+      <col width="8%">
+      <col width="6%">
+      <col width="7%">
+      <col width="7%">
+      <col width="9%">
+      <col width="6%">
+      <col width="7%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th class="font-report">Marca</th>
+        <th class="font-report">Familia</th>
+        <th class="font-report"># Parte</th>
+        <th class="font-report"># Serie</th>
+        <th class="font-report">Estado</th>
+        <th class="font-report">Bodega</th>
+        <th class="font-report">Costo $</th>
+        <th class="font-report">Fec Ven</th>
+        <th class="font-report">Venta $</th>
+        <th class="font-report">Fact Ven</th>
+        <th class="font-report">Cliente</th>
+        <th class="font-report">Garantia</th>
+        <th class="font-report">Vendio</th>
+        <th class="font-report">Obser</th>
+      </tr>
+    </thead>
+  </table>
+  <div style="border: 2px solid greenyellow; height: 450px;margin-top: -25px;">
+    <table class="table is-bordered is-hoverable" style="width: 100%;" id="tblVentas">
+      <colgroup>
+        <col width="7%">
+        <col width="7%">
+        <col width="8%">
+        <col width="9%">
+        <col width="7%">
+        <col width="6%">
+        <col width="6%">
+        <col width="8%">
+        <col width="6%">
+        <col width="7%">
+        <col width="7%">
+        <col width="9%">
+        <col width="6%">
+        <col width="7%">
+      </colgroup>
+      <tbody>
+        <tr *ngFor="let mercancia of mercancias; let i = index" (click)="selectRow(i)" [class.is-selected]="i == highLightRow">
+          <td class="font-report">{{mercancia.producto.marca}}</td>
+          <td class="font-report" title="{{mercancia.producto.modelo}}">{{mercancia.producto.familia}}</td>
+          <td class="font-report">{{mercancia.producto.noParte}}</td>
+          <td class="font-report">{{mercancia.serie}}</td>
+          <td class="font-report">{{mercancia.estado}}</td>
+          <td class="font-report">{{mercancia.bodega}}</td>
+          <td class="font-report">{{mercancia.precioCompra | currency}}</td>
+          <td class="font-report">{{mercancia.fechaVenta | date:'short'}}</td>
+          <td class="font-report">{{mercancia.precioVenta | currency}}</td>
+          <td class="font-report">{{mercancia.noFacturaVenta}}</td>
+          <td class="font-report">{{mercancia.cliente}}</td>
+          <td class="font-report">{{mercancia.fechaVencimientoGarantia | date:'short'}}</td>
+          <td class="font-report">{{mercancia.capturoSalida}}</td>
+          <td class="font-report">{{mercancia.observaciones}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

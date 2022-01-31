@@ -29,7 +29,8 @@ import { InventarioComponent } from './components/inventario/inventario.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuinventarioComponent } from './components/menuinventario/menuinventario.component';
 import { SalidainventarioComponent } from './components/salidainventario/salidainventario.component';
-
+import { ReporteinventarioComponent } from './components/reporteinventario/reporteinventario.component';
+import {AngularMyDatePickerModule} from 'angular-mydatepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,8 @@ import { SalidainventarioComponent } from './components/salidainventario/salidai
     EnviosComponent,
     InventarioComponent,
     MenuinventarioComponent,
-    SalidainventarioComponent
+    SalidainventarioComponent,
+    ReporteinventarioComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { SalidainventarioComponent } from './components/salidainventario/salidai
     HttpClientModule,
     MomentModule,
     AngularFileUploaderModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularMyDatePickerModule
   ],
   providers: [appRoutingProviders,
     AuthGuard,

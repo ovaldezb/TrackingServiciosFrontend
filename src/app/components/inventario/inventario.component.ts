@@ -5,7 +5,7 @@ import { Producto } from 'src/app/models/producto';
 import { Mercancia } from 'src/app/models/mercancia';
 import { Router, ActivatedRoute } from '@angular/router';
 import  swal  from 'sweetalert';
-
+import {IAngularMyDpOptions,IMyDateModel} from 'angular-mydatepicker';
 
 export interface Bodega {
   value: string;
@@ -28,6 +28,9 @@ export interface CantCapture{
 export class InventarioComponent implements OnInit {
   public mercancia:Mercancia;
   public producto: Producto;
+  public stock:number;
+  fechaCompra: IMyDateModel = null;
+  locale:string="es";
   helperArray: Array<any>;
   cantMercCapturar:number;
   element: HTMLElement;
@@ -40,6 +43,11 @@ export class InventarioComponent implements OnInit {
     {value:'Usado',viewValue:'Usado'},
     {value:'Reconstruido', viewValue:'Reconstruido'}
   ];
+  myDpOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'dd/mm/yyyy'
+    // other options are here...
+  };
   constructor(private _router : Router,
     private _servicioService: ServicioService) { 
       this.producto = new Producto("","","","","","","",0);
@@ -59,34 +67,44 @@ export class InventarioComponent implements OnInit {
       swal("Necesita capturar al menos un No de Serie");
       return;
     }
+    this.stock = this.producto.stock;
     this.producto.stock = this.producto.stock + this.helperArray.length;
     var servrec = await this._servicioService.createProducto(this.producto).toPromise();
-    if(servrec.status == 'success'){
-      for(let i=0;i<this.helperArray.length;i++){
-        var element = (<HTMLInputElement>document.getElementById("noSerie"+i)).value
-        this.mercancia.serie = element;
-        this.mercancia.producto = servrec.productoSaved;
-        this.mercancia.capturoEntrada = localStorage.getItem('usuario');
-        this._servicioService.createMercancia(this.mercancia)
-        .subscribe((res)=>{
-          //console.log(res);
-        },
-        (err=>{
-          //console.log(err);
-          swal('Hubo un error al guardar el Producto','Error','error');  
-          return;
-        }));
-      }
-      swal('Se ha creado el Producto exitosamente','Felicidades!','success');  
-      this.producto = new Producto("","","","","","","",0);
-      this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
-      for(let i=0;i<this.helperArray.length;i++){
-        (<HTMLInputElement>document.getElementById("noSerie"+i)).value = '';
-      }
-      this.helperArray = new Array();
-      this.helperArray.push(0);
-      this.cantMercCapturar = 1;
-    }  
+      if(servrec.status == 'success'){
+        for(let i=0;i<this.helperArray.length;i++){
+          var numeroSerie = (<HTMLInputElement>document.getElementById("noSerie"+i)).value
+          this.mercancia.serie = numeroSerie=='' ? 'NA' : numeroSerie;
+          this.mercancia.producto = servrec.productoSaved;
+          this.mercancia.capturoEntrada = localStorage.getItem('usuario');
+          if(this.stock < 0 ){
+            this.stock++;
+            this._servicioService.createIncreasePendiente(this.mercancia)
+            .subscribe((res)=>{
+              
+            });
+          }else{
+            this._servicioService.createMercancia(this.mercancia)
+            .subscribe((res)=>{
+              //console.log(res);
+            },
+            (err=>{
+              swal('Hubo un error al guardar el Producto','Error','error');  
+              return;
+            }));
+          }
+        }
+        swal('Se ha creado el Producto exitosamente','Felicidades!','success');  
+        
+        this.producto = new Producto("","","","","","","",0);
+        this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
+        for(let i=0;i<this.helperArray.length;i++){
+          (<HTMLInputElement>document.getElementById("noSerie"+i)).value = '';
+        }
+        this.helperArray = new Array();
+        this.helperArray.push(0);
+        this.cantMercCapturar = 1;
+      }  
+    
   }
 
   changeCantCapturar(event){
@@ -109,6 +127,9 @@ export class InventarioComponent implements OnInit {
     },(err)=>{
       swal("No se encontro un producto con ese número de parte");
     });
+  }
+  onDateChanged(event: IMyDateModel): void {
+    this.mercancia.fechaCompra = event.singleDate.jsDate;
   }
 
   limpiarForma(){

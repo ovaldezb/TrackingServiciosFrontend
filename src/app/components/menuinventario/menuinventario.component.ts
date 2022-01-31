@@ -14,6 +14,7 @@ export class MenuinventarioComponent implements OnInit {
   isEntradas:boolean;
   isSalidas:boolean;
   isLista:boolean=true;
+  isReporte:boolean;
   productos:Producto[];
   constructor(private _router : Router,
     private _servicioService: ServicioService) { 
@@ -29,10 +30,11 @@ export class MenuinventarioComponent implements OnInit {
     });
   }
 
-  habilita(entrada,salida,lista){
+  habilita(entrada,salida,lista,reporte){
     this.isEntradas = entrada;
     this.isSalidas = salida;
     this.isLista = lista;
+    this.isReporte = reporte;
     if(this.isLista){
       this._servicioService.getProductos().subscribe((res)=>{
         if(res.status==='success'){

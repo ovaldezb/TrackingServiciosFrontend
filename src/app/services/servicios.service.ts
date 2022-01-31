@@ -157,8 +157,8 @@ export class ServicioService{
     getProductos():Observable<any>{
         return this._http.get(this.url+'producto');
     }
-    getMercanciaByNoSerie(descripcion):Observable<any>{
-        return this._http.get(this.url+'mercancia/'+descripcion);
+    getMercanciaByNoSerie(filtro,descripcion):Observable<any>{
+        return this._http.get(this.url+'mercancia/'+filtro+'?descripcion='+descripcion);
     }
     getMercanciaByProductoId(idProducto):Observable<any>{
         return this._http.get(this.url+'mercancia/producto/'+idProducto);
@@ -169,4 +169,23 @@ export class ServicioService{
         return this._http.post(this.url+'mercancia/vendido',params,{headers});
     }
 
+    createPendiente(pendiente):Observable<any>{
+        let params = JSON.stringify(pendiente);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'pendiente',params,{headers});
+    }
+
+    createIncreasePendiente(pendiente):Observable<any>{
+        let params = JSON.stringify(pendiente);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'pendiente/increase',params,{headers});
+    }
+
+    getMercancias():Observable<any>{
+        return this._http.get(this.url+'mercancia');
+    }
+
+    getMercVendidaByRangoFechas(fecIni,fecFin):Observable<any>{
+        return this._http.get(this.url+'mercancia/rango?fecIni='+fecIni+'&fecFin='+fecFin);
+    }
 }

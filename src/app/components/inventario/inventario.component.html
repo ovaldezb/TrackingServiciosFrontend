@@ -100,7 +100,17 @@
             <label for="" class="label">Fecha Compra</label>
           </div>
           <div class="column">
-            <input type="text" class="is-small" name="fechaCompra" #fechaCompra="ngModel" [(ngModel)]="mercancia.fechaCompra">
+            <div class="input-box-container">
+              <input class="input-box" 
+                     name="fechaCompra" 
+                     placeholder="Seleccione una fecha" 
+                     angular-mydatepicker #dp="angular-mydatepicker" 
+                     [(ngModel)]="fechaCompra"
+                     [options]="myDpOptions" 
+                     (dateChanged)="onDateChanged($event)"
+                     (click)="dp.toggleCalendar()"
+                     [locale]="locale">
+            </div>
           </div>
         </div>
       </div>

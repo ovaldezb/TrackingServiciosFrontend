@@ -8,9 +8,8 @@
           </div>
           <div class="column">
             <div class="select is-small">
-              <select name="" id="">
-                <option value="">Número de Parte</option>
-                <option value="">Número de Serie</option>
+              <select name="filtro" [(ngModel)]="filtro">
+                <option *ngFor="let filtroBusqueda of filtroBusquedas" [ngValue]="filtroBusqueda.value">{{filtroBusqueda.valueView}}</option>
               </select>
             </div>
           </div>
@@ -45,23 +44,28 @@
             </table>
           </div>
         </div>
+        <div class="columns" *ngIf="productos.length > 0 && mercancias.length === 0 && HighlightRow >=0">
+          <div class="column">
+            <label for="" class="label">
+              Agregar sin existencia:
+            </label>
+          </div>
+          <div class="column">
+            <button class="button is-info" (click)="agregarSinExistencia()">Agregar</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="column">
       <div class="box" style="height: 520px;">
         <div class="columns">
-          <div class="column is-narrow"><label for="" class="label">Productos a sacar:</label></div>
+          <div class="column is-narrow"><label for="" class="label">Productos a sacar por:</label></div>
           <div class="column">
             <div class="select is-small">
               <select name="motivoSelect" [(ngModel)]="motivoSelect">
                 <option *ngFor="let motivo of motivos" [ngValue]="motivo.value">{{motivo.valueView}}</option>
               </select>
             </div>
-          </div>
-          <div class="column">
-            <label for="" class="label">Equipo:
-              <input type="checkbox" name="isEquipo" [(ngModel)]="isEquipo" >
-            </label>
           </div>
           <div class="column">
             <input type="text" name="nombreEquipo" [(ngModel)]="nombreEquipo" *ngIf="isEquipo">
