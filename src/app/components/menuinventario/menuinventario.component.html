@@ -3,45 +3,61 @@
   <div class="notification">
     <div class="columns">
       <div class="columm is-2">
-        <button class="button is-success is-rounded" (click)="habilita(true,false,false,false)">Entradas</button>
+        <button class="button is-success is-rounded" (click)="habilita(true,false,false,false,false)">Entradas</button>
       </div>
       <div class="column is-1"></div>
       <div class="columm is-2">
-        <button class="button is-info  is-rounded" (click)="habilita(false,true,false,false)">Salidas</button>
+        <button class="button is-info  is-rounded" (click)="habilita(false,true,false,false,false)">Salidas</button>
       </div>
       <div class="column is-1"></div>
       <div class="columm is-2">
-        <button class="button is-warning  is-rounded" (click)="habilita(false,false,true,false)">Inventario</button>
+        <button class="button is-warning  is-rounded" (click)="habilita(false,false,true,false,false)">Inventario</button>
       </div>
       <div class="column is-1"></div>
       <div class="columm is-2">
-        <button class="button is-link  is-rounded" (click)="habilita(false,false,false,true)">Reporte</button>
+        <button class="button is-link  is-rounded" (click)="habilita(false,false,false,true,false)">Reporte</button>
       </div>
     </div>
   </div>
   <app-inventario *ngIf="isEntradas"></app-inventario>
   <app-salidainventario *ngIf="isSalidas"></app-salidainventario>
   <app-reporteinventario *ngIf="isReporte"></app-reporteinventario>
+  <div *ngIf="isLista || isDesgloce">
+    <div class="columns">
+      <div class="column is-narrow">
+        <label for="" class="label">
+          <input type="radio" name="option" #option="ngModel" ngModel value="resumen" (click)="tipoReporte('resumen')">
+          Resumen
+        </label>
+      </div>
+      <div class="column is-narrow">
+        <label for="" class="label">
+          <input type="radio" name="option" #option="ngModel" ngModel value="desgloce" (click)="tipoReporte('desgloce')">
+          Desgloce
+        </label>
+      </div>
+    </div>
+  </div>
   <div *ngIf="isLista">
-  <table class="table is-bordered" style="width: 100%;">
-    <colgroup>
-      <col width="10%"/>
-      <col width="20%"/>
-      <col width="20%"/>
-      <col width="20%"/>
-      <col width="30%"/>
-    </colgroup>
-    <thead>
-      <tr>
-        <th style="text-align: center;">Stock</th>
-        <th style="text-align: center;">Marca</th>
-        <th style="text-align: center;">Modelo</th>
-        <th style="text-align: center;">Familia</th>
-        <th style="text-align: center;">No de Parte</th>
-      </tr>
-    </thead>
-  </table>
-    <div style="height: 298px; width: 100%; overflow: auto; border: 2px solid black;margin-top: -25px;">
+    <table class="table is-bordered" style="width: 100%;">
+      <colgroup>
+        <col width="10%"/>
+        <col width="20%"/>
+        <col width="20%"/>
+        <col width="20%"/>
+        <col width="30%"/>
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align: center;">Stock</th>
+          <th style="text-align: center;">Marca</th>
+          <th style="text-align: center;">Modelo</th>
+          <th style="text-align: center;">Familia</th>
+          <th style="text-align: center;">No de Parte</th>
+        </tr>
+      </thead>
+    </table>
+    <div style="height: 550px; width: 100%; overflow: auto; border: 2px solid black;margin-top: -25px;">
       <table  class="table is-bordered is-striped" style="width: 100%;">
         <colgroup>
           <col width="10%"/>
@@ -57,6 +73,44 @@
             <td><a href="{{producto.url}}">{{producto.modelo}}</a></td>
             <td>{{producto.familia}}</td>
             <td>{{producto.noParte}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="isDesgloce">
+    <table class="table" style="width: 100%">
+      <thead>
+        <tr>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Familia</th>
+          <th>No Parte</th>
+          <th>No Serie</th>
+          <th>Bodega</th>
+          <th>Capturó</th>
+          <th>$ Pesos</th>
+          <th>$ Dls</th>
+          <th>Fact Comp</th>
+          <th>Fecha Com</th>
+        </tr>
+      </thead>
+    </table>
+    <div style="height: 550px;border: 2px solid saddlebrown;overflow: auto;margin-top: -25px;">
+      <table class="table is-bordered" style="width: 100%;">
+        <tbody>
+          <tr *ngFor="let mercancia of mercancias">
+            <td>{{mercancia.producto.marca}}</td>
+            <td>{{mercancia.producto.modelo}}</td>
+            <td>{{mercancia.producto.familia}}</td>
+            <td>{{mercancia.producto.noParte}}</td>
+            <td>{{mercancia.serie}}</td>
+            <td>{{mercancia.bodega}}</td>
+            <td>{{mercancia.capturoEntrada}}</td>
+            <td>{{mercancia.precioCompra}}</td>
+            <td>{{mercancia.precioDolares}}</td>
+            <td>{{mercancia.noFacturaCompra}}</td>
+            <td>{{mercancia.fechaCompra | date}}</td>
           </tr>
         </tbody>
       </table>

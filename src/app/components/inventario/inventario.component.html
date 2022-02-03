@@ -89,10 +89,16 @@
         </div>
         <div class="columns">
           <div class="column">
-            <label for="" class="label">Costo</label>
+            <label for="" class="label">Costo Pesos</label>
+          </div>
+          <div class="column is-3">
+            <input type="number" class="input is-small" name="precioCompra" #precioCompra="ngModel" [(ngModel)]="mercancia.precioCompra">
           </div>
           <div class="column">
-            <input type="text" class="is-small" name="precioCompra" #precioCompra="ngModel" [(ngModel)]="mercancia.precioCompra">
+            <label for="" class="label">Costo Dólares</label>
+          </div>
+          <div class="column is-3">
+            <input type="number" class="input is-small" name="precioDolares" #precioDolares="ngModel" [(ngModel)]="mercancia.precioDolares" >
           </div>
         </div>
         <div class="columns">
@@ -121,8 +127,8 @@
           <div class="column is-narrow">
             <label for="" class="label">Equipos a capturar</label>
           </div>
-          <div class="column is-narrow" style="width:50px;">
-            <input type="number" name="cantMercCapturar" class="is-small" [(ngModel)]="cantMercCapturar" (change)="changeCantCapturar($event)">
+          <div class="column is-3">
+            <input type="number" name="cantMercCapturar" class="input is-small" [(ngModel)]="cantMercCapturar" (change)="changeCantCapturar($event)">
           </div>
         </div>
         <div *ngFor="let i of helperArray" class="columns">

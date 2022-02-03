@@ -29,7 +29,7 @@ export class ReporteinventarioComponent implements OnInit {
     private _servicioService: ServicioService) { }
     
   ngOnInit(): void {
-    this._servicioService.getMercancias().subscribe((res)=>{
+    this._servicioService.getMercanciaVendida().subscribe((res)=>{
       this.mercancias = res.mercancias;
     },(err)=>{
       console.log(err);

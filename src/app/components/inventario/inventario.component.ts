@@ -34,10 +34,7 @@ export class InventarioComponent implements OnInit {
   helperArray: Array<any>;
   cantMercCapturar:number;
   element: HTMLElement;
-  bodegas: Bodega[] =[
-    {value:'Toluca', viewValue:'Toluca'},
-    {value:'CDMX',viewValue:'CDMX'}
-  ];
+  bodegas: Bodega[];
   estados: Estado[] = [
     {value:'Nuevo', viewValue:'Nuevo'},
     {value:'Usado',viewValue:'Usado'},
@@ -51,7 +48,7 @@ export class InventarioComponent implements OnInit {
   constructor(private _router : Router,
     private _servicioService: ServicioService) { 
       this.producto = new Producto("","","","","","","",0);
-      this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
+      this.mercancia = new Mercancia(null,"","","",0,0,null,"","",0,"","",null,"",0,null,"","");
       
   }
 
@@ -59,6 +56,12 @@ export class InventarioComponent implements OnInit {
     this.helperArray = new Array();
     this.helperArray.push(0);
     this.cantMercCapturar = 1;
+    this._servicioService.getBodegas()
+    .subscribe((res)=>{
+      if(res.status==='success'){
+        this.bodegas = res.bodegas;
+      }
+    });
   }
 
 
@@ -96,7 +99,7 @@ export class InventarioComponent implements OnInit {
         swal('Se ha creado el Producto exitosamente','Felicidades!','success');  
         
         this.producto = new Producto("","","","","","","",0);
-        this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
+        this.mercancia = new Mercancia(null,"","","",0,0,null,"","",0,"","",null,"",0,null,"","");
         for(let i=0;i<this.helperArray.length;i++){
           (<HTMLInputElement>document.getElementById("noSerie"+i)).value = '';
         }
@@ -137,7 +140,7 @@ export class InventarioComponent implements OnInit {
     this.helperArray.push(0);
     this.cantMercCapturar = 1;
     this.producto = new Producto("","","","","","","",0);
-    this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
+    this.mercancia = new Mercancia(null,"","","",0,0,null,"","",0,"","",null,"",0,null,"","");
   }
   
 }

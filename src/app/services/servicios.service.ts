@@ -181,11 +181,19 @@ export class ServicioService{
         return this._http.post(this.url+'pendiente/increase',params,{headers});
     }
 
-    getMercancias():Observable<any>{
+    getMercanciaVendida():Observable<any>{
         return this._http.get(this.url+'mercancia');
+    }
+
+    getMercanciaDisponible():Observable<any>{
+        return this._http.get(this.url+'disponible');
     }
 
     getMercVendidaByRangoFechas(fecIni,fecFin):Observable<any>{
         return this._http.get(this.url+'mercancia/rango?fecIni='+fecIni+'&fecFin='+fecFin);
+    }
+
+    getBodegas():Observable<any>{
+        return this._http.get(this.url+'bodegas');
     }
 }

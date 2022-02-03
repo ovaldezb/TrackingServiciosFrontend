@@ -169,7 +169,7 @@ export class SalidainventarioComponent implements OnInit {
   }
 
   agregarSinExistencia(){
-    this.mercancia = new Mercancia(null,"","","",0,null,"","",0,"","",null,"",0,null,"","");
+    this.mercancia = new Mercancia(null,"","","",0,0,null,"","",0,"","",null,"",0,null,"","");
     this.mercancia.producto = this.productos[this.HighlightRow];
     console.log(this.mercancia);
     this.mercanciaSalida.push(this.mercancia);

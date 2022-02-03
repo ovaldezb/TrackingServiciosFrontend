@@ -7,6 +7,7 @@ export class Mercancia{
     public bodega: String,
     public serie: String,
     public precioCompra:Number,
+    public precioDolares:Number,
     public fechaCompra:Date,
     public capturoEntrada:String,
     public capturoSalida:String,
