@@ -196,4 +196,12 @@ export class ServicioService{
     getBodegas():Observable<any>{
         return this._http.get(this.url+'bodegas');
     }
+
+    getMarcas():Observable<any>{
+        return this._http.get(this.url+"marca");
+    }
+
+    getFamilias():Observable<any>{
+        return this._http.get(this.url+"familia");
+    }
 }

@@ -212,8 +212,22 @@ tr:hover{
   height: 60px;
 } 
 
+.font-report-header{
+    font-size: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center !important;
+    background-color: #817b7a !important;
+    color: #f7f7f7 !important;
+    vertical-align: middle !important;
+}
 .font-report{
     font-size: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center !important;
+}
+
+.font-desgloce{
+    font-size: 12px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-align: center !important;
 }

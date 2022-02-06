@@ -57,7 +57,7 @@
         </tr>
       </thead>
     </table>
-    <div style="height: 550px; width: 100%; overflow: auto; border: 2px solid black;margin-top: -25px;">
+    <div style="height: 460px; width: 100%; overflow: auto; border: 2px solid black;margin-top: -25px;">
       <table  class="table is-bordered is-striped" style="width: 100%;">
         <colgroup>
           <col width="10%"/>
@@ -79,38 +79,64 @@
     </div>
   </div>
   <div *ngIf="isDesgloce">
-    <table class="table" style="width: 100%">
+    <table class="table is-bordered" style="width: 100%">
+      <colgroup>
+        <col width="9%">
+          <col width="12%">
+          <col width="9%">
+          <col width="10%">
+          <col width="13%">
+          <col width="9%">
+          <col width="7%">
+          <col width="7%">
+          <col width="7%">
+          <col width="9%">
+          <col width="8%">
+      </colgroup>
       <thead>
         <tr>
-          <th>Marca</th>
-          <th>Modelo</th>
-          <th>Familia</th>
-          <th>No Parte</th>
-          <th>No Serie</th>
-          <th>Bodega</th>
-          <th>Capturó</th>
-          <th>$ Pesos</th>
-          <th>$ Dls</th>
-          <th>Fact Comp</th>
-          <th>Fecha Com</th>
+          <th style="text-align: center;">Marca</th>
+          <th style="text-align: center;">Modelo</th>
+          <th style="text-align: center;">Familia</th>
+          <th style="text-align: center;">No Parte</th>
+          <th style="text-align: center;">No Serie</th>
+          <th style="text-align: center;">Bodega</th>
+          <th style="text-align: center;">Capturó</th>
+          <th style="text-align: center;">$ MXP</th>
+          <th style="text-align: center;">$ USD</th>
+          <th style="text-align: center;">Factura</th>
+          <th style="text-align: center;">Fecha</th>
         </tr>
       </thead>
     </table>
-    <div style="height: 550px;border: 2px solid saddlebrown;overflow: auto;margin-top: -25px;">
+    <div style="height: 460px;border: 2px solid saddlebrown;overflow: auto;margin-top: -25px;">
       <table class="table is-bordered" style="width: 100%;">
+        <colgroup>
+          <col width="9%">
+          <col width="12%">
+          <col width="9%">
+          <col width="10%">
+          <col width="13%">
+          <col width="9%">
+          <col width="7%">
+          <col width="7%">
+          <col width="7%">
+          <col width="9%">
+          <col width="8%">
+        </colgroup>
         <tbody>
           <tr *ngFor="let mercancia of mercancias">
-            <td>{{mercancia.producto.marca}}</td>
-            <td>{{mercancia.producto.modelo}}</td>
-            <td>{{mercancia.producto.familia}}</td>
-            <td>{{mercancia.producto.noParte}}</td>
-            <td>{{mercancia.serie}}</td>
-            <td>{{mercancia.bodega}}</td>
-            <td>{{mercancia.capturoEntrada}}</td>
-            <td>{{mercancia.precioCompra}}</td>
-            <td>{{mercancia.precioDolares}}</td>
-            <td>{{mercancia.noFacturaCompra}}</td>
-            <td>{{mercancia.fechaCompra | date}}</td>
+            <td class="font-desgloce">{{mercancia.producto.marca}}</td>
+            <td class="font-desgloce">{{mercancia.producto.modelo}}</td>
+            <td class="font-desgloce">{{mercancia.producto.familia}}</td>
+            <td class="font-desgloce">{{mercancia.producto.noParte}}</td>
+            <td class="font-desgloce">{{mercancia.serie}}</td>
+            <td class="font-desgloce">{{mercancia.bodega}}</td>
+            <td class="font-desgloce">{{mercancia.capturoEntrada}}</td>
+            <td class="font-desgloce">{{mercancia.precioCompra | currency}}</td>
+            <td class="font-desgloce">{{mercancia.precioDolares | currency}}</td>
+            <td class="font-desgloce">{{mercancia.noFacturaCompra}}</td>
+            <td class="font-desgloce">{{mercancia.fechaCompra | date:'dd/MM/yyyy'}}</td>
           </tr>
         </tbody>
       </table>

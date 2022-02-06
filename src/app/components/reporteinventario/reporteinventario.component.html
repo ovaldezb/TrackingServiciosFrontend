@@ -40,59 +40,75 @@
     </div>
     <div class="column"><button class="button is-info" (click)="buscaPorFechas()">Buscar</button></div>
   </div>
-  <table class="table is-bordered" style="width: 100%;">
-    <colgroup>
-      <col width="7%">
-      <col width="7%">
-      <col width="8%">
-      <col width="9%">
-      <col width="7%">
-      <col width="6%">
-      <col width="6%">
-      <col width="8%">
-      <col width="6%">
-      <col width="7%">
-      <col width="7%">
-      <col width="9%">
-      <col width="6%">
-      <col width="7%">
-    </colgroup>
-    <thead>
-      <tr>
-        <th class="font-report">Marca</th>
-        <th class="font-report">Familia</th>
-        <th class="font-report"># Parte</th>
-        <th class="font-report"># Serie</th>
-        <th class="font-report">Estado</th>
-        <th class="font-report">Bodega</th>
-        <th class="font-report">Costo $</th>
-        <th class="font-report">Fec Ven</th>
-        <th class="font-report">Venta $</th>
-        <th class="font-report">Fact Ven</th>
-        <th class="font-report">Cliente</th>
-        <th class="font-report">Garantia</th>
-        <th class="font-report">Vendio</th>
-        <th class="font-report">Obser</th>
-      </tr>
-    </thead>
-  </table>
-  <div style="border: 2px solid greenyellow; height: 450px;margin-top: -25px;">
-    <table class="table is-bordered is-hoverable" style="width: 100%;" id="tblVentas">
+  <div style="width: 100%;overflow: auto;height: 500px;border: 2px solid greenyellow;">
+    <table class="table is-bordered" style="width: 150%;">
       <colgroup>
+        <col width="5%">
+        <col width="5%">
         <col width="7%">
+        <col width="5%">
         <col width="7%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
         <col width="8%">
-        <col width="9%">
-        <col width="7%">
-        <col width="6%">
-        <col width="6%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
         <col width="8%">
-        <col width="6%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="font-report-header" rowspan="2">MARCA</th>
+          <th class="font-report-header" rowspan="2">FAMILIA</th>
+          <th class="font-report-header" rowspan="2"># PARTE</th>
+          <th class="font-report-header" rowspan="2"># SERIE</th>
+          <th class="font-report-header" rowspan="2">ESTADO</th>
+          <th class="font-report-header" rowspan="2">BODEGA</th>
+          <th colspan="5" style="text-align: center; background: rgb(123, 188, 199);">COMPRA</th>
+          <th colspan="7" style="text-align: center; background: rgb(223, 224, 125);">VENTA</th>
+        </tr>
+        <tr>
+          <th style="text-align: center; background: rgb(123, 188, 199);">$ MXP</th>
+          <th style="text-align: center; background: rgb(123, 188, 199);">$ USD</th>
+          <th style="text-align: center; background: rgb(123, 188, 199);">Fecha</th>
+          <th style="text-align: center; background: rgb(123, 188, 199);">Factura</th>
+          <th style="text-align: center; background: rgb(123, 188, 199);">Capturó</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">$ MXP</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">Fecha</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">Factura</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">Cliente</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">Garantia</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">Vendió</th>
+          <th style="text-align: center; background: rgb(223, 224, 125);">Obser</th>
+        </tr>
+      </thead>
+    </table>
+    <table class="table is-bordered is-hoverable" style="width: 150%;margin-top: -25px;" id="tblVentas">
+      <colgroup>
+        <col width="5%">
+        <col width="5%">
         <col width="7%">
         <col width="7%">
-        <col width="9%">
-        <col width="6%">
-        <col width="7%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="8%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="8%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
+        <col width="5%">
       </colgroup>
       <tbody>
         <tr *ngFor="let mercancia of mercancias; let i = index" (click)="selectRow(i)" [class.is-selected]="i == highLightRow">
@@ -102,12 +118,16 @@
           <td class="font-report">{{mercancia.serie}}</td>
           <td class="font-report">{{mercancia.estado}}</td>
           <td class="font-report">{{mercancia.bodega}}</td>
-          <td class="font-report">{{mercancia.precioCompra | currency}}</td>
+          <td class="font-report" style="text-align: right !important;">{{mercancia.precioCompra | currency}}</td>
+          <td class="font-report" style="text-align: right !important;">{{mercancia.precioDolares | currency}}</td>
+          <td class="font-report">{{mercancia.fechaCompra | date:'dd/MM/yy'}}</td>
+          <td class="font-report">{{mercancia.noFacturaCompra}}</td>
+          <td class="font-report">{{mercancia.capturoEntrada}}</td>
+          <td class="font-report" style="text-align: right !important;">{{mercancia.precioVenta | currency}}</td>
           <td class="font-report">{{mercancia.fechaVenta | date:'short'}}</td>
-          <td class="font-report">{{mercancia.precioVenta | currency}}</td>
           <td class="font-report">{{mercancia.noFacturaVenta}}</td>
           <td class="font-report">{{mercancia.cliente}}</td>
-          <td class="font-report">{{mercancia.fechaVencimientoGarantia | date:'short'}}</td>
+          <td class="font-report">{{mercancia.fechaVencimientoGarantia | date:'dd/MM/yy'}}</td>
           <td class="font-report">{{mercancia.capturoSalida}}</td>
           <td class="font-report">{{mercancia.observaciones}}</td>
         </tr>

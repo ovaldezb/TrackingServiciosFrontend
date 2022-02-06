@@ -3,6 +3,8 @@ import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
 import { Producto } from 'src/app/models/producto';
 import { Mercancia } from 'src/app/models/mercancia';
+import { Marca } from 'src/app/models/marca';
+import { Familia } from 'src/app/models/familia';
 import { Router, ActivatedRoute } from '@angular/router';
 import  swal  from 'sweetalert';
 import {IAngularMyDpOptions,IMyDateModel} from 'angular-mydatepicker';
@@ -34,6 +36,8 @@ export class InventarioComponent implements OnInit {
   helperArray: Array<any>;
   cantMercCapturar:number;
   element: HTMLElement;
+  marcas:Marca[];
+  familias:Familia[];
   bodegas: Bodega[];
   estados: Estado[] = [
     {value:'Nuevo', viewValue:'Nuevo'},
@@ -56,6 +60,8 @@ export class InventarioComponent implements OnInit {
     this.helperArray = new Array();
     this.helperArray.push(0);
     this.cantMercCapturar = 1;
+    this.getMarcas();
+    this.getFamilias();
     this._servicioService.getBodegas()
     .subscribe((res)=>{
       if(res.status==='success'){
@@ -64,6 +70,23 @@ export class InventarioComponent implements OnInit {
     });
   }
 
+  getMarcas(){
+    this._servicioService.getMarcas()
+    .subscribe((res)=>{
+      if(res.status === "success"){
+        this.marcas = res.marcas;
+      }
+    });
+  }
+
+  getFamilias(){
+    this._servicioService.getFamilias()
+    .subscribe((res)=>{
+      if(res.status === "success"){
+        this.familias = res.familias;
+      }
+    });
+  }
 
   async nuevaMercancia(event){
     if(this.helperArray.length == 0){

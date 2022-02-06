@@ -1,13 +1,17 @@
 <div class="container">
   <div class="columns" style="width: 100%;">
     <div class="column" >
-      <div class="box">
+      <div class="box" style="height: 330px; border: 1px solid gray;">
           <div class="columns">
             <div class="column">
               <label for="" class="label">Marca</label>
             </div>
             <div class="column">
-              <input type="text" name="marca" id="" class="small" #marca="ngModel" [(ngModel)]="producto.marca" required placeholder="MARCA">
+              <div class="select is-small">
+                <select name="marca" [(ngModel)]="producto.marca" >
+                  <option *ngFor="let marca of marcas" [ngValue]="marca.value">{{marca.viewValue}}</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="columns">
@@ -23,7 +27,11 @@
               <label for="" class="label">Familia</label>
             </div>
             <div class="column">
-              <input type="text" name="familia" class="small" #familia="ngModel" [(ngModel)]="producto.familia" required>
+              <div class="select is-small">
+                <select name="familia" [(ngModel)]="producto.familia">
+                  <option *ngFor="let familia of familias" [ngValue]="familia.value">{{familia.viewValue}}</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="columns">
@@ -53,7 +61,7 @@
       </div>
     </div>
     <div class="column">
-      <div class="box">
+      <div class="box" style="border: 1px solid gray;">
         <div class="columns">
           <div class="column">
             <label for="" class="label">No Factura Compra</label>
@@ -89,15 +97,17 @@
         </div>
         <div class="columns">
           <div class="column">
-            <label for="" class="label">Costo Pesos</label>
-          </div>
-          <div class="column is-3">
-            <input type="number" class="input is-small" name="precioCompra" #precioCompra="ngModel" [(ngModel)]="mercancia.precioCompra">
+            <label for="" class="label">$ MXP</label>
           </div>
           <div class="column">
-            <label for="" class="label">Costo Dólares</label>
+            <input type="number" class="input is-small" name="precioCompra" #precioCompra="ngModel" [(ngModel)]="mercancia.precioCompra">
           </div>
-          <div class="column is-3">
+        </div>
+        <div class="columns">
+          <div class="column">
+            <label for="" class="label">$ USD</label>
+          </div>
+          <div class="column">
             <input type="number" class="input is-small" name="precioDolares" #precioDolares="ngModel" [(ngModel)]="mercancia.precioDolares" >
           </div>
         </div>
@@ -122,7 +132,7 @@
       </div>
     </div>
     <div class="column">
-      <div class="box" style="height: 300px;overflow: auto;">
+      <div class="box" style="height: 330px;overflow: auto;border: 1px solid gray;">
         <div class="columns">
           <div class="column is-narrow">
             <label for="" class="label">Equipos a capturar</label>
