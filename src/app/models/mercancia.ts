@@ -2,6 +2,7 @@ import { Producto } from "./producto";
 
 export class Mercancia{
   constructor(
+    public _id: String,
     public producto:Producto,
     public estado: String,
     public bodega: String,

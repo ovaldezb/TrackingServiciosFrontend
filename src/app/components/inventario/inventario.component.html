@@ -141,17 +141,24 @@
             <input type="number" name="cantMercCapturar" class="input is-small" [(ngModel)]="cantMercCapturar" (change)="changeCantCapturar($event)">
           </div>
         </div>
-        <div *ngFor="let i of helperArray" class="columns">
+        <div *ngFor="let eq of equipoinventario" class="columns">
           <div class="column is-narrow">
-            <label for="" class="label">No Serie {{i+1}}</label>
+            <label for="" class="label">No Serie {{eq.index+1}}</label>
           </div>
           <div class="column">
-            <input type="text" name="" id="noSerie{{i}}">
+            <input type="text" [name]="eq.index" [(ngModel)]="eq.serie">
           </div>
         </div>
       </div>
     </div>
   </div>
-  <button class="button is-success" (click)="nuevaMercancia($event)" >Agregar Mercancia</button>
-  <button class="button is-warning" (click)="limpiarForma()" >Limpiar</button>
+  <div *ngIf="isSubmit">
+    <button class="button is-success" (click)="nuevaMercancia($event)" >Agregar Mercancia</button>
+    <button class="button is-warning" (click)="limpiarForma()" >Limpiar</button>
+  </div>
+  <div *ngIf="!isSubmit">
+    <button class="button is-success" (click)="actualizarMercancia($event)" >Actualizar Mercancia</button>
+    <button class="button is-warning" (click)="limpiarForma()" >Limpiar</button>
+  </div>
+  
 </div>

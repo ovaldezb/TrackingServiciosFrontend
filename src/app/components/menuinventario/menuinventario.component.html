@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <app-inventario *ngIf="isEntradas"></app-inventario>
+  <app-inventario *ngIf="isEntradas" [idproducto]="idproducto"></app-inventario>
   <app-salidainventario *ngIf="isSalidas"></app-salidainventario>
   <app-reporteinventario *ngIf="isReporte"></app-reporteinventario>
   <div *ngIf="isLista || isDesgloce">
@@ -67,7 +67,7 @@
           <col width="30%"/>
         </colgroup>
         <tbody>
-          <tr *ngFor="let producto of productos ; let i = index" >
+          <tr *ngFor="let producto of productos ; let i = index" (click)="ClickedRow(i)" (dblclick)="DoubleClickRow(i)" [class.selected]="i == HighlightRow">
             <td style="text-align: center;">{{producto.stock}}</td>
             <td>{{producto.marca}}</td>
             <td><a href="{{producto.url}}">{{producto.modelo}}</a></td>
