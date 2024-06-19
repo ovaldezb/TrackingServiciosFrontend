@@ -5,6 +5,7 @@ import { Global } from '../../services/global';
 import { ServicioService } from '../../services/servicios.service';
 import  swal  from 'sweetalert';
 import { Servicio } from 'src/app/models/servicio';
+import { Cliente } from 'src/app/models/cliente';
 
 export interface Marcas {
   value: string;
@@ -24,6 +25,7 @@ export interface Garantia {
 export class EquiposComponent implements OnInit {
 
   @Input() servicio : Servicio;
+  @Input() cliente: Cliente;
   @Output() recFolio = new EventEmitter();
   url:string;
   HighlightRow : number;
@@ -97,7 +99,16 @@ export class EquiposComponent implements OnInit {
   async onSubmit(){
     this.servicio.fechaactualizacion = new Date();
     this.servicio.esgarantia = this.tieneGarantia;
-      this.servicio.costorevision = this.costoRev;
+    this.servicio.costorevision = this.costoRev;
+    this.servicio.cliente = this.cliente.nombre;
+    this.servicio.telefono = this.cliente.telefono;
+    this.servicio.correo = this.cliente.correo;
+    if(this.cliente._id === "" || this.cliente._id === undefined){
+      var nuevoCliente = await this._servicioService.guardaCliente(this.cliente).toPromise();
+      this.servicio.clienteId = nuevoCliente.clienteSaved;
+    }else{
+      this.servicio.clienteId = this.cliente;
+    }
     var servrec = await this._servicioService.create(this.servicio).toPromise();
     if(servrec.status == 'success'){
       for(var i=0;i<this.equipos.length;i++){
@@ -109,11 +120,10 @@ export class EquiposComponent implements OnInit {
         }
         var serUpdt = await this._servicioService.createEquipo(equi,servrec.servicio._id).toPromise();
       }
-      if(this.servicio.correo != ''){
+      if(this.cliente.correo != ''){
         this._servicioService.enviaCorreoInicial(serUpdt.serviceUpdate)
           .subscribe(res=>{
-
-          });
+         });
       }
       swal('Servicio creado',
         'El Servicio fue creado exitosamente',
@@ -121,9 +131,7 @@ export class EquiposComponent implements OnInit {
       );
       this.equipos = [];
       this.equipo = new Equipo('','',null,'','',0,null,'',[],[],'','','');
-      //this._router.navigate(['/lista']);
       this.getFolio();
-
     }
   }
 

@@ -1,15 +1,15 @@
 <div class="container" style="margin:0 auto;">
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <table style="width: 100%; border: 0px; text-align: center;" cellpadding="0" cellspacing="0">
         <tr>
-        <td width="148" rowspan="2">
-            <div id="logo">
-            <img src="assets/images/logotdm.jpg" alt="Logotipo" />
-            </div>
-        </td>
-        <td width="77" height="48" valign="bottom" bgcolor="#EEEEEE">&nbsp;</td>
-        <td width="703" rowspan="2" align="left" valign="middle" bgcolor="#EEEEEE">
-            <nav id="menu" >
-            <ul>
+            <td style="width: 20%;" rowspan="2">
+                <div id="logo">
+                <img src="assets/images/logotdm.jpg" alt="Logotipo" />
+                </div>
+            </td>
+        
+            <td style="width: 80%; text-align: left;background-color:#EEEEEE; vertical-align: middle;" rowspan="2">
+                <nav id="menu" >
+                <ul>
                 <li>
                     <span class="icon is-small is-left">
                         <i class="fas fa-user"></i>
@@ -24,6 +24,9 @@
                 </li>
                 <li *ngIf="authService.getRol() == 0">
                     <a routerLink="/tecnicos"  [routerLinkActive]="['active']">Técnico</a>
+                </li>
+                <li *ngIf="authService.getRol() == 0">
+                    <a routerLink="/cliente"  [routerLinkActive]="['active']">Cliente</a>
                 </li>
                 <li *ngIf="authService.getRol() == 0">
                   <a routerLink="/envios"  [routerLinkActive]="['active']">Envios</a>

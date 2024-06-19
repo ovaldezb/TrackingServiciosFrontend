@@ -8,6 +8,7 @@ import { ServicioService } from '../../services/servicios.service';
 import { Global } from '../../services/global';
 import { AuthService } from '../../services/auth.service';
 import { PrintService } from '../../services/print.service';
+import { Cliente } from 'src/app/models/cliente';
 
 export interface Metodopago {
   value: string;
@@ -23,6 +24,7 @@ export interface Metodopago {
 export class MoverStatusComponent implements OnInit {
   url:string;
   public servicio: Servicio;
+  public cliente: Cliente = new Cliente('','','','');
   public canreapir: boolean;
   public actnnorepair:string;
   public devolver: string = "devolver";
@@ -79,7 +81,7 @@ export class MoverStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.servicio = history.state;
-    console.log(this.servicio);
+
     this._servicioService.getEquiposById(this.servicio._id).subscribe(res =>{
       if(res.equipos.length > 0){
         this.equipos = res.equipos;
@@ -252,6 +254,25 @@ export class MoverStatusComponent implements OnInit {
 
   imprimir() {
     this.printService.printDocument(this.servicio._id, this.servicio);
+  }
+
+  reenviarCorreo(){
+    swal({
+      title: "Esta seguro que desea re enviar este correo al cliente ",
+      text: this.servicio.clienteId.nombre+" ["+this.servicio.clienteId.correo+"]",
+      icon: "warning",
+      buttons: [true,true],
+      dangerMode: true,
+    })
+    .then((willSend) => {
+      if(willSend) {
+        this._servicioService.enviaCorreoInicial(this.servicio).subscribe(res=>{
+          swal({
+            title:"El correo ha sido enviado",
+            timer:1500
+          })
+        });
+      }});
   }
 
   cobrar(){

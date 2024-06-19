@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container">
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <table style="width: 100%; border: 0px; text-align: center;"  cellpadding="0" cellspacing="0">
         <tr>
             <td><img id="top-img" src="assets/images/top-estatus.jpg"/></td>
           </tr>
@@ -20,7 +20,7 @@
                 <label for="folio">{{servicio.estatus}} </label>
             </div>
             <div class="column">
-                <button class="button is-info" (click)="imprimir()">Imprimir</button>
+                <button class="button is-info is-small" (click)="imprimir()">Imprimir</button>
             </div>
         </div>
         <div class="columns">
@@ -28,7 +28,7 @@
                 <label for="folio" class="label">Cliente: </label>
             </div>
             <div class="column is-narrow" style="width: 200px;">
-                <label for="folio">{{servicio.cliente}} </label>
+                <label for="folio">{{servicio.clienteId.nombre}} </label>
             </div>
             <div class="column is-narrow" *ngIf="servicio.esgarantia">
                 <label for="folio" class="label">Garantía: </label>
@@ -61,13 +61,16 @@
                 <label for="folio" class="label">Teléfono: </label>
             </div>
             <div class="column is-narrow" style="width: 200px;">
-                <label for="folio">{{servicio.telefono}} </label>
+                <label for="folio">{{servicio.clienteId.telefono}} </label>
             </div>
             <div class="column is-narrow">
                 <label for="folio" class="label">Correo: </label>
             </div>
-            <div class="column">
-                <label for="correo">{{servicio.correo}}</label>
+            <div class="column is-narrow">
+                <label for="correo">{{servicio.clienteId.correo}}</label>
+            </div>
+            <div *ngIf="servicio.clienteId.correo!=''" class="column is-narrow">
+                <i class="fas fa-envelope" title="Re enviar correo inicial" (click)="reenviarCorreo()" style="cursor: pointer;"></i>
             </div>
         </div>
         <div class="columns">

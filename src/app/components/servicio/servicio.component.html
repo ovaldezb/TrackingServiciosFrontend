@@ -22,16 +22,40 @@
           <label for="cliente" class="label">Cliente:</label>
         </div>
         <div class="column is-narrow" style="width: 200px;">
-          <input type="text" name="cliente" class="input is-small" #cliente="ngModel" [(ngModel)]="servicio.cliente" (ngModelChange)="servicio.cliente = $event.toUpperCase()" required />
-          <small *ngIf="!cliente.valid && cliente.touched">Nombre de Cliente no válido</small>
+          <input click-stop-propagation type="text" name="nombre" class="input is-small" #nombre="ngModel" (keyup)="buscaCliente();" [(ngModel)]="cliente.nombre" (ngModelChange)="cliente.nombre= $event.toUpperCase()" required />
+          <small *ngIf="!nombre.valid && nombre.touched">Nombre de Cliente no válido</small>
         </div>
+      </div>
+      <table *ngIf="listaClientes.length > 0" style="width:350px; margin-top: -15px;border-top: 1px solid black;border-left:  1px solid black; border-right: 1px solid black;">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Cliente</th>
+            <th style="text-align: right;">
+              <button class="button is-small is-info" (click)="cierraLista()">X</button>
+            </th>
+          </tr>
+        </thead>
+      </table>
+      <div *ngIf="listaClientes.length > 0" style="height: 200px;border: 1px solid black;overflow: auto; width:350px;  margin-bottom: 5px;">
+        <table class="table is-hoverable" style="width:330px">
+          <tbody>
+          <tr *ngFor="let cliente of listaClientes; let i= index;" (dblclick)="DoubleClickRow(i)" (click)="singleClickRow(i)" [class.selected]="i == HighlightRow" >
+            <td style="font-size: small;">
+              {{cliente.nombre}}
+            </td>
+            <td  style="font-size: small;">
+              {{cliente.telefono}}
+            </td>
+          </tr>
+        </tbody>
+        </table>
       </div>
       <div class="columns">
         <div class="column is-narrow" style="width: 140px;">
           <label for="telefono" class="label">Teléfono</label>
         </div>
         <div class="column is-narrow" style="width: 140px;">
-          <input type="text" name="telefono" class="input is-small" #telefono="ngModel" [(ngModel)]="servicio.telefono"  (blur)="validaTel()" maxlength="10" required />
+          <input type="text" name="telefono" class="input is-small" #telefono="ngModel" [(ngModel)]="cliente.telefono"  (blur)="validaTel()" maxlength="10" required />
           <small *ngIf="(!telefono.valid && telefono.touched) || errTel">El teléfono no es válido</small>
         </div>
       </div>
@@ -40,7 +64,7 @@
           <label for="correo" class="label">Correo</label>
         </div>
         <div class="column is-narrow" style="width: 200px;">
-          <input type="email" name="correo" class="input is-small" #correo="ngModel" [(ngModel)]="servicio.correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+          <input type="email" name="correo" class="input is-small" #correo="ngModel" [(ngModel)]="cliente.correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required />
             <small *ngIf="!correo.valid && correo.touched" >Correo es requerido</small>
         </div>
       </div>
@@ -58,7 +82,7 @@
     </div>
   </div>
   <div class="column">
-    <app-equipos  [servicio]="servicio" (recFolio)="recFolio($event)"></app-equipos>
+    <app-equipos  [servicio]="servicio"  [cliente]="cliente" (recFolio)="recFolio($event)"></app-equipos>
   </div>
 </div>
 

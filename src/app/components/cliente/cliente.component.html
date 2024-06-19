@@ -1,0 +1,93 @@
+<app-header></app-header>
+<div class="container">
+<div class="columns">
+  <div class="column is-three-fifths">
+    
+      <div class="columns">
+        <div class="column is-narrow">
+          <label for="" class="label">Filtro:</label>
+        </div>
+        <div class="column is-narrow">
+          <input type="text" name="filtro" [(ngModel)]="filtro" (keyup)="filtraCliente()">
+        </div>
+      </div>
+      <table class="table" style="width: 100%;">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Cliente</th>
+            <th style="text-align: center;">Teléfono</th>
+            <th style="text-align: center;">Correo</th>
+          </tr>
+        </thead>
+      </table>
+      <table class="table is-hoverable" style="width: 100%;" id="tblClientes">
+        <tbody>
+          <tr *ngFor="let cliente of listaClientes; let i=index;" (dblclick)="seleccionaCliente(i)">
+            <td style="text-align: center;">{{cliente.nombre}}</td>
+            <td style="text-align: center;">{{cliente.telefono}}</td>
+            <td style="text-align: center;">{{cliente.correo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    
+  </div>
+  <div class="column">
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">Nombre Completo</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-success" type="text" placeholder="Ingrese el Nombre" #nombre="ngModel" [(ngModel)]="cliente.nombre" (ngModelChange)="cliente.nombre= $event.toUpperCase()" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
+          </div>
+        
+        
+          <div class="field">
+            <label class="label">Teléfono</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-success" type="text" placeholder="Ingrese el Teléfono" #telefono="ngModel" [(ngModel)]="cliente.telefono" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
+          </div>
+       
+        
+          <div class="field">
+            <label class="label">Correo</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-success" type="text" placeholder="Ingrese el Correo" #correo="ngModel" [(ngModel)]="cliente.correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        
+          <div class="column control" style="text-align: right;">
+            <button class="button is-primary" (click)="agregaActualizaCliente()" [disabled]="cliente.nombre=='' || cliente.telefono=='' || cliente.correo=='' ">{{accion}}</button>
+          </div>
+          <div class="column control" style="text-align: right;">
+            <button class="button is-primary" (click)="limpiar()">Limpiar</button>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</div>

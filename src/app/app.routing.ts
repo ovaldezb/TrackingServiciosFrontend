@@ -14,6 +14,7 @@ import { EnviosComponent } from './components/envios/envios.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
 import { MenuinventarioComponent } from './components/menuinventario/menuinventario.component';
 import { SalidainventarioComponent } from './components/salidainventario/salidainventario.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
 //Array de Componentes
 const appRoutes: Routes = [
     //{path:'', redirectTo:'/auth', pathMatch: 'full'},
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     {path:'movserv',component:MoverStatusComponent},
     {path:'envios',component:EnviosComponent},
     {path:'print/:serviceId',outlet: 'print',component:PrintLayoutComponent},
-    {path:'menuinventario',component:MenuinventarioComponent}
+    {path:'menuinventario',component:MenuinventarioComponent},
+    {path:'cliente',component:ClienteComponent}
 ];
 
 // Exportar el modulo de rutas

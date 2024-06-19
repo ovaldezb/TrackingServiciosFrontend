@@ -1,13 +1,15 @@
+import { Cliente } from './cliente';
 import { Equipo } from './equipo';
 import { Imagen } from './imagen';
 
 export class Servicio{
     constructor(
         public _id : string,
-        public cliente: string,
+        public clienteId:Cliente ,
         public receptor: string,
         public folio : string,
-        public telefono : string,
+        public telefono: string,
+        public cliente : string,
         public correo : string,
         public costorevision:number,
         public esgarantia : string,

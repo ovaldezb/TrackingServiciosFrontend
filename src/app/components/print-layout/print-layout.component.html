@@ -84,7 +84,7 @@
 			<td height="20" colspan="2" valign="top" style="padding-top:-15px;"><label class="titulos">Nombre/Empresa</label></td>
 		  </tr>
 		  <tr>
-			<td height="30" colspan="2" valign="top" style=" border-bottom: 1px solid grey;"><label class="titulossmall">{{servicio.cliente}}</label></td>
+			<td height="30" colspan="2" valign="top" style=" border-bottom: 1px solid grey;"><label class="titulossmall">{{servicio.clienteId.nombre}}</label></td>
 		  </tr>
 		  <tr>
 			<td height="25" colspan="2" valign="top" ><label class="titulos">Dirección</label></td>
@@ -97,8 +97,8 @@
 			<td  valign="top"><label class="titulos">Correo</label></td>
 		  </tr>
 		  <tr>
-			<td  height="33" valign="top"><label class="titulossmall">{{servicio.telefono}}</label></td>
-			<td  valign="top" ><label class="titulossmall">{{servicio.correo}}</label></td>
+			<td  height="33" valign="top"><label class="titulossmall">{{servicio.clienteId.telefono}}</label></td>
+			<td  valign="top" ><label class="titulossmall">{{servicio.clienteId.correo}}</label></td>
 		  </tr>
 		</table>
 	</td>

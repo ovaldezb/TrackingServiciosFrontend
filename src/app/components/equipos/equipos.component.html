@@ -79,7 +79,7 @@
           </div>
           <div class="columns">
             <div class="column">
-              <button class="button is-rounded is-info" (click)="onSubmit()" [disabled]="equipos.length <= 0 || servicio.esgarantia==null || (servicio.esgarantia == 'false' && servicio.costorevision == 0) || servicio.cliente =='' || servicio.telefono=='' || servicio.correo == '' || servicio.receptor == ''" style="margin-left: 80px;">Enviar Servicio</button>
+              <button class="button is-rounded is-info" (click)="onSubmit()" [disabled]="equipos.length <= 0 || servicio.esgarantia==null || (servicio.esgarantia == 'false' && servicio.costorevision == 0) || cliente.nombre =='' || cliente.telefono=='' || cliente.correo == '' || servicio.receptor == ''" style="margin-left: 80px;">Enviar Servicio</button>
             </div>
           </div>
         </div>

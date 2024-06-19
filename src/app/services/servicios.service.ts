@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Global } from './global';
+import { Cliente } from '../models/cliente';
 
 @Injectable()
 export class ServicioService{
@@ -221,5 +222,25 @@ export class ServicioService{
 
     getFamilias():Observable<any>{
         return this._http.get(this.url+"familia");
+    }
+
+    getClientesByName(nombre:String):Observable<any>{
+        return this._http.get(this.url+"cliente/"+nombre);
+    }
+
+    getAllClientes():Observable<any>{
+        return this._http.get(this.url+"cliente");
+    }
+
+    guardaCliente(cliente:Cliente):Observable<any>{
+        let params = JSON.stringify(cliente);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url+'cliente',params,{headers:headers});
+    }
+
+    actualizaCliente(cliente:Cliente):Observable<any>{
+        let params = JSON.stringify(cliente);
+        let headers = new HttpHeaders().set('Content-Type','application/json');
+        return this._http.put(this.url+'cliente/'+cliente._id,params,{headers:headers});
     }
 }

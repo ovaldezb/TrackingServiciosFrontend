@@ -31,6 +31,8 @@ import { MenuinventarioComponent } from './components/menuinventario/menuinventa
 import { SalidainventarioComponent } from './components/salidainventario/salidainventario.component';
 import { ReporteinventarioComponent } from './components/reporteinventario/reporteinventario.component';
 import {AngularMyDatePickerModule} from 'angular-mydatepicker';
+import { ClienteComponent } from './components/cliente/cliente.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +55,8 @@ import {AngularMyDatePickerModule} from 'angular-mydatepicker';
     InventarioComponent,
     MenuinventarioComponent,
     SalidainventarioComponent,
-    ReporteinventarioComponent
+    ReporteinventarioComponent,
+    ClienteComponent
   ],
   imports: [
     BrowserModule,
